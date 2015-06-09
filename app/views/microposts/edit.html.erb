@@ -1,0 +1,41 @@
+<h4>Editing Micropost: <%= @micropost.heading %> </h4>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <%= form_for(@micropost) do |f| %>
+
+      <%= f.label :heading %>
+      <%= f.text_field :heading, class: 'form-control' %><br>
+
+      <%= f.label :content %>
+        <%= f.text_area :content, :class => "tinymce", :rows => 10, :cols => 20 %>
+  <%= tinymce %>
+
+      <%= f.label :desc %>
+  <%= f.text_area :desc, :class => "tinymce", :rows => 10, :cols => 20 %>
+  <%= tinymce %>
+
+      <%= f.label :category %><br>
+      <%= f.collection_select :category_id, Category.order(:name),:id,:name, include_blank: false %>
+
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+    
+      <br><br>
+
+      <%= f.submit "Save changes", class: "btn btn-primary" %><br>
+       
+    <% end %>
+
+
+
+  </div>
+</div>
+
+<div class="row">
+<hr class="divider"></hr>
+	<div class="col-md-12">
+		<%= link_to 'Show', @micropost %> |
+<%= link_to 'Back', microposts_path %>
+	</div>
+</div>

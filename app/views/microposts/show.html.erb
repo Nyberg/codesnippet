@@ -1,0 +1,68 @@
+
+<div class="row">
+
+<p id="notice"><%= notice %></p>
+
+<div class="col-xs-12">
+
+	<h4><%= @micropost.heading %> | <small> <%= link_to @micropost.category.name, @micropost.category %></small></h4>
+
+	<p>
+		<%= @micropost.desc.html_safe %>
+	</p>
+
+	<pre>
+		<%= @micropost.content.html_safe %>
+	</pre>
+
+	<%= link_to 'Edit', edit_micropost_path(@micropost) %> |
+	<%= link_to 'Destroy', @micropost, method: :delete, data: { confirm: 'Are you sure?' } %> |
+	<%= link_to 'Back', microposts_path %>
+	
+</div>
+
+</div>
+<div class="row">
+
+<div class="col-xs-12">
+
+<hr class="divider"></hr>
+<h4>Comments</h4>
+	
+	<%= @micropost.comments.each do |c| %>
+	
+	<p><%= c.user.name %> | <%= c.created_at.to_formatted_s(:db) %>
+		<span class="pull-right">
+		<%= link_to 'Edit', edit_comment_path(c) %> | 
+		<%= link_to 'Destroy', c, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</span>
+	</p>
+
+	<p><%= c.body.html_safe %></p>
+
+	<% end %>
+
+</div>
+
+<div class="col-xs-12">
+<hr class="divider"></hr>
+<h4>Add comment</h4>
+	
+	<%= form_for(@comment) do |f| %>
+
+	<div class="form-group">
+	<%= f.text_area :body, :class => "tinymce", :rows => 10, :cols => 20 %>
+	<%= tinymce %>
+	</div>
+
+		<%= f.hidden_field :user_id, :value => current_user.id %>
+		<%= f.hidden_field :micropost_id, :value => @micropost.id %>
+
+	<div class="form-group">
+		<%= f.submit "Save" %>
+	</div>
+
+	<% end %>
+</div>
+
+</div>
