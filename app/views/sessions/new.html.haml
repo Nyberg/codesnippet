@@ -1,0 +1,16 @@
+.row
+	.col-sm-6.col-md-4.col-md-offset-4
+		.account-wall
+			= image_tag "https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120", alt: "", class: "profile-img"
+			%p.profile-name
+				Logga in
+			%span.profile-email
+				Var vänlig logga in för att fortsätta..
+
+			= form_for(:session, url: login_path, html: {class: 'form-signin'}) do |f|
+				.form-group
+					= f.email_field :email, autofocus: true, placeholder: "email", class: 'form-control'
+				.form-group
+					= f.password_field :password, placeholder: "lösenord", class: 'form-control'
+				.form-group
+					= f.submit "Logga in", class: "btn btn-lg btn-block signin-button"

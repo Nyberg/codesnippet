@@ -1,0 +1,46 @@
+!!!
+%html
+  %head
+    %title
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  %body
+    %nav.navbar.navbar-static
+      .container
+        .navbar-header
+          = link_to "Chainnation", "/", class: "navbar-brand"
+        .navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to "Tävlingar", "/"
+            %li
+              = link_to "Kommande Tävlingar", "/"
+            %li
+              = link_to "Spelare", users_path
+
+          %ul.nav.navbar-right.navbar-nav
+            - if logged_in?
+              %li
+                = link_to "", user_path(current_user), class: "glyphicon glyphicon-user"
+              - if current_user.admin?
+                %li
+                  = link_to "", admin_path, class: "glyphicon glyphicon-cog"
+              %li
+                = link_to "", logout_path, method: :delete, class: "glyphicon glyphicon-log-out"
+            - else
+              %li
+                = link_to "", login_path, class: "glyphicon glyphicon-log-in"
+
+    .container
+      .no-gutter.row
+        - if notice
+          .alert.alert-success
+            = notice
+        - if alert
+          .alert.alert-danger
+            = alert
+
+        = yield

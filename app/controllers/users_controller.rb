@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :admin, only: [:edit, :update, :destroy, :new_user]
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    @clubs = Club.all
   end
 
   # GET /users/1
@@ -24,6 +25,21 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
+
+  def new_user
+    @user = User.new(user_params)
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to admin_path, notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -70,6 +86,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :club_id)
     end
 end

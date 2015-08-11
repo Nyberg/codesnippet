@@ -1,0 +1,25 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Användare
+          %p.lead Nedan visas #{@users.count} användare
+
+
+.col-md-12
+  %table.table.table-hover
+    %thead
+      %th Namn
+      %th Email
+      %th Klubb
+      %th
+    %tbody
+      - @users.each do |u|
+        %tr
+          %td= u.name
+          %td= u.email
+          %td= u.club.name
+          %td
+            = link_to "", user_path(u), class: "glyphicon glyphicon-user"
+            = link_to "", edit_user_path(u), class: "glyphicon glyphicon-pencil"

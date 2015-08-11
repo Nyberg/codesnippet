@@ -1,0 +1,20 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Klubbar
+          %p.lead Nedan visas #{@clubs.count} klubbar
+
+
+.col-md-12
+  %table.table.table-hover
+    %thead
+      %th Namn
+      %th
+    %tbody
+      - @clubs.each do |u|
+        %tr
+          %td= u.name
+          %td
+            = link_to "", edit_club_path(u), class: "glyphicon glyphicon-pencil"

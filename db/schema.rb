@@ -11,30 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608095234) do
+ActiveRecord::Schema.define(version: 20150811210420) do
 
   create_table "categories", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "clubs", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "website",    limit: 255
+    t.string   "img",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "body"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "micropost_id"
+    t.integer  "user_id",      limit: 4
+    t.text     "body",         limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "micropost_id", limit: 4
   end
 
   create_table "microposts", force: :cascade do |t|
-    t.text     "content"
-    t.string   "heading"
-    t.string   "desc"
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "category_id"
+    t.text     "content",     limit: 65535
+    t.string   "heading",     limit: 255
+    t.text     "desc",        limit: 65535
+    t.integer  "user_id",     limit: 4
+    t.integer  "category_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "pages", force: :cascade do |t|
@@ -43,12 +51,14 @@ ActiveRecord::Schema.define(version: 20150608095234) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "password_digest"
-    t.string   "remember_digest"
+    t.string   "name",            limit: 255
+    t.string   "email",           limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "password_digest", limit: 255
+    t.string   "remember_digest", limit: 255
+    t.integer  "club_id",         limit: 4
+    t.boolean  "admin",           limit: 1
   end
 
 end
