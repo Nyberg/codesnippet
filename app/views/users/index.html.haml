@@ -1,0 +1,24 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Användare
+          %p.lead Nedan visas #{@users.count} användare
+
+    .row
+      .col-md-12
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Namn
+              %th Klubb
+              %th PDGA #
+              %th Tävlingar
+          %tbody
+            - @users.each do |u|
+              %tr
+                %td= u.name
+                %td= u.club.name
+                %td 778899
+                %td 10
