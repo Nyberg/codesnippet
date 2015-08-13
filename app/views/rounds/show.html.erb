@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @round.user_id %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @round.course_id %>
+</p>
+
+<p>
+  <strong>Competition:</strong>
+  <%= @round.competition_id %>
+</p>
+
+<p>
+  <strong>Tee:</strong>
+  <%= @round.tee_id %>
+</p>
+
+<p>
+  <strong>Tour part:</strong>
+  <%= @round.tour_part_id %>
+</p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @round.score %>
+</p>
+
+<p>
+  <strong>Division:</strong>
+  <%= @round.division %>
+</p>
+
+<%= link_to 'Edit', edit_round_path(@round) %> |
+<%= link_to 'Back', rounds_path %>

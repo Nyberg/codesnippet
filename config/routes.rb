@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :scores
+  resources :rounds
+  resources :tour_parts
+  resources :tees
+  resources :holes
+  resources :courses
+  resources :competitions
   resources :clubs
   get 'sessions/new'
 
@@ -12,9 +19,12 @@ Rails.application.routes.draw do
   delete '/logout'=> 'sessions#destroy'
 
 
-  get '/admin'  => 'admins#index'
-  get '/admin/users' => 'admins#users'
-  get '/admin/clubs' => 'admins#clubs'
+  get '/admin'              => 'admins#index'
+  get '/admin/users'        => 'admins#users'
+  get '/admin/clubs'        => 'admins#clubs'
+  get '/admin/competitions' => 'admins#competitions'
+  get '/admin/courses'      => 'admins#courses'
+  get '/admin/tees'         => 'admins#tees'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

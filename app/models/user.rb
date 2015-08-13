@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
 belongs_to :club
+has_many :rounds
+has_many :scores
+
+	scope :by_name, -> {order(name: :asc)}
 
 	attr_accessor :remember_token
 

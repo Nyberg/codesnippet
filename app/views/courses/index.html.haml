@@ -1,0 +1,24 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Banor
+          %p.lead
+            Visar all banor
+    .row
+      .col-md-12
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Namn
+              %th Klubb
+              %th Vart
+              %th Antal hål
+          %tbody
+            - @courses.each do |c|
+              %tr
+                %td= link_to c.name, course_path(c)
+                %td= c.club.name
+                %td= c.content
+                %td= c.holes

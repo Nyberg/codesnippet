@@ -7,11 +7,23 @@ class AdminsController < ApplicationController
   end
 
   def users
-    @users = User.all
+    @users = User.by_name
   end
 
   def clubs
     @clubs = Club.all
+  end
+
+  def competitions
+    @competitions = Competition.all
+  end
+
+  def courses
+    @courses = Course.by_name
+  end
+
+  def tees
+    @tees = Tee.all.includes(:course)
   end
 
 end

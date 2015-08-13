@@ -1,0 +1,12 @@
+= form_for(@tee) do |f|
+  - if @tee.errors.any?
+    .error_explanation
+      %ul
+        = @tee.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.text_field :color, placeholder: "färg", class: "form-control"
+  .form-group
+    = f.collection_select(:course_id, Course.all, :id, :name, class: 'form-control')
+  .form-group
+    = f.submit :Spara, class: 'btn btn-sm btn-primary'

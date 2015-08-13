@@ -6,6 +6,12 @@
           Chainnation
           %p.lead
             Statistik för Svenska Discgolftävlingar
-
-      .col-md-6
-        .well.pull-right
+    .row
+      .col-md-12
+        %h1 Senaste Tävlingar
+      .col-md-12
+        .row
+          - @competitions.each do |c|
+            .col-md-6
+              = link_to c.name, competition_path(c)
+              %p= "#{c.club.name} - #{c.date.strftime("%Y-%m-%d")}"

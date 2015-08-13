@@ -1,0 +1,18 @@
+= form_for(@hole) do |f|
+  -if @hole.errors.any?
+    .error_explanation
+      %ul
+        = @hole.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.collection_select(:course_id, Course.all, :id, :name, class: 'form-control')
+  .form-group
+    = f.number_field :number, placeholder: 'nummer', class: 'form-control'
+  .form-group
+    = f.number_field :par, placeholder: 'par', class: 'form-control'
+  .form-group
+    = f.number_field :length, placeholder: 'längd', class: 'form-control'
+  .form-group
+    = f.collection_select(:tee_id, Tee.all, :id, :color, class: 'form-control')
+  .form-group
+    = f.submit :Spara, class: 'btn btn-sm btn-primary'

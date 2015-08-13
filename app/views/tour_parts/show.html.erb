@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tour_part.name %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @tour_part.content %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @tour_part.course_id %>
+</p>
+
+<p>
+  <strong>Competition:</strong>
+  <%= @tour_part.competition_id %>
+</p>
+
+<p>
+  <strong>Tee:</strong>
+  <%= @tour_part.tee_id %>
+</p>
+
+<%= link_to 'Edit', edit_tour_part_path(@tour_part) %> |
+<%= link_to 'Back', tour_parts_path %>

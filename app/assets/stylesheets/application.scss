@@ -25,6 +25,42 @@
 /* custom theme + Bootstrap resets */
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
+.ace{
+	background-color: #FF5500;
+}
+
+.albatross{
+	background-color: #14F732;
+}
+
+.eagle{
+	background-color: #3DF556;
+}
+
+.birdie{
+	background-color: #8FFFA3;
+}
+
+.par{
+	background-color: #FFFFD4;
+}
+
+.bogey{
+	background-color: #FFADAD;
+}
+
+.dblbogey{
+	background-color: #F08181;
+}
+
+.tplbogey{
+	background-color: #F26363;
+}
+
+.quadbogey{
+	background-color: #F53D3D;
+}
+
 header {
 	min-height:180px;
   	margin-bottom:5px;
@@ -84,7 +120,7 @@ body {
   background-color:#fff;
 }
 
-a,a:hover {
+a,a:hover, a:visited {
 	color:#404040;
   text-decoration:none;
 }
@@ -130,7 +166,7 @@ h3.highlight  {
   	opacity:.9;
 }
 
-.navbar-brand a, a:visited, a:hover{
+.navbar-brand a, .navbar-brand a:visited, .navbar-brand a:hover{
 	color:#fff;
 	background-color: #FF5500;
 }
@@ -325,5 +361,10 @@ footer {
 	border: none;
 }
 
-.signin-button a, a:visited, a:hover{
+.btn-primary {
+	background-color: #FB9C44;
+	background-image: linear-gradient(to left, #FB9C44, #FF5500);
+	color:#ffffff;
+	border-radius:2;
+	border: none;
 }

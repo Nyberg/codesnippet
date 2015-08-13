@@ -1,6 +1,8 @@
 .col-md-12
   .well.text-center
     %h2 Välkommen #{current_user.name}!
-    %h2
-      %a{href: admin_users_path, class: "glyphicon glyphicon-4x glyphicon-user"}
-      %a{href: admin_clubs_path, class: "glyphicon glyphicon-4x glyphicon-user"}
+    = link_to "Användare", admin_users_path
+    = link_to "Klubbar", admin_clubs_path
+    = link_to "Tävlingar", admin_competitions_path
+    = link_to "Banor", admin_courses_path
+    = link_to "Tees", admin_tees_path
