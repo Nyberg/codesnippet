@@ -25,6 +25,10 @@
 /* custom theme + Bootstrap resets */
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
+.ob{
+	color: red;
+}
+
 .ace{
 	background-color: #FF5500;
 }
@@ -59,6 +63,10 @@
 
 .quadbogey{
 	background-color: #F53D3D;
+}
+
+.other{
+	background-color: #DB3535;
 }
 
 header {

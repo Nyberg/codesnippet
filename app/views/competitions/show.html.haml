@@ -10,24 +10,23 @@
         %h3
         - @competition.tour_parts.each do |t|
           %p= "#{t.name} - #{t.date.strftime("%Y-%m-%-d")}"
-          %table.table.table-striped
+          %table.table.table-hover
             %tbody
               %tr
                 %td= "#{t.tee.color} tee"
                 %td= "Par #{t.tee.par}"
               %tr
-                %td Nr/par
+                %td Nr
                 - t.tee.holes.each do |h|
                   %td.text-center= h.number
-                %td
-              - t.rounds.each do |r|
-                %tr
-                  %td= r.user.name
-                  - r.scores.each do |s|
-                    %td{class: "#{get_score(s.score, s.hole.par)} text-center"}= "#{s.score} (#{s.hole.par})"
-                  %td= r.score
+
               %tr
                 %td Längd
                 - t.tee.holes.each do |h|
                   %td.text-center= "#{h.length} m"
-                %td
+              - t.rounds.each do |r|
+                %tr
+                  %td= "#{r.place} #{r.user.name}"
+                  - r.scores.each do |s|
+                    %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score} (#{s.hole.par})"
+                  %td= calc_score(r.score, r.tee.par)

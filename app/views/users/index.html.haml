@@ -14,11 +14,14 @@
               %th Namn
               %th Klubb
               %th PDGA #
+              %th Division
               %th Tävlingar
           %tbody
             - @users.each do |u|
               %tr
                 %td= u.name
                 %td= u.club.name
-                %td 778899
+                %td
+                  = "##{u.pdga}" unless blank?
+                %td= u.division
                 %td 10

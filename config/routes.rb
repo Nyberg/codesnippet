@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/admin/competitions' => 'admins#competitions'
   get '/admin/courses'      => 'admins#courses'
   get '/admin/tees'         => 'admins#tees'
+  get '/admin/user/new'     => 'admins#create_player'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

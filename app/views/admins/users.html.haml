@@ -5,12 +5,15 @@
         %h1
           Användare
           %p.lead Nedan visas #{@users.count} användare
+        = link_to "Ny spelare", new_user_path, class: 'btn btn-success'
 
 
 .col-md-12
   %table.table.table-hover
     %thead
       %th Namn
+      %th PDGA #
+      %th Division
       %th Email
       %th Klubb
       %th
@@ -18,6 +21,8 @@
       - @users.each do |u|
         %tr
           %td= u.name
+          %td= "##{u.pdga}"
+          %td= u.division
           %td= u.email
           %td= u.club.name
           %td
