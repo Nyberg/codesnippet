@@ -10,6 +10,10 @@ class TourPartsController < ApplicationController
   # GET /tour_parts/1
   # GET /tour_parts/1.json
   def show
+    @tour_part = TourPart.find(params[:id])
+    @tee = Tee.find(@tour_part.tee_id)
+    @holes = Hole.where(tee_id: @tour_part.tee_id)
+    @rounds = Round.where(tour_part_id: @tour_part.id).includes(:scores, :user, :holes, :tee)
   end
 
   # GET /tour_parts/new

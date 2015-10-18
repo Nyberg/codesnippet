@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150812202734) do
     t.integer  "division_id",    limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "place",          limit: 4
   end
 
   create_table "scores", force: :cascade do |t|
@@ -97,8 +98,9 @@ ActiveRecord::Schema.define(version: 20150812202734) do
     t.integer  "tee_id",     limit: 4
     t.integer  "hole_id",    limit: 4
     t.integer  "score",      limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "ob",         limit: 1, default: 0
   end
 
   create_table "tees", force: :cascade do |t|
@@ -123,12 +125,14 @@ ActiveRecord::Schema.define(version: 20150812202734) do
   create_table "users", force: :cascade do |t|
     t.string   "name",            limit: 255
     t.string   "email",           limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "password_digest", limit: 255
     t.string   "remember_digest", limit: 255
     t.integer  "club_id",         limit: 4
-    t.boolean  "admin",           limit: 1
+    t.boolean  "admin",           limit: 1,   default: false
+    t.string   "division",        limit: 11
+    t.string   "pdga",            limit: 255
   end
 
 end

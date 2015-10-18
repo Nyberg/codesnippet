@@ -15,6 +15,7 @@ class ScoresController < ApplicationController
   # GET /scores/new
   def new
     @score = Score.new
+    @round = Round.find(params[:format])
   end
 
   # GET /scores/1/edit

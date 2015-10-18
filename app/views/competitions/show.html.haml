@@ -6,27 +6,6 @@
         %small= "#{@competition.club.name} - #{@competition.title}"
 
     .row
-      .col-md-12
-        %h3
+      .col-md-6
         - @competition.tour_parts.each do |t|
-          %p= "#{t.name} - #{t.date.strftime("%Y-%m-%-d")}"
-          %table.table.table-hover
-            %tbody
-              %tr
-                %td= "#{t.tee.color} tee"
-                %td= "Par #{t.tee.par}"
-              %tr
-                %td Nr
-                - t.tee.holes.each do |h|
-                  %td.text-center= h.number
-
-              %tr
-                %td Längd
-                - t.tee.holes.each do |h|
-                  %td.text-center= "#{h.length} m"
-              - t.rounds.each do |r|
-                %tr
-                  %td= "#{r.place} #{r.user.name}"
-                  - r.scores.each do |s|
-                    %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score} (#{s.hole.par})"
-                  %td= calc_score(r.score, r.tee.par)
+          = link_to t.name, tour_part_path(t)

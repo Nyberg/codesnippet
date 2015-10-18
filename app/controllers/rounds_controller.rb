@@ -25,10 +25,14 @@ class RoundsController < ApplicationController
   # POST /rounds.json
   def create
     @round = Round.new(round_params)
+    tour_part = TourPart.find(@round.tour_part_id)
+
+    @round.tee_id = tour_part.tee_id
+    @round.course_id = tour_part.course_id
 
     respond_to do |format|
       if @round.save
-        format.html { redirect_to @round, notice: 'Round was successfully created.' }
+        format.html { redirect_to admin_round_path, notice: 'Round was successfully created.' }
         format.json { render :show, status: :created, location: @round }
       else
         format.html { render :new }
@@ -56,7 +60,7 @@ class RoundsController < ApplicationController
   def destroy
     @round.destroy
     respond_to do |format|
-      format.html { redirect_to rounds_url, notice: 'Round was successfully destroyed.' }
+      format.html { redirect_to admin_round_path, notice: 'Round was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +73,6 @@ class RoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def round_params
-      params.require(:round).permit(:user_id, :course_id, :competition_id, :tee_id, :tour_part_id, :score, :division)
+      params.require(:round).permit(:user_id, :course_id, :competition_id, :tee_id, :tour_part_id, :total, :division, :place)
     end
 end

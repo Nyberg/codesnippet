@@ -1,0 +1,13 @@
+= form_for(@round) do |f|
+  -if @round.errors.any?
+    .error_explanation
+      %ul
+        = @round.errors.full_messages.each do |message|
+          %li= message
+
+  = hidden_field(:user_id, @round.user_id)
+  = hidden_field(:round_id, @round.user_id)
+  = hidden_field(:tee_id, @round.user_id)
+
+  .form-group
+    = f.submit :Spara, class: 'btn btn-sm btn-primary'

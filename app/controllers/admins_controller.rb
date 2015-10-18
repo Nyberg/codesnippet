@@ -26,4 +26,8 @@ class AdminsController < ApplicationController
     @tees = Tee.all.includes(:course)
   end
 
+  def rounds
+    @rounds = Round.all
+  end
+
 end

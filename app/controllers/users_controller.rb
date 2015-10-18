@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @club = Club.find(@user.club_id)
+    @rounds = Round.where(user_id: params[:id]).includes(:scores, :holes, :tee)
   end
 
   # GET /users/new

@@ -5,4 +5,5 @@ class TourPart < ActiveRecord::Base
   belongs_to :tee
   has_many :rounds
 
+  scope :by_name, -> {order(name: :asc)}
 end

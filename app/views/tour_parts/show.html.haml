@@ -1,0 +1,62 @@
+%header.masthead
+  .container
+    .row
+      .col-md-12.text-center
+        %h1= "#{@tour_part.competition.name} - #{@tour_part.name}"
+        %h4= @tour_part.competition.club.name
+    .row
+      .col-sm-6.col-md-3.col-lg-3
+        .panel.text-center
+          .col-md-6.stats-item{style: "background-color: #fcde07"}
+            %a.glyphicon.glyphicon-calendar.bigicon
+          .col-md-6.stats-item{style: "background-color: #4a4a49"}
+            .header-item Datum
+            .data-item= @tour_part.date.strftime("%Y-%m-%-d")
+
+      .col-sm-6.col-md-3.col-lg-3
+        .panel.text-center
+          .col-md-6.stats-item{style: "background-color: #fcde07"}
+            %a.glyphicon.glyphicon-user.bigicon
+          .col-md-6.stats-item{style: "background-color: #4a4a49"}
+            .header-item Spelare
+            .data-item= @rounds.count
+
+      .col-sm-6.col-md-3.col-lg-3
+        .panel.text-center
+          .col-md-6.stats-item{style: "background-color: #fcde07"}
+            %a.glyphicon.glyphicon-info-sign.bigicon
+          .col-md-6.stats-item{style: "background-color: #4a4a49"}
+            .header-item= @tour_part.course.name
+            .data-item= @tee.color
+
+      .col-sm-6.col-md-3.col-lg-3
+        .panel.text-center
+          .col-md-6.stats-item{style: "background-color: #fcde07"}
+            %a.glyphicon.glyphicon-equalizer.bigicon
+          .col-md-6.stats-item{style: "background-color: #4a4a49"}
+            .header-item Snitt
+            .data-item= calc_score(60, @tee.par)
+
+    .row
+      .col-md-12
+        %h3
+        %table.table.table-hover
+          %tbody
+            %tr
+              %td Nr
+              - @holes.each do |h|
+                %td.text-center= h.number
+
+            %tr
+              %td Längd
+              - @holes.each do |h|
+                %td.text-center= "#{h.length} m"
+
+            - @rounds.each do |r|
+              %tr
+                %td
+                  = link_to "#{r.place} #{r.user.name}", user_path(r.user.id)
+
+                - r.scores.each do |s|
+                  %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+                %td= calc_score(r.total, r.tee.par)

@@ -1,8 +1,38 @@
-.col-md-12
-  .well.text-center
-    %h2 Välkommen #{current_user.name}!
-    = link_to "Användare", admin_users_path
-    = link_to "Klubbar", admin_clubs_path
-    = link_to "Tävlingar", admin_competitions_path
-    = link_to "Banor", admin_courses_path
-    = link_to "Tees", admin_tees_path
+.container
+  .row
+    .col-md-6
+      %h1
+        Kontrollpanel
+
+.row
+  .col-md-12
+    .row.step
+      = link_to admin_users_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-user
+          %p Användare
+
+      = link_to admin_clubs_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-home
+          %p Klubbar
+
+      = link_to admin_courses_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-tree-deciduous
+          %p Banor
+
+      = link_to admin_competitions_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-star
+          %p Tävlingar
+
+      = link_to admin_competitions_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-star-empty
+          %p Deltävlingar
+
+      = link_to admin_round_path do
+        .col-md-2
+          %i.glyphicon.glyphicon-heart
+          %p Rundor
