@@ -12,6 +12,10 @@ module ApplicationHelper
     return "#{score} (#{score - par})"
   end
 
+  def calc_to_par(score, par)
+    return score - par
+  end
+
   def get_score(score, par)
 
     if par == 3

@@ -1,19 +1,39 @@
 class TourPartsController < ApplicationController
   before_action :set_tour_part, only: [:show, :edit, :update, :destroy]
-
+  before_filter :stats
   # GET /tour_parts
   # GET /tour_parts.json
   def index
     @tour_parts = TourPart.all
   end
 
+  def stats
+    @stats ||= Stats::StatsCommon.new
+    @stats
+  end
+
   # GET /tour_parts/1
   # GET /tour_parts/1.json
   def show
     @tour_part = TourPart.find(params[:id])
+    @heading = @tour_part.name
     @tee = Tee.find(@tour_part.tee_id)
     @holes = Hole.where(tee_id: @tour_part.tee_id)
     @rounds = Round.where(tour_part_id: @tour_part.id).includes(:scores, :user, :holes, :tee)
+    @scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
+    @all_scores = Score.where(competition_id: @tour_part.competition_id).includes(:hole)
+    check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first
+    @headtohead = true if check
+    avg = stats.tour_part_round_stats(@tour_part.id) # gets average score for line graph
+    numbers = stats.holes(@holes) # gets the hole numbers
+    high = stats.high_low(@holes, @tour_part.id, "DESC") # gets the highest score for the tour_part
+    low = stats.high_low(@holes, @tour_part.id, "ASC") # gets the lowest score for the tour_part
+    res = stats.numbers(@scores) # gets the results for the tour_part (birdies, pars etc)
+    totals = stats.numbers(@all_scores) # gets the total results for the competition (birdies, pars etc)
+
+    @line_chart = stats.tour_part_line_chart(@tour_part, avg, low, high, numbers)
+    @pie_chart_part = stats.tour_part_pie_chart(res, @tour_part.name)
+    @pie_chart_total = stats.competition_pie_chart(totals, @tour_part.competition.name)
   end
 
   # GET /tour_parts/new
@@ -32,7 +52,7 @@ class TourPartsController < ApplicationController
 
     respond_to do |format|
       if @tour_part.save
-        format.html { redirect_to @tour_part, notice: 'Tour part was successfully created.' }
+        format.html { redirect_to admin_tours_path, notice: 'Tour part was successfully created.' }
         format.json { render :show, status: :created, location: @tour_part }
       else
         format.html { render :new }
@@ -73,6 +93,6 @@ class TourPartsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tour_part_params
-      params.require(:tour_part).permit(:name, :content, :course_id, :competition_id, :tee_id)
+      params.require(:tour_part).permit(:name, :content, :course_id, :competition_id, :tee_id, :date)
     end
 end

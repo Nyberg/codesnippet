@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.by_name
-    @clubs = Club.all
+    @users = User.by_name.includes(:club, :rounds)
+    @users = @users.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /users/1
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @club = Club.find(@user.club_id)
-    @rounds = Round.where(user_id: params[:id]).includes(:scores, :holes, :tee)
+    @rounds = Round.unscoped.where(user_id: params[:id]).includes(:scores, :holes, :tee).order("id DESC")
   end
 
   # GET /users/new
@@ -88,6 +88,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :club_id, :division, :pdga, :admin)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :club_id, :division, :pdga, :admin, :first_name, :last_name)
     end
 end

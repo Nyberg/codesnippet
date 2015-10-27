@@ -2,8 +2,11 @@
   .container
     .row
       .col-md-6
-        %h1= @round.user.name
-        %small= "#{@round.user.name} - #{@round.tour_part.name}"
+        %h1= "#{@user.name} | #{calc_score(@round.total, @round.tee.par)}"
+        %small
+          = link_to "#{@user.name} - ", user_path(@user)
+          = link_to "#{@round.tour_part.name} - ", tour_part_path(@round.tour_part)
+          = link_to @round.competition.name, competition_path(@round.competition)
 
     .row
       .col-md-12
@@ -14,15 +17,15 @@
 
             %tr
               %td Nr
-              - @round.tee.holes.each do |h|
+              - @holes.each do |h|
                 %td.text-center= h.number
 
             %tr
               %td Längd
-              - @round.tee.holes.each do |h|
+              - @holes.each do |h|
                 %td.text-center= "#{h.length} m"
               %tr
-                %td= @round.user.name
+                %td= @user.name
                 - @round.scores.each do |s|
                   %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
                 %td= calc_score(@round.total, @round.tee.par)

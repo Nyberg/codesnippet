@@ -1,11 +1,1 @@
-%header.masthead
-  .container
-    .row
-      .col-md-6
-        %h1= @competition.name
-        %small= "#{@competition.club.name} - #{@competition.title}"
-
-    .row
-      .col-md-6
-        - @competition.tour_parts.each do |t|
-          = link_to t.name, tour_part_path(t)
+= render :partial => 'competitions/partials/header', locals: {title: @page_title, heading: @heading}

@@ -1,0 +1,72 @@
+.container
+  .row
+    %h1.text-center.uppercase.headtohead Head to Head
+  .row
+    - @data.each do |d|
+      - d.each do |user|
+        .col-md-6.well
+          %h4.uppercase.text-center= user[:user][:name]
+          %p.text-center= user[:club]
+
+          .col-md-12
+            .panel.text-center
+              .col-md-6
+                %p.uppercase Score
+                %h4= user[:score]
+            .panel.text-center
+              .col-md-6
+                %p.uppercase Till par
+                %h4= calc_to_par(user[:score], user[:par])
+
+          .col-md-12
+            .panel.text-center
+              .col-md-4
+                %p Ace
+                %p= user[:results][:ace][:count]
+            .panel.text-center
+              .col-md-4
+                %p Eagle
+                %p= user[:results][:eagle][:count]
+            .panel.text-center
+              .col-md-4
+                %p Birdie
+                %p= user[:results][:birdie][:count]
+
+            .panel.text-center
+              .col-md-4
+                %p Par
+                %p= user[:results][:par][:count]
+            .panel.text-center
+              .col-md-4
+                %p Bogey
+                %p= user[:results][:bogey][:count]
+            .panel.text-center
+              .col-md-4
+                %p Övriga
+                %p= user[:results][:dblbogey][:count] + user[:results][:trpbogey][:count] + user[:results][:other][:count]
+
+  .row
+    .col-md-12
+      %h3
+      %table.table.table-hover
+        %tbody
+          %tr
+            %td Nr
+            - @holes.each do |h|
+              %td.text-center= h.number
+            %td
+          %tr
+            %td Längd
+            - @holes.each do |h|
+              %td.text-center= "#{h.length} m"
+            %td.text-center
+              = link_to (fa_icon "arrows-v"), statistics_headtohead_path(tour_part: @tour_part.id, user: @user.id, order: (@order == 'inverse' ? 'reverse' : 'inverse'))
+
+          - @rounds.each do |r|
+            %tr
+              %td
+                = link_to "#{r.place} #{r.user.name}", user_path(r.user.id)
+
+              - r.scores.each do |s|
+                %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+              %td= calc_score(r.total, r.tee.par)

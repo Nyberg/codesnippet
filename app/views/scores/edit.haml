@@ -1,0 +1,12 @@
+.row
+  .col-md-12
+    = form_tag scores_update_path, class: 'form-horizontal' do
+      .form-group
+        - @scores.each do |s|
+          = fields_for "scores[]", s do |f|
+            = f.label "Hål #{s.hole.number}", class: 'col-sm-1 control-label'
+            .col-sm-1
+              = f.text_field :score, class: 'form-control'
+
+      .form-group
+        = submit_tag :Spara, class: 'btn btn-sm btn-primary'

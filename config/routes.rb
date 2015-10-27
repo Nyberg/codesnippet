@@ -26,5 +26,13 @@ Rails.application.routes.draw do
   get '/admin/tees'         => 'admins#tees'
   get '/admin/user/new'     => 'admins#create_player'
   get '/admin/round'        => 'admins#rounds'
+  get '/admin/tours'        => 'admins#tours'
+  post '/scores/update'     => 'scores#update'
+
+  get '/competition/statistics' => 'competitions#statistics'
+  get '/competition/records' => 'competitions#records'
+  get '/statistics/headtohead/' => 'statistics#headtohead'
+
+  get 'stats'   => 'statistics#index'
 
 end

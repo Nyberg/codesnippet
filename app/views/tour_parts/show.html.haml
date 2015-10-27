@@ -2,7 +2,8 @@
   .container
     .row
       .col-md-12.text-center
-        %h1= "#{@tour_part.competition.name} - #{@tour_part.name}"
+        %h1
+          = link_to "#{@tour_part.competition.name} - #{@tour_part.name}", competition_path(@tour_part.competition_id)
         %h4= @tour_part.competition.club.name
     .row
       .col-sm-6.col-md-3.col-lg-3
@@ -59,4 +60,15 @@
 
                 - r.scores.each do |s|
                   %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
-                %td= calc_score(r.total, r.tee.par)
+                %td= link_to calc_score(r.total, r.tee.par),statistics_headtohead_path(tour_part: @tour_part.id, user: r.user_id) if @headtohead
+    .row
+      .col-md-12
+        %h3 Statistik
+    .row
+      .col-md-12#line_chart
+        = high_chart("line_chart", @line_chart)
+    .row
+      .col-md-6#pie_chart_part
+        = high_chart("pie_chart_part", @pie_chart_part)
+      .col-md-6#pie_chart_total
+        = high_chart("pie_chart_total", @pie_chart_total)

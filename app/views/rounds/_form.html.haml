@@ -17,11 +17,11 @@
     = f.number_field :place, placeholder: 'placering', class: 'form-control'
 
   = f.object.scores.each do |s|
-    .col-md-1
+    .col-md-2
       = f.fields_for "s_ids[]", s do |score_form|
+        = "Hål: #{s.hole.number}"
         = score_form.number_field :score, class: 'form-control'
         = score_form.check_box :ob, class: 'checkbox'
-
 
   .form-group
     = f.submit :Spara, class: 'btn btn-sm btn-primary'

@@ -18,6 +18,10 @@ class AdminsController < ApplicationController
     @competitions = Competition.all
   end
 
+  def tours
+    @tour_parts = TourPart.all
+  end
+
   def courses
     @courses = Course.by_name
   end
@@ -27,7 +31,7 @@ class AdminsController < ApplicationController
   end
 
   def rounds
-    @rounds = Round.all
+    @tour_parts = TourPart.all.includes(:rounds).order("date DESC")
   end
 
 end

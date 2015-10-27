@@ -1,16 +1,81 @@
 class CompetitionsController < ApplicationController
   before_action :set_competition, only: [:show, :edit, :update, :destroy]
-
+  before_filter :stats
+  require 'set'
   # GET /competitions
   # GET /competitions.json
   def index
     @competitions = Competition.all
   end
 
+  def stats
+    @stats ||= Stats::StatsCommon.new
+    @stats
+  end
+
   # GET /competitions/1
   # GET /competitions/1.json
   def show
     @competition = Competition.find(params[:id])
+    @page_title = "Startsida"
+    @heading = @competition.name
+
+    if @competition.tour_parts.count == 1
+      tour = TourPart.where(competition_id: @competition.id).first
+      redirect_to tour_part_path(tour.id)
+    end
+  end
+
+  def records
+    @page_title = "Rekordrundor"
+    @heading = "Rekordrundor"
+    @competition = Competition.find(params[:id])
+    @tees = Tee.where(id: @competition.tour_parts.uniq).includes(:rounds, :holes)
+    rounds = Round.bogeyfree_rounds(@competition.id)
+    @bogeyfrees = []
+    rounds.each do |round|
+      data = round.result.split(',')
+      if data.include?("bogey" || "dblbogey" || "trpbogey" || "other")
+      else
+        @bogeyfrees << round
+      end
+    end
+  end
+
+  def statistics
+    @page_title = "Statistik"
+    @heading = "Statistik"
+    @competition = Competition.find(params[:id])
+    @all_scores = Score.where(competition_id: params[:id]).includes(:hole)
+
+    tees = []
+
+    @competition.tour_parts.each do |tour|
+      tees << Tee.where(id: tour.tee_id).first
+    end
+    @tees = tees.uniq
+
+    avg = []
+    numbers = []
+    totals = []
+    @line_charts = []
+    @pie_charts = []
+
+    @tees.each do |tee|
+      avg = []
+      numbers = []
+      totals = []
+      avg = stats.competition_round_stats(@competition.id, tee.id) # gets average score for line graph
+      numbers = stats.holes(tee.holes) # gets the hole numbers
+      round = Round.where(competition_id: @competition.id, tee_id: tee.id, place: 1).order("total ASC").limit(1) # gets the lowest score for the competition
+      low = stats.competition_high_low(round)
+      @line_charts << stats.competition_line_chart(@competition, avg, numbers, tee.color, low)
+      scores = Score.where(competition_id: @competition.id).where(tee_id: tee.id).includes(:hole)
+      totals = stats.numbers(scores)
+      @pie_charts << stats.competition_pie_chart(totals, "Resultat #{tee.color} tee")
+    end
+    all_totals = stats.numbers(@all_scores) # gets the total results for the competition (birdies, pars etc)
+    @pie_chart_total = stats.competition_pie_chart(all_totals, "Totalt för #{@competition.name}")
   end
 
   # GET /competitions/new

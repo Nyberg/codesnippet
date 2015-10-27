@@ -10,6 +10,9 @@ class RoundsController < ApplicationController
   # GET /rounds/1
   # GET /rounds/1.json
   def show
+    @round = Round.where(id: params[:id]).includes(:holes, :tour_part, :competition, :scores, :tee).first
+    @user = User.where(id: @round.user_id).first
+    @holes = Hole.where(tee_id: @round.tee_id)
   end
 
   # GET /rounds/new
@@ -29,10 +32,12 @@ class RoundsController < ApplicationController
 
     @round.tee_id = tour_part.tee_id
     @round.course_id = tour_part.course_id
+    @round.competition_id = tour_part.competition_id
 
     respond_to do |format|
       if @round.save
-        format.html { redirect_to admin_round_path, notice: 'Round was successfully created.' }
+        User.where(id: @round.user_id).first.increment!(:rounds_count)
+        format.html { redirect_to edit_score_path(@round.id), notice: 'Round was successfully created.' }
         format.json { render :show, status: :created, location: @round }
       else
         format.html { render :new }
@@ -58,6 +63,7 @@ class RoundsController < ApplicationController
   # DELETE /rounds/1
   # DELETE /rounds/1.json
   def destroy
+    User.where(id: @round.user_id).first.decrement(:rounds_count, 1)
     @round.destroy
     respond_to do |format|
       format.html { redirect_to admin_round_path, notice: 'Round was successfully destroyed.' }

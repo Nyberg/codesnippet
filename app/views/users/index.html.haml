@@ -4,7 +4,6 @@
       .col-md-6
         %h1
           Spelare
-          %p.lead Nedan visas #{@users.count} användare
 
     .row
       .col-md-12
@@ -19,9 +18,14 @@
           %tbody
             - @users.each do |u|
               %tr
-                %td= u.name
+                %td
+                  = link_to u.name, user_path(u)
                 %td= u.club.name
                 %td
                   = "##{u.pdga}" unless blank?
                 %td= u.division
-                %td 10
+                %td= u.rounds_count
+
+    .row.text-center
+      .col-md-12
+        = will_paginate @users

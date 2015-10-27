@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-md-4
+      %h1= @heading
+      %h4= @competition.club.name
+
+
+    .col-md-8#leftCol
+      %ul.nav.nav-tabs.pull-right
+        %li
+          = link_to (fa_icon "home", text: "Startsida"), competition_path(@competition), class: (title == "Startsida" ? 'active' : '')
+        %li
+          = link_to (fa_icon "trophy", text: "Totalställning"), "#"
+        %li
+          = link_to (fa_icon "bullseye", text: "Rekordrundor"), competition_records_path(id: @competition.id), class: (title == "Rekordrundor" ? 'active' : '')
+        %li
+          = link_to (fa_icon "area-chart", text: "Statistik"), competition_statistics_path(id: @competition.id), class: (title == "Statistik" ? 'active' : '')
