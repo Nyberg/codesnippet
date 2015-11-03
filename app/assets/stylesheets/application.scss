@@ -24,12 +24,12 @@
 .height {
     min-height: 200px;
 }
-
 /* end */
 
 /* custom theme + Bootstrap resets */
 /*@import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');*/
 @import url('https://fonts.googleapis.com/css?family=Asap');
+@import url('https://fonts.googleapis.com/css?family=Cookie');
 
 .nav-tabs > li > a.active{
 	color: #fff;
@@ -40,8 +40,46 @@
 	text-transform: uppercase;
 }
 
+.event{
+	min-height: 100px;
+	border-left: 5px solid #24CCA9;
+}
+
+.event li {
+	display: block;
+	list-style: none;
+}
+
+.event li:first-child{
+	padding-top: 15px;
+	padding-bottom: 0;
+}
+
+.event li:last-child{
+}
+
+.padding-icon{
+	padding: 10px 0 20px 10px;
+	margin: 10px 0 10px 0;
+}
+
+
+.event i{
+	color: #616161;
+}
+
+.spacing{
+	margin-top: 20px;
+}
+
+.info{
+	margin-top: 20px;
+	padding:5px;
+	border-left: 5px solid #24CCA9;
+}
+
 .headtohead{
-	color: #fcde07;
+	color: #24CCA9;
 }
 
 .ob{
@@ -109,15 +147,42 @@ h1{
       position:static;
 }
 
+#admin i {
+	color: #616161;
+}
+
+#admin a:visited{
+	color: #616161 !important;
+}
+
 body {
   font-family: 'Asap',Sans-Serif;
   font-weight:300;
   color:#616161;
-  background-color:#fff;
+  background-color:#f6f6f6;
+	min-height: 700px;
+}
+
+.footer{
+	width: 100%;
+	height: 120px;
+	background-color: #24CCA9;
+	border-top: 1px solid #616161;
+	padding: 40px 15px 35px;
+	color: #ffffff;
+}
+
+.footer p, a{
+	padding: 18px 0;
+	text-align: right;
+}
+
+.white{
+	background-color: #ffffff;
 }
 
 a,a:hover, a:visited {
-	color:#404040;
+	color:#616161;
   text-decoration:none;
 }
 
@@ -138,28 +203,45 @@ h3.highlight  {
 }
 
 .navbar-header a{
-	color:#2B8080;
+	color:#616161;
 	font-size: 1.3em;
 	font-weight: 400;
-	padding: 23px;
+	padding-top: 23px;
+	height: 70px;
 	text-transform: uppercase;
+	margin-left: 3%;
+
+}
+
+.navbar-brand a {
+	color: #fff;
+	font-size: 2.2em;
+	font-family: 'Cookie', Serif;
+}
+
+.navbar-brand a:hover{
+	color: #616161;
+	background-color: #24CCA9;
 }
 
 .navbar {
-	background-color: #ffffff;
-	color:#24CCA9;
+	background-color: #24CCA9;
+	color:#fff;
 	border-radius:0;
-	height: 70px;
-	border-bottom: 3px solid #24CCA9;
+	margin-bottom: 0px;
+	padding: 10px 0;
 }
 .navbar-nav > li > a {
-  	color:#24CCA9;
-  	padding:23px;
+  	color:#fff;
 		border: none;
-		font-size: .85em;
+		height: 50px;
+		font-size: .9em;
 		text-transform: uppercase;
 		font-weight: 400;
+		padding-left: 0px;
+		padding-right: 20px;
 }
+
 .navbar-nav > li:last-child > a {
 	border: none;
 }
@@ -167,10 +249,6 @@ h3.highlight  {
 .navbar-nav li a:hover {
 		color: #fff;
 		background-color: #24CCA9;
-}
-
-.navbar-nav li a:active {
-	border-bottom: 4px solid #FF8800;
 }
 
 .navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
@@ -217,13 +295,6 @@ h3.highlight  {
 
 .accordion-heading .accordion-toggle, .accordion-inner, .nav-stacked li > a {
 	padding-left:1px;
-}
-
-footer {
-	height:50px;
-  	background-color:#dfdfdf;
-  	color:#888;
-  	margin-top:20px;
 }
 
 @media (min-width: 992px) {
@@ -315,6 +386,7 @@ footer {
 .account-wall
 {
     margin-top: 20px;
+		margin-bottom: 20px;
     padding: 40px 0px 20px 0px;
     background-color: #f7f7f7;
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
@@ -362,18 +434,20 @@ footer {
 }
 
 .signin-button{
-	background-color: #FF5500;
-	background-image: linear-gradient(to left, #FB9C44, #FF5500);
+	background-color: #24CCA9;
 	color:#ffffff;
 	border: none;
 }
 
 .btn-primary {
-	background-color: #FB9C44;
-	background-image: linear-gradient(to left, #FB9C44, #FF5500);
+	background-color: #24CCA9;
 	color:#ffffff;
-	border-radius:2;
-	border: none;
+	border: 1px solid #24CCA9;
+}
+
+.btn a, a:hover{
+	background-color: #fff;
+	color: #24CCA9;
 }
 
 .step{

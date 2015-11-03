@@ -1,5 +1,5 @@
 .container
-  .row
+  .row.spacing
     .col-md-4
       %h1= @heading
       %h4= @competition.club.name
@@ -10,7 +10,7 @@
         %li
           = link_to (fa_icon "home", text: "Startsida"), competition_path(@competition), class: (title == "Startsida" ? 'active' : '')
         %li
-          = link_to (fa_icon "trophy", text: "Totalställning"), "#"
+          = link_to (fa_icon "trophy", text: "Totalställning"), competition_totals_path(id: @competition.id), class: (title == "Totalställning" ? 'active' : '')
         %li
           = link_to (fa_icon "bullseye", text: "Rekordrundor"), competition_records_path(id: @competition.id), class: (title == "Rekordrundor" ? 'active' : '')
         %li

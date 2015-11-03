@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get '/competition/statistics' => 'competitions#statistics'
   get '/competition/records' => 'competitions#records'
   get '/statistics/headtohead/' => 'statistics#headtohead'
+  get '/competition/totals' => 'competitions#totals'
+  get '/tour_part_line_chart' => 'tour_parts#line_chart'
 
   get 'stats'   => 'statistics#index'
 

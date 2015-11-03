@@ -1,1 +1,36 @@
 = render :partial => 'competitions/partials/header', locals: {title: @page_title, heading: @heading}
+
+.container
+  .row.spacing
+    .col-md-12
+      %p= @competition.title
+  .row
+    .col-md-7
+      %h2.highlight Deltävlingar
+      %table.table.table-hover
+        %thead
+          %th Namn
+          %th Datum
+          %th Bana
+          %th Spelare
+        %tbody
+          - @tour_parts.each do |tour|
+            %tr{data: {href: tour_part_path(tour)}}
+              %td= link_to tour.name, tour_part_path(tour)
+              %td= tour.date.strftime("%Y-%m-%d")
+              %td= "#{tour.course.name} - #{tour.tee.color}"
+              %td= tour.rounds.count
+
+    .col-md-5
+      %h2.highlight Banor
+      %table.table.table-hover
+        %thead
+          %th Bana
+          %th Tee
+          %th Par
+        %tbody
+          - @tees.each do |tee|
+            %tr
+              %td= link_to tee.course.name, course_path(tee.course)
+              %td= tee.color
+              %td= tee.par

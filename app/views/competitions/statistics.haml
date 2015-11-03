@@ -1,12 +1,15 @@
 = render :partial => 'competitions/partials/header', locals: {title: @page_title}
+
 .container
-  .row
+  .row.spacing
     .col-md-12
       - @line_charts.each_with_index do |line, index|
         .col-md-6{id: "line_chart_#{index}"}
           = high_chart("line_chart_#{index}", line)
+  .row.spacing
+    .col-md-12
       - @pie_charts.each_with_index do |pie, index|
         .col-md-4{id: "pie_chart_#{index}"}
           = high_chart("pie_chart_#{index}", pie)
-      .col-md-4#all_totals
-        = high_chart("all_totals", @pie_chart_total)
+        .col-md-4#all_totals
+          = high_chart("all_totals", @pie_chart_total)

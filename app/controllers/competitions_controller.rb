@@ -6,6 +6,10 @@ class CompetitionsController < ApplicationController
   # GET /competitions.json
   def index
     @competitions = Competition.all
+    @search = params[:term] || nil
+    if @search
+      @competitions = Competition.search(@search)
+    end
   end
 
   def stats
@@ -16,14 +20,21 @@ class CompetitionsController < ApplicationController
   # GET /competitions/1
   # GET /competitions/1.json
   def show
-    @competition = Competition.find(params[:id])
+    @competition = Competition.where(id: params[:id]).first
     @page_title = "Startsida"
-    @heading = @competition.name
-
     if @competition.tour_parts.count == 1
       tour = TourPart.where(competition_id: @competition.id).first
       redirect_to tour_part_path(tour.id)
     end
+
+    @heading = @competition.name
+    @tour_parts = TourPart.where(competition_id: params[:id]).order("date DESC").includes(:course, :tee, :rounds)
+    @tees = []
+
+    @tour_parts.each do |tour|
+      @tees << tour.tee
+    end
+    @tees = @tees.uniq(&:id)
   end
 
   def records
@@ -40,6 +51,13 @@ class CompetitionsController < ApplicationController
         @bogeyfrees << round
       end
     end
+  end
+
+  def totals
+    @page_title = "Totalställning"
+    @heading = "Totalställning"
+    @competition = Competition.find(params[:id])
+    @users = Round.competition_players(params[:id])
   end
 
   def statistics

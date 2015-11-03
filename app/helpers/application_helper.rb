@@ -12,6 +12,11 @@ module ApplicationHelper
     return "#{score} (#{score - par})"
   end
 
+  def calc_total_score(score, players, par)
+    data = score/players
+    return "#{data} (#{data - par})"
+  end
+
   def calc_to_par(score, par)
     return score - par
   end

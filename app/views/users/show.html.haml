@@ -1,6 +1,6 @@
 %header.masthead
   .container
-    .row
+    .row.spacing
       .col-md-6
         %h1= @user.name
         %p.lead= @user.pdga.blank? ? @club.name : "##{@user.pdga} | #{@club.name}"

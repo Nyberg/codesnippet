@@ -18,6 +18,15 @@ class Round < ActiveRecord::Base
     group("rounds.id")
   }
 
+  scope :competition_players, -> (id) {
+    select("u.name, COUNT(rounds.id) as rounds_count, c.name as club_name").
+    joins("INNER JOIN users u on rounds.user_id = u.id").
+    joins("INNER JOIN clubs c on u.club_id = c.id").
+    where("rounds.competition_id = #{id}").
+    group("u.id").
+    order("u.name")
+  }
+
   after_create :build_scores
 
  def build_scores

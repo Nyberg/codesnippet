@@ -8,31 +8,38 @@
     = csrf_meta_tags
 
   %body
-    %nav.navbar.navbar-static
+    %nav.navbar.navbar-static-top
       .container
-        .navbar-header
-          = link_to "Chainnation", "/", class: "navbar-brand"
+        .navbar-brand
+          = link_to "dgstats", "/"
         .navbar-collapse.collapse
-          %ul.nav.navbar-nav
+          %ul.nav.navbar-right.navbar-nav
             %li
-              = link_to "Tävlingar", "/"
-            %li
-              = link_to "Kommande Tävlingar", "/"
+              = link_to "Tävlingar", competitions_path
             %li
               = link_to "Spelare", users_path
-
-          %ul.nav.navbar-right.navbar-nav
-            - if logged_in?
+            - if current_user
               %li
-                = link_to "", user_path(current_user), class: "glyphicon glyphicon-user"
-              - if current_user.admin?
-                %li
-                  = link_to "", admin_path, class: "glyphicon glyphicon-cog"
+                = link_to (fa_icon "cog"), admin_path
               %li
-                = link_to "", logout_path, method: :delete, class: "glyphicon glyphicon-log-out"
+                = link_to (fa_icon "user"), user_path(current_user)
             - else
               %li
-                = link_to "", login_path, class: "glyphicon glyphicon-log-in"
+                = link_to "Logga in", sessions_new_path
+
+
+          -# %ul.nav.navbar-right.navbar-nav
+          -#   - if logged_in?
+          -#     %li
+          -#       = link_to "", user_path(current_user), class: "glyphicon glyphicon-user"
+          -#     - if current_user.admin?
+          -#       %li
+          -#         = link_to "", admin_path, class: "glyphicon glyphicon-cog"
+          -#     %li
+          -#       = link_to "", logout_path, method: :delete, class: "glyphicon glyphicon-log-out"
+          -#   - else
+          -#     %li
+          -#       = link_to "", login_path, class: "glyphicon glyphicon-log-in"
 
     .container
       .no-gutter.row
@@ -42,5 +49,9 @@
         - if alert
           .alert.alert-danger
             = alert
-
+    .container.white
+      .row
         = yield
+
+    %footer.footer
+      = render :partial => 'layouts/footer'

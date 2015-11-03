@@ -22,18 +22,8 @@ class TourPartsController < ApplicationController
     @rounds = Round.where(tour_part_id: @tour_part.id).includes(:scores, :user, :holes, :tee)
     @scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
     @all_scores = Score.where(competition_id: @tour_part.competition_id).includes(:hole)
-    check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first
+    check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first if current_user
     @headtohead = true if check
-    avg = stats.tour_part_round_stats(@tour_part.id) # gets average score for line graph
-    numbers = stats.holes(@holes) # gets the hole numbers
-    high = stats.high_low(@holes, @tour_part.id, "DESC") # gets the highest score for the tour_part
-    low = stats.high_low(@holes, @tour_part.id, "ASC") # gets the lowest score for the tour_part
-    res = stats.numbers(@scores) # gets the results for the tour_part (birdies, pars etc)
-    totals = stats.numbers(@all_scores) # gets the total results for the competition (birdies, pars etc)
-
-    @line_chart = stats.tour_part_line_chart(@tour_part, avg, low, high, numbers)
-    @pie_chart_part = stats.tour_part_pie_chart(res, @tour_part.name)
-    @pie_chart_total = stats.competition_pie_chart(totals, @tour_part.competition.name)
   end
 
   # GET /tour_parts/new

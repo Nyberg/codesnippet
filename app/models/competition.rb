@@ -5,5 +5,6 @@ class Competition < ActiveRecord::Base
 
   scope :by_name, -> {order(name: :asc)}
   scope :latest, -> {order(updated_at: :desc)}
+  scope :search, -> (term) { where("name LIKE '%#{term}%'") }
 
 end

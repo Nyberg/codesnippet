@@ -1,74 +1,64 @@
 %header.masthead
   .container
-    .row
-      .col-md-12.text-center
-        %h1
-          = link_to "#{@tour_part.competition.name} - #{@tour_part.name}", competition_path(@tour_part.competition_id)
+    .row.spacing
+      .col-md-8
+        %h1= "#{@tour_part.competition.name} - #{@tour_part.name}"
         %h4= @tour_part.competition.club.name
-    .row
-      .col-sm-6.col-md-3.col-lg-3
-        .panel.text-center
-          .col-md-6.stats-item{style: "background-color: #fcde07"}
-            %a.glyphicon.glyphicon-calendar.bigicon
-          .col-md-6.stats-item{style: "background-color: #4a4a49"}
-            .header-item Datum
-            .data-item= @tour_part.date.strftime("%Y-%m-%-d")
+      .col-md-4.info
+        .col-md-6
+          %p
+            Datum:
+            %strong= @tour_part.date.strftime("%Y-%m-%-d")
+        .col-md-6
+          %p
+            Spelare:
+            %strong= @rounds.count
+        .col-md-6
+          %p
+            Bana:
+            %strong= "#{@tour_part.course.name} #{@tee.color}"
+        .col-md-6
+          %p
+            Snitt:
+            %strong= calc_total_score(@scores.map(&:score).inject(:+), @rounds.count, @tee.par)
+.container
+  .row.spacing
+    .col-md-12
+      %h3
+      %table.table.table-hover
+        %tbody
+          %tr
+            %td Nr
+            - @holes.each do |h|
+              %td.text-center= h.number
 
-      .col-sm-6.col-md-3.col-lg-3
-        .panel.text-center
-          .col-md-6.stats-item{style: "background-color: #fcde07"}
-            %a.glyphicon.glyphicon-user.bigicon
-          .col-md-6.stats-item{style: "background-color: #4a4a49"}
-            .header-item Spelare
-            .data-item= @rounds.count
+          %tr
+            %td Längd
+            - @holes.each do |h|
+              %td.text-center= "#{h.length} m"
 
-      .col-sm-6.col-md-3.col-lg-3
-        .panel.text-center
-          .col-md-6.stats-item{style: "background-color: #fcde07"}
-            %a.glyphicon.glyphicon-info-sign.bigicon
-          .col-md-6.stats-item{style: "background-color: #4a4a49"}
-            .header-item= @tour_part.course.name
-            .data-item= @tee.color
-
-      .col-sm-6.col-md-3.col-lg-3
-        .panel.text-center
-          .col-md-6.stats-item{style: "background-color: #fcde07"}
-            %a.glyphicon.glyphicon-equalizer.bigicon
-          .col-md-6.stats-item{style: "background-color: #4a4a49"}
-            .header-item Snitt
-            .data-item= calc_score(60, @tee.par)
-
-    .row
-      .col-md-12
-        %h3
-        %table.table.table-hover
-          %tbody
+          - @rounds.each do |r|
             %tr
-              %td Nr
-              - @holes.each do |h|
-                %td.text-center= h.number
+              %td
+                = link_to "#{r.place} #{r.user.name}", user_path(r.user.id)
 
-            %tr
-              %td Längd
-              - @holes.each do |h|
-                %td.text-center= "#{h.length} m"
+              - r.scores.each do |s|
+                %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+              - if @headtohead
+                %td= link_to calc_score(r.total, @tee.par), statistics_headtohead_path(tour_part: @tour_part.id, user: r.user_id)
+              - else
+                %td= calc_score(r.total, @tee.par)
 
-            - @rounds.each do |r|
-              %tr
-                %td
-                  = link_to "#{r.place} #{r.user.name}", user_path(r.user.id)
-
-                - r.scores.each do |s|
-                  %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
-                %td= link_to calc_score(r.total, r.tee.par),statistics_headtohead_path(tour_part: @tour_part.id, user: r.user_id) if @headtohead
-    .row
-      .col-md-12
-        %h3 Statistik
-    .row
+  .row
+    .col-md-12
+      %h1 Statistik
+  .row
+    .col-md-12
       .col-md-12#line_chart
-        = high_chart("line_chart", @line_chart)
-    .row
+        = high_chart("line_chart", @stats.get_tour_part_line_chart(@tour_part, @scores, @holes, @all_scores, @headtohead, current_user.id))
+  .row
+    .col-md-12
       .col-md-6#pie_chart_part
-        = high_chart("pie_chart_part", @pie_chart_part)
+        = high_chart("pie_chart_part", @stats.get_tour_part_part_pie(@tour_part.name, @scores))
       .col-md-6#pie_chart_total
-        = high_chart("pie_chart_total", @pie_chart_total)
+        = high_chart("pie_chart_total", @stats.get_tour_part_total_pie(@tour_part.competition.name, @all_scores))

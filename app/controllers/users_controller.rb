@@ -4,8 +4,15 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.by_name.includes(:club, :rounds)
-    @users = @users.paginate(:page => params[:page], :per_page => 10)
+    @search = params[:term] || nil
+
+    if @search
+      @users = User.clubs.search(@search).by_name
+      @users = @users.paginate(:page => params[:page], :per_page => 10)
+    else
+      @users = User.by_name.includes(:club, :rounds)
+      @users = @users.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   # GET /users/1
