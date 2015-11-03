@@ -6,6 +6,10 @@ gem 'rails', '4.2.1'
 gem 'bcrypt',               '3.1.7'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'tinymce-rails'
+gem 'lazy_high_charts' #highcharts
+gem 'font-awesome-rails'
+gem 'will_paginate', '~> 3.0.6'
+gem 'rails_12factor', group: :production
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'mysql2'
@@ -33,7 +37,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

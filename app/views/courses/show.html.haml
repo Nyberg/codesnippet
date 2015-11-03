@@ -1,0 +1,25 @@
+.container
+  .row.spacing
+    .col-md-6
+      %h1= @course.name
+
+    -# - @tees.each do |t|
+    -#   .row
+    -#     .col-md-12
+    -#       %table.table.table-striped
+    -#         %tbody
+    -#           %tr
+    -#             %td= t.color
+    -#             %td= "Par #{t.par}"
+    -#           %tr
+    -#             %td Nr (par)
+    -#             - t.holes.each do |h|
+    -#               %td= h.number
+    -#           %tr
+    -#             %td Längd
+    -#             - t.holes.each do |h|
+    -#               %td= "#{h.length} m"
+    -#           %tr
+    -#             %td Par
+    -#             - t.holes.each do |h|
+    -#               %td= h.par

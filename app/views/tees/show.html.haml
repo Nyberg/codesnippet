@@ -1,0 +1,26 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          = @tee.color
+        %p.lead
+          = @tee.course.name
+        = link_to "Nytt hål", new_hole_path
+
+    .row
+      .col-md-12
+        - if @tee.holes.present?
+          %table.table.table-hover
+            %thead
+              %th Nummer
+              %th Par
+              %th Längd
+              %th Actions
+            %tbody
+              - @tee.holes.each do |h|
+                %tr
+                  %td= h.number
+                  %td= h.par
+                  %td= "#{h.length} m"
+                  %td= link_to "", edit_hole_path(h), class: 'glyphicon glyphicon-pencil'

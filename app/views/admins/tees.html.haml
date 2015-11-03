@@ -1,0 +1,26 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Teepads
+          %p.lead Nedan visas #{@tees.count} teepads
+        = link_to "Ny tee", new_tee_path, class: "btn btn-primary btn-sm"
+
+
+.col-md-12
+  %table.table.table-hover
+    %thead
+      %th Färg
+      %th Bana
+      %th Antal hål
+      %th Actions
+    %tbody
+      - @tees.each do |t|
+        %tr
+          %td= link_to t.color, tee_path(t)
+          %td= t.course.name
+          %td= t.holes.count
+          %td
+            = link_to "", edit_tee_path(t), class: "glyphicon glyphicon-pencil"
+            = link_to "", new_hole_path, class: "glyphicon glyphicon-plus"

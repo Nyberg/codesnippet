@@ -4,14 +4,23 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-    @clubs = Club.all
+    @search = params[:term] || nil
+
+    if @search
+      @users = User.clubs.search(@search).by_name
+      @users = @users.paginate(:page => params[:page], :per_page => 10)
+    else
+      @users = User.by_name.includes(:club, :rounds)
+      @users = @users.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @club = Club.find(@user.club_id)
+    @rounds = Round.unscoped.where(user_id: params[:id]).includes(:scores, :holes, :tee).order("id DESC")
   end
 
   # GET /users/new
@@ -86,6 +95,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :club_id)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :club_id, :division, :pdga, :admin, :first_name, :last_name)
     end
 end

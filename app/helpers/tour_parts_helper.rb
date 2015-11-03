@@ -1,0 +1,2 @@
+module TourPartsHelper
+end

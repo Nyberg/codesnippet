@@ -1,5 +1,11 @@
 class User < ActiveRecord::Base
 belongs_to :club
+has_many :rounds
+has_many :scores
+
+	scope :by_name, -> {order(name: :asc)}
+	scope :clubs, -> { joins("INNER JOIN clubs c on users.club_id = c.id ")}
+	scope :search, -> (term) { where("users.first_name LIKE ? or users.last_name LIKE ? or users.name LIKE ? or users.pdga LIKE ? or c.name LIKE ?", *(["%#{term}%"]*5)) }
 
 	attr_accessor :remember_token
 

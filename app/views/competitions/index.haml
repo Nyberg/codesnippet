@@ -1,0 +1,29 @@
+%header.masthead
+  .container
+    .row.spacing
+      .col-md-8
+        %h1 Tävlingar
+        - if @search
+          %p
+            = "Visar sökresultat för '#{@search}' - "
+            = link_to "Visa alla", competitions_path
+      .col-md-4
+        .input-group.middle
+          = form_tag competitions_path, method: :get do
+            = text_field_tag :term, @search, size: 32, placeholder: "Sök tävlingar..", class: "form-control"
+          %span.input-group-btn
+            = submit_tag "Sök", type: "button", class: "btn btn-primary"
+    .row
+      - @competitions.each do |comp|
+        .col-md-4
+          .event
+            .col-md-3
+              = fa_icon "trophy", class: "fa-4x padding-icon"
+            .col-md-9
+              %ul
+                %li
+                  %h5
+                    = link_to comp.name, competition_path(comp.id)
+                %li= fa_icon "calendar", class: "fa-1x", text: comp.date.strftime("%Y-%m-%d")
+    .row
+      .col-md-12

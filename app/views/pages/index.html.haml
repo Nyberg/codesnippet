@@ -1,11 +1,24 @@
 %header.masthead
   .container
+    .row.spacing
+      .col-md-12
+        .col-md-6
+          %h1
+            dgstats
+            %p.lead
+              Statistik för Svenska Discgolftävlingar
     .row
-      .col-md-6
-        %h1
-          Chainnation
-          %p.lead
-            Statistik för Svenska Discgolftävlingar
-
-      .col-md-6
-        .well.pull-right
+      .col-md-12
+        .col-md-12
+          %h1 Senaste Tävlingar
+        - @competitions.each do |comp|
+          .col-md-4
+            .event
+              .col-md-3
+                = fa_icon "trophy", class: "fa-4x padding-icon"
+              .col-md-9
+                %ul
+                  %li
+                    %h5
+                      = link_to comp.name, competition_path(comp.id)
+                  %li= fa_icon "calendar", class: "fa-1x", text: comp.date.strftime("%Y-%m-%d")

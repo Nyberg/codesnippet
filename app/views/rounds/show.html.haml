@@ -1,0 +1,31 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1= "#{@user.name} | #{calc_score(@round.total, @round.tee.par)}"
+        %small
+          = link_to "#{@user.name} - ", user_path(@user)
+          = link_to "#{@round.tour_part.name} - ", tour_part_path(@round.tour_part)
+          = link_to @round.competition.name, competition_path(@round.competition)
+
+    .row
+      .col-md-12
+        %h3
+        %table.table.table-hover
+          %tbody
+            %tr
+
+            %tr
+              %td Nr
+              - @holes.each do |h|
+                %td.text-center= h.number
+
+            %tr
+              %td Längd
+              - @holes.each do |h|
+                %td.text-center= "#{h.length} m"
+              %tr
+                %td= @user.name
+                - @round.scores.each do |s|
+                  %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+                %td= calc_score(@round.total, @round.tee.par)

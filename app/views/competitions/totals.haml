@@ -1,0 +1,17 @@
+= render :partial => 'competitions/partials/header', locals: {title: @page_title, heading: @heading}
+
+.container
+  .row
+    .col-md-5
+      %h2.highlight Spelare
+      %table.table.table-hover
+        %thead
+          %th Namn
+          %th Klubb
+          %th Deltävlingar
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.name
+              %td= user.club_name
+              %td= user.rounds_count

@@ -1,0 +1,21 @@
+%header.masthead
+  .container
+    .row
+      .col-md-6
+        %h1
+          Tävlingar
+          %p.lead Nedan visas #{@competitions.count} tävlingar
+        = link_to "Ny tävling", new_competition_path
+
+
+.col-md-12
+  %table.table.table-hover
+    %thead
+      %th Namn
+      %th
+    %tbody
+      - @competitions.each do |u|
+        %tr
+          %td= u.name
+          %td
+            = link_to "", edit_competition_path(u), class: "glyphicon glyphicon-pencil"

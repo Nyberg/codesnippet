@@ -1,0 +1,27 @@
+= render :partial => 'competitions/partials/header', locals: {title: @page_title, heading: @heading}
+
+.container
+  - @tees.each do |tee|
+    .row.spacing
+      .col-md-12
+        %p.text-center= "Rekordrundor #{tee.color} tee"
+        %table.table.table-hover
+          %tbody
+            %tr
+              %td Nr
+              - tee.holes.each do |h|
+                %td= h.number
+            %tr
+              %td Längd
+              - tee.holes.each do |h|
+                %td= h.length
+
+            %tr
+              - tee.rounds.limit(20).each do |r|
+                %tr
+                  %td
+                    = link_to r.user.name, user_path(r.user.id)
+
+                  - r.scores.each do |s|
+                    %td{class: "#{s.result} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+                  %td= calc_score(r.total, r.tee.par)

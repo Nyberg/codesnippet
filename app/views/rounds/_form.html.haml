@@ -1,0 +1,27 @@
+= form_for(@round) do |f|
+  -if @round.errors.any?
+    .error_explanation
+      %ul
+        = @round.errors.full_messages.each do |message|
+          %li= message
+
+  .form-group
+    = f.collection_select(:user_id, User.by_name, :id, :name, class: 'form-control')
+  .form-group
+    = f.collection_select(:competition_id, Competition.by_name, :id, :name, class: 'form-control')
+  .form-group
+    = f.collection_select(:tour_part_id, TourPart.all, :id, :name, class: 'form-control')
+  .form-group
+    = f.number_field :total, placeholder: 'resultat', class: 'form-control'
+  .form-group
+    = f.number_field :place, placeholder: 'placering', class: 'form-control'
+
+  = f.object.scores.each do |s|
+    .col-md-2
+      = f.fields_for "s_ids[]", s do |score_form|
+        = "Hål: #{s.hole.number}"
+        = score_form.number_field :score, class: 'form-control'
+        = score_form.check_box :ob, class: 'checkbox'
+
+  .form-group
+    = f.submit :Spara, class: 'btn btn-sm btn-primary'
