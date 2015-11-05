@@ -6,7 +6,6 @@ class CreateCompetitions < ActiveRecord::Migration
       t.text :content
       t.integer :club_id
       t.timestamp :date
-
       t.timestamps null: false
     end
   end

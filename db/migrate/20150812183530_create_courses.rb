@@ -5,7 +5,6 @@ class CreateCourses < ActiveRecord::Migration
       t.text :content
       t.integer :club_id
       t.integer :holes
-
       t.timestamps null: false
     end
   end

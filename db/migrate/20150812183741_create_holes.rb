@@ -6,7 +6,6 @@ class CreateHoles < ActiveRecord::Migration
       t.integer :par
       t.integer :length
       t.integer :tee_id
-
       t.timestamps null: false
     end
   end

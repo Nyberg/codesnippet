@@ -59,6 +59,6 @@ class ScoresController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.permit(:user_id, :round_id, :tee_id, :hole_id, :score, :competition_id)
+      params.permit(:user_id, :round_id, :tee_id, :hole_id, :score, :competition_id, :ob, :tour_part_id, :result)
     end
 end
