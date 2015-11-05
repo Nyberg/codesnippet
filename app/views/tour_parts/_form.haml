@@ -1,14 +1,16 @@
 .row
-  = form_for(@competition) do |f|
+  = form_for(@tour_part) do |f|
     .col-md-4
       .form-group
         = f.text_field :name, placeholder: "namn", class: 'form-control'
       .form-group
-        = f.text_field :title, placeholder: "titel", class: 'form-control'
-      .form-group
         = f.text_area :content, placeholder: "beskrivning", class: 'form-control'
       .form-group
-        = f.collection_select(:club_id, Club.all, :id, :name, class: 'form-control')
+        = f.collection_select(:competition_id, Competition.all, :id, :name, class: 'form-control')
+      .form-group
+        = f.collection_select(:course_id, Course.all, :id, :name, class: 'form-control')
+      .form-group
+        = f.collection_select(:tee_id, Tee.all, :id, :color, class: 'form-control')
       .form-group
         = f.datetime_select :date, class: 'form-control'
       .form-group
