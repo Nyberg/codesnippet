@@ -1,4 +1,6 @@
-.col-md-12
-  %h3 Redigera användare #{@course.name}
-.col-md-4
+.container
+  .row
+    .col-md-12
+      %h1= "Redigera användare #{@course.name}"
+      
   = render 'form'

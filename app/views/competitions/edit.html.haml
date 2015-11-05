@@ -1,4 +1,6 @@
-.col-md-12
-  %h3 Redigera tävling #{@competition.name}
-.col-md-4
+.container
+  .row
+    .col-md-12
+      %h1= "Redigera tävling #{@competition.name}"
+
   = render 'form'
