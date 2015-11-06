@@ -1,5 +1,9 @@
 class Stats::StatsCommon
 
+  def graph_types
+    graphs = [["column", "bar-chart"], ["area", "area-chart"], ["spline", "line-chart"]]
+  end
+
   def get_head_to_head(round)
     data = [user: round.user, club: round.user.club.name, par: round.tee.par, score: round.total, results: numbers(round.scores) ]
   end
@@ -41,6 +45,15 @@ class Stats::StatsCommon
       end
     end
     result
+  end
+
+  def tour_part_avg_score(scores)
+    sums = []
+    scores.each do |s|
+      avg = s.sum.to_f/s.number.to_f
+      sums << avg.round(2)
+    end
+    sums
   end
 
   def tour_part_round_stats(avg)
@@ -85,24 +98,29 @@ class Stats::StatsCommon
     numbers
   end
 
-  def tour_part_line_chart(tour_part, avg, low, high, numbers, player = nil)
+  def tour_part_line_chart(tour_part, numbers, tee, low, high, player = nil, chart, avg, all_avg)
     @line_chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Snittresultat för #{tour_part.name}", :style => {:color => '#616161'})
+      f.title(:text => "Resultat #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee", :style => {:color => '#616161'})
       f.xAxis(:categories => numbers)
       f.series(:name => "Snittresultat", :yAxis => 0, :data => avg)
-      f.series(:name => "Lägsta resultat", :yAxis => 0, :data => low)
-      f.series(:name => "Högsta resultat", :yAxis => 0, :data => high)
-      f.series(:name => "Din runda", :YAxis => 0, :data => player) unless player.blank?
+      f.series(:name => "Din runda", :yAxis => 0, :data => player) unless player.blank?
+      f.series(:name => "Snitt alla deltävlingar", :yAxis => 0, :data => all_avg)
+      #f.series(:name => "Högsta resultat", :yAxis => 0, :data => high)
+      #f.series(:name => "Lägsta resultat", :yAxis => 0, :data => low)
       f.tooltip(:shared => true)
-      f.colors(['#24CCA9', '#616161', '#2B8080', '#9061C2'])
+      f.plotOptions({
+        :series => {
+          fillOpacity: 0.4
+      }})
+      f.colors(['#24CCA9', '#616161', '#9061C2'])
       f.yAxis [{:title => {:text => "Resultat", :margin => 20, :style => {:color => '#24CCA9'}} }]
-      f.chart({:defaultSeriesType=>"spline", backgroundColor:'rgba(255, 255, 255, 0.1)'})
+      f.chart({:defaultSeriesType=>chart, backgroundColor:'rgba(255, 255, 255, 0.1)'})
     end
   end
 
   def competition_line_chart(competition, avg, numbers, color, low)
     @line_chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Snittresultat för #{competition.name} - #{color} tee", :style => {:color => '#616161'})
+      f.title(:text => "Snittresultat för #{competition.name} - #{competition.date.strftime("%Y-%m-%d")} - #{color} tee", :style => {:color => '#616161'})
       f.xAxis(:categories => numbers)
       f.series(:name => "Snittresultat", :yAxis => 0, :data => avg)
       f.series(:name => "Bästa runda", :yAxis => 0, :data => low)
@@ -165,14 +183,16 @@ class Stats::StatsCommon
        ]}
       f.series(series)
       f.title(:text => name, :style => {:color => '#616161'})
-      f.legend(:layout=> 'vertical',:style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '0px' })
+      f.legend(:layout=> 'vertical', borderWidth: 0, :style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '0px' })
       f.colors(['#FF5500', '#14F732', '#3DF556', '#8FFFA3', '#FFFFD4','#FFADAD', '#F08181', '#F26363', '#F53D3D', '#DB3535'])
       f.plot_options(:pie=>{
         :allowPointSelect=>true,
+        :showInLegend => true,
         :dataLabels=>{
-          :enabled=>false,
-          :distance => 0
+          :enabled=>false
         },
+        :startAngle=> -90,
+        :endAngle => 90,
         :center => ['50%', '60%']
       })
     end

@@ -9,6 +9,7 @@ class CompetitionsController < ApplicationController
     @search = params[:term] || nil
     if @search
       @competitions = Competition.search(@search)
+      @tags = Competition.tagged_with(@search)
     end
   end
 
@@ -22,10 +23,10 @@ class CompetitionsController < ApplicationController
   def show
     @competition = Competition.where(id: params[:id]).first
     @page_title = "Startsida"
-    if @competition.tour_parts.count == 1
-      tour = TourPart.where(competition_id: @competition.id).first
-      redirect_to tour_part_path(tour.id)
-    end
+    # if @competition.tour_parts.count == 1
+    #   tour = TourPart.where(competition_id: @competition.id).first
+    #   redirect_to tour_part_path(tour.id)
+    # end
 
     @heading = @competition.name
     @tour_parts = TourPart.where(competition_id: params[:id]).order("date DESC").includes(:course, :tee, :rounds)
@@ -63,35 +64,42 @@ class CompetitionsController < ApplicationController
   def statistics
     @page_title = "Statistik"
     @heading = "Statistik"
+    @graph_type = params[:graph] || "spline"
     @competition = Competition.find(params[:id])
     @all_scores = Score.where(competition_id: params[:id]).includes(:hole)
+    @tour_parts = TourPart.where(competition_id: params[:id])
+    @graphs = stats.graph_types
 
-    tees = []
-
-    @competition.tour_parts.each do |tour|
-      tees << Tee.where(id: tour.tee_id).first
+    if params[:tour_part]
+      @tour_part = TourPart.find(params[:tour_part])
+    else
+      @tour_part = @tour_parts.first
     end
-    @tees = tees.uniq
+    @tee = Tee.find(@tour_part.tee_id)
+    @holes = Hole.where(tee_id: @tee.id)
 
-    avg = []
-    numbers = []
-    totals = []
-    @line_charts = []
-    @pie_charts = []
+    numbers = stats.holes(@holes) # gets the hole numbers
+    round = Round.where(tour_part_id: @tour_part.id, tee_id: @tee.id, place: 1).order("total ASC").limit(1) # gets the lowest score for the competition
+    low = stats.high_low(@holes, @tour_part.id, "asc")
+    high = stats.high_low(@holes, @tour_part.id, "desc")
+    scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
+    avg = Score.tour_part_avg(@tour_part.id) # gets average score for line graph
+    avg = stats.tour_part_avg_score(avg)
+    all_avg = Score.competition_avg(@competition.id, @tee.id)
+    all_avg  = stats.tour_part_avg_score(all_avg)
+    totals = stats.numbers(scores)
 
-    @tees.each do |tee|
-      avg = []
-      numbers = []
-      totals = []
-      avg = stats.competition_round_stats(@competition.id, tee.id) # gets average score for line graph
-      numbers = stats.holes(tee.holes) # gets the hole numbers
-      round = Round.where(competition_id: @competition.id, tee_id: tee.id, place: 1).order("total ASC").limit(1) # gets the lowest score for the competition
-      low = stats.competition_high_low(round)
-      @line_charts << stats.competition_line_chart(@competition, avg, numbers, tee.color, low)
-      scores = Score.where(competition_id: @competition.id).where(tee_id: tee.id).includes(:hole)
-      totals = stats.numbers(scores)
-      @pie_charts << stats.competition_pie_chart(totals, "Resultat #{tee.color} tee")
+    check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first if current_user
+    @headtohead = true if check
+
+    if @headtohead
+      head_scores = Score.where(user_id: current_user.id, tour_part_id: @tour_part.id)
+      data = head_scores.map(&:score).to_a
+      @line_chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, low, high, data, @graph_type, avg, all_avg)
+    else
+      @line_chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, low, high, @graph_type, avg, all_avg)
     end
+    @pie_chart = stats.competition_pie_chart(totals, "Resultat #{@tee.color} tee")
     all_totals = stats.numbers(@all_scores) # gets the total results for the competition (birdies, pars etc)
     @pie_chart_total = stats.competition_pie_chart(all_totals, "Totalt för #{@competition.name}")
   end
@@ -153,6 +161,6 @@ class CompetitionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def competition_params
-      params.require(:competition).permit(:name, :title, :content, :club_id, :date)
+      params.require(:competition).permit(:name, :title, :content, :club_id, :date, :tag_list)
     end
 end

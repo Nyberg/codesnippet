@@ -2,14 +2,27 @@
 
 .container
   .row.spacing
-    .col-md-12
-      - @line_charts.each_with_index do |line, index|
-        .col-md-6{id: "line_chart_#{index}"}
-          = high_chart("line_chart_#{index}", line)
-  .row.spacing
-    .col-md-12
-      - @pie_charts.each_with_index do |pie, index|
-        .col-md-4{id: "pie_chart_#{index}"}
-          = high_chart("pie_chart_#{index}", pie)
-        .col-md-4#all_totals
+    .col-md-3
+      %ul.list-group
+        %li.list-group-item
+          %span.badge= @competition.tour_parts.count
+          = @competition.name
+        - @tour_parts.each do |tour|
+          %li.list-group-item
+            %span.badge= tour.date.strftime("%Y-%m-%d")
+            = link_to tour.name, competition_statistics_path(id: @competition.id, tour_part: tour.id), class: tour.id == @tour_part.id ? 'active' : ''
+    .col-md-9
+      .col-md-12.charts
+        - @graphs.each do |graph|
+          = link_to fa_icon(graph.last), competition_statistics_path(id: @competition.id, tour_part: @tour_part.id, graph: graph.first), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
+        .col-md-12{id: "line_chart"}
+          = high_chart("line_chart", @line_chart)
+      .col-md-12.charts
+        .col-md-6{id: "pie_chart"}
+          = high_chart("pie_chart", @pie_chart) do |c|
+            = raw "options.tooltip.formatter = function() {return this.point.name +'</b>: '+ this.y +' st';}"
+            = raw "options.plotOptions.pie.dataLabels.formatter = function() { return this.point.name; }"
+        .col-md-6#all_totals
           = high_chart("all_totals", @pie_chart_total)
+
+  .row.spacing

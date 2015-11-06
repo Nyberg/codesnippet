@@ -12,4 +12,7 @@
       .form-group
         = f.datetime_select :date, class: 'form-control'
       .form-group
+        = f.label :tag_list, "Tags (separated by commas)"
+        = f.text_field :tag_list
+      .form-group
         = f.submit :Spara, class: 'btn btn-sm btn-primary'
