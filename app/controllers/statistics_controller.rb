@@ -27,4 +27,7 @@ class StatisticsController < ApplicationController
 
   end
 
+  def hole_stats
+  end
+
 end

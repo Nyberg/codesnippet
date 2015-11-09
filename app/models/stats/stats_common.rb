@@ -4,8 +4,38 @@ class Stats::StatsCommon
     graphs = [["column", "bar-chart"], ["area", "area-chart"], ["spline", "line-chart"]]
   end
 
+  def result_types
+    types = ["ace", "eagle", "birdie", "par", "bogey", "dblbogey", "tplbogey", "other"]
+  end
+
   def get_head_to_head(round)
     data = [user: round.user, club: round.user.club.name, par: round.tee.par, score: round.total, results: numbers(round.scores) ]
+  end
+
+  def get_hole_stats(datas)
+    results = result_types
+    sums = Array.new(results.size, 0)
+    datas.each do |data|
+
+      if data.result == "ace"
+        sums[0] = data.sum
+      elsif data.result == "eagle"
+        sums[1] = data.sum
+      elsif data.result == "birdie"
+        sums[2] = data.sum
+      elsif data.result == "par"
+        sums[3] = data.sum
+      elsif data.result == "bogey"
+        sums[4] = data.sum
+      elsif data.result == "dblbogey"
+        sums[5] = data.sum
+      elsif data.result == "trpbogey"
+        sums[6] = data.sum
+      elsif data.result == "other"
+        sums[7] = data.sum
+      end
+    end
+    sums
   end
 
   def get_hole_avg(id)
@@ -15,7 +45,7 @@ class Stats::StatsCommon
   def holes(holes)
     numbers = []
     holes.each do |hole|
-      numbers << "Hål #{hole.number}"
+      numbers << hole.number
     end
     numbers
   end
@@ -98,132 +128,55 @@ class Stats::StatsCommon
     numbers
   end
 
-  def tour_part_line_chart(tour_part, numbers, tee, low, high, player = nil, chart, avg, all_avg)
+  def tour_part_line_chart(tour_part, numbers, tee, player = nil, chart, avg, all_avg)
     @line_chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(:text => "Resultat #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee", :style => {:color => '#616161'})
       f.xAxis(:categories => numbers)
       f.series(:name => "Snittresultat", :yAxis => 0, :data => avg)
-      f.series(:name => "Din runda", :yAxis => 0, :data => player) unless player.blank?
       f.series(:name => "Snitt alla deltävlingar", :yAxis => 0, :data => all_avg)
-      #f.series(:name => "Högsta resultat", :yAxis => 0, :data => high)
-      #f.series(:name => "Lägsta resultat", :yAxis => 0, :data => low)
+      f.series(:name => "Din runda", :yAxis => 0, :data => player) unless player.blank?
       f.tooltip(:shared => true)
       f.plotOptions({
         :series => {
           fillOpacity: 0.4
       }})
       f.colors(['#24CCA9', '#616161', '#9061C2'])
+      f.legend({
+        layout: 'horizontal',
+        itemDistance: 20,
+        itemMarginTop: 15,
+        borderWidth: 0
+        })
       f.yAxis [{:title => {:text => "Resultat", :margin => 20, :style => {:color => '#24CCA9'}} }]
       f.chart({:defaultSeriesType=>chart, backgroundColor:'rgba(255, 255, 255, 0.1)'})
     end
   end
 
-  def competition_line_chart(competition, avg, numbers, color, low)
-    @line_chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Snittresultat för #{competition.name} - #{competition.date.strftime("%Y-%m-%d")} - #{color} tee", :style => {:color => '#616161'})
-      f.xAxis(:categories => numbers)
-      f.series(:name => "Snittresultat", :yAxis => 0, :data => avg)
-      f.series(:name => "Bästa runda", :yAxis => 0, :data => low)
-      #f.series(:name => "Högsta resultat", :yAxis => 0, :data => high)
-      f.tooltip(:shared => true)
-      f.colors(['#24CCA9', '#616161', '#2B8080'])
-      f.yAxis [{:title => {:text => "Resultat", :margin => 20, :style => {:color => '#24CCA9'}} }]
-      f.chart({:defaultSeriesType=>"spline", backgroundColor:'rgba(255, 255, 255, 0.1)'})
+  def hole_bar_chart(graph, all_holes, tour_part, tee)
+    holes = holes(all_holes)
+    @bar = LazyHighCharts::HighChart.new('column') do |f|
+      f.xAxis(categories: holes)
+      types = result_types
+      data = []
+      types.each do |type|
+        data = []
+        all_holes.each do |h|
+          arr = Score.get_type(h.id, tour_part.id, type)
+          data << arr.first.sum
+        end
+        f.series(:name=>type, :data=> data)
+      end
+      f.legend({
+        layout: 'horizontal',
+        itemDistance: 20,
+        itemMarginTop: 15,
+        borderWidth: 0
+        })
+      f.title({ :text=>"Resultat för #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee"})
+      f.tooltip(shared: true)
+      f.colors(['#9061C2', '#3DF556', '#8FFFA3', '#FFFFD4','#FFADAD', '#F08181', '#F26363', '#F53D3D', '#DB3535'])
+      f.chart({:defaultSeriesType=>graph, backgroundColor:'rgba(255, 255, 255, 0.1)'})
+      f.plot_options({:column=>{:stacking=>"normal", :dataLabels => {:enabled => false}}})
     end
   end
-
-  def tour_part_pie_chart(res, tour_part)
-    @pie_chart_part = LazyHighCharts::HighChart.new('pie') do |f|
-      f.chart({:defaultSeriesType=>"pie", :margin=> [40, 40, 40, 40], backgroundColor:'rgba(255, 255, 255, 0.1)'} )
-      series = {
-       :type=> 'pie',
-       :name=> 'Antal',
-       :data=> [
-          ['Ace',         res[:ace][:count]],
-          ['Albatross',   res[:albatross][:count]],
-          ['Eagle',       res[:eagle][:count]],
-          ['Birdie',      res[:birdie][:count]],
-          ['Par',         res[:par][:count]],
-          ['Bogey',       res[:bogey][:count]],
-          ['Dubbelbogey', res[:dblbogey][:count]],
-          ['Trippelbogey',res[:trpbogey][:count]],
-          ['Others',      res[:other][:count]]
-       ]}
-      f.series(series)
-      f.title(:text => "Resultat för #{tour_part}", :style => {:color => '#616161'})
-      f.legend(:layout=> 'vertical',:style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '0px', :color => '#616161'})
-      f.colors(['#FF5500', '#14F732', '#3DF556', '#8FFFA3', '#FFFFD4','#FFADAD', '#F08181', '#F26363', '#F53D3D', '#DB3535'])
-      f.plot_options(:pie=>{
-        :allowPointSelect=>true,
-        :dataLabels=>{
-          :enabled=>false,
-          :distance => 0
-        },
-        :center => ['50%', '60%']
-      })
-    end
-  end
-
-  def competition_pie_chart(totals, name)
-    @pie_chart_total = LazyHighCharts::HighChart.new('pie') do |f|
-      f.chart({:defaultSeriesType=>"pie", :margin=> [40, 40, 40, 40], backgroundColor:'rgba(255, 255, 255, 0.1)'} )
-      series = {
-       :type=> 'pie',
-       :name=> 'Antal',
-       :data=> [
-          ['Ace',         totals[:ace][:count]],
-          ['Albatross',   totals[:albatross][:count]],
-          ['Eagle',       totals[:eagle][:count]],
-          ['Birdie',      totals[:birdie][:count]],
-          ['Par',         totals[:par][:count]],
-          ['Bogey',       totals[:bogey][:count]],
-          ['Dubbelbogey', totals[:dblbogey][:count]],
-          ['Trippelbogey',totals[:trpbogey][:count]],
-          ['Others',      totals[:other][:count]]
-       ]}
-      f.series(series)
-      f.title(:text => name, :style => {:color => '#616161'})
-      f.legend(:layout=> 'vertical', borderWidth: 0, :style=> {:left=> 'auto', :bottom=> 'auto',:right=> '50px',:top=> '0px' })
-      f.colors(['#FF5500', '#14F732', '#3DF556', '#8FFFA3', '#FFFFD4','#FFADAD', '#F08181', '#F26363', '#F53D3D', '#DB3535'])
-      f.plot_options(:pie=>{
-        :allowPointSelect=>true,
-        :showInLegend => true,
-        :dataLabels=>{
-          :enabled=>false
-        },
-        :startAngle=> -90,
-        :endAngle => 90,
-        :center => ['50%', '60%']
-      })
-    end
-  end
-
-  def get_tour_part_line_chart(tour_part, scores, holes, all_scores, headtohead, user_id = nil)
-    average = get_hole_avg(tour_part.id)
-    avg = tour_part_round_stats(average) # gets average score for line graph
-    numbers = holes(holes) # gets the hole numbers
-    high = high_low(holes, tour_part.id, "DESC") # gets the highest score for the tour_part
-    low = high_low(holes, tour_part.id, "ASC") # gets the lowest score for the tour_part
-    res = numbers(scores) # gets the results for the tour_part (birdies, pars etc)
-    totals = numbers(all_scores) # gets the total results for the competition (birdies, pars etc)
-
-    if headtohead
-      scores = Score.where(user_id: user_id, tour_part_id: tour_part.id)
-      data = scores.map(&:score).to_a
-      return @line_chart = tour_part_line_chart(tour_part, avg, low, high, numbers, data)
-    else
-      return @line_chart = tour_part_line_chart(tour_part, avg, low, high, numbers)
-    end
-  end
-
-  def get_tour_part_part_pie(name, scores)
-    res = numbers(scores)
-    return @pie_chart_part = tour_part_pie_chart(res, name)
-  end
-
-  def get_tour_part_total_pie(name, scores)
-    totals = numbers(scores)
-    @pie_chart_total = competition_pie_chart(totals, name)
-  end
-
 end

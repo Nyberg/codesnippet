@@ -60,26 +60,92 @@ hole_list.each do |course_id, number, par, length, tee_id|
 end
 
 clubs_list = ["Karlstad FSK", "Klarälvens DGK"]
-]
 
 clubs_list.each do |name|
   Club.create(name: name)
 end
 
 competitions_list = [
-  ["KFSK Veckotävlingar", "", "", 1, 2015-01-01 00:00:00],
-  ["Klarälvsdiscen", "", "", 2, 2015-01-01 00:00:00]
+  ["KFSK Veckotävlingar", "", "", 1],
+  ["Klarälvsdiscen", "", "", 2]
 ]
 
-competitions_list.each do |name, title, content, club_id, date|
-  Competition.create(name: name, title: title, content: content, club_id: club_id, date: date)
+competitions_list.each do |name, title, content, club_id|
+  Competition.create(name: name, title: title, content: content, club_id: club_id, date: "2015-01-01 00:00:00")
 end
 
 tour_parts_list = [
-  ["Deltävling 1", "", 1, 1, 1, 2015-02-01 00:00:00],
-  ["Deltävling 1", "", 2, 2, 2, 2015-02-01 00:00:00]
+  ["Deltävling 1", "", 1, 1, 1],
+  ["Deltävling 1", "", 2, 2, 2]
 ]
 
-tour_parts_list.each do | name, content, course_id, competition_id, tee_id, date|
-  TourPart.create(name: name, content: content, course_id: course_id, competition_id: competition_id, tee_id: tee_id, date: date)
+tour_parts_list.each do | name, content, course_id, competition_id, tee_id|
+  TourPart.create(name: name, content: content, course_id: course_id, competition_id: competition_id, tee_id: tee_id, date: "2015-01-01 00:00:00")
+end
+
+users_list = [
+  "Magnus Dunder", "Peter Jonsson", "Ulf Engström",
+  "Magnus Siivonen",
+  "Jimmy Gräsberg",
+  "Christoffer Eriksson",
+  "Jari Mansikkala",
+  "Max Khokhlov",
+  "Daniel Boström",
+  "Henry Kjellström",
+  "Adrian Pettersson",
+  "Christian Granberg",
+  "Simon Camitz",
+  "Albin Långh",
+  "Anders Camitz",
+  "Robert Boström",
+  "Jacob Andreasson",
+  "Fredrik Petterson",
+  "Nicklas Hedberg",
+  "Liam Moynagh",
+  "Nils-Erik Jonsson",
+  "Mats Westerberg",
+  "Robert Eriksson",
+  "Erik Bonde",
+  "Karl Letterström",
+  "Daniel Camitz",
+  "Claes Bonde",
+  "Magnus Samuelsson",
+  "Mikael Moberg",
+  "Dennis Andersson",
+  "Jacob CE Johansson",
+  "Andreas Liljemark",
+  "Rikard Frejgrim",
+  "Albin Boström",
+  "Lars Olsson",
+  "Niclas Fredin",
+  "Per Carlsson",
+  "Hampus Magnusson",
+  "Tomas Mansikkala",
+  "Simon Didner",
+  "Rasmus Norlen",
+  "Staffan Jansson",
+  "Love Johansson",
+  "Nick Caspr",
+  "Henrik Reimer",
+  "Andreas Norlen",
+  "Jonas Norlen",
+  "Jacob Johansson",
+  "Sabina Engström",
+  "Kristoffer Gräsberg",
+  "Nicklas Julin",
+  "Johan Andersson",
+  "Christoffer Nyberg",
+  "Martin Johansson",
+  "Hampus Piehl",
+  "Marcus Thorsen",
+  "Fredrik Lundberg",
+  "Daniel Hällsten",
+  "Noa Ekeberg",
+  "Arvid Svensson",
+  "Joel Svensson",
+  "Richard Hammar"
+]
+
+users_list.each do |user|
+  User.create(name: user, club_id: 1)
 end

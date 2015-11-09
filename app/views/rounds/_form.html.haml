@@ -4,12 +4,11 @@
       .form-group
         = f.collection_select(:user_id, User.by_name, :id, :name, class: 'form-control')
       .form-group
-        = f.collection_select(:competition_id, Competition.by_name, :id, :name, class: 'form-control')
-      .form-group
-        = f.collection_select(:tour_part_id, TourPart.all, :id, :name, class: 'form-control')
-      .form-group
-        = f.number_field :total, placeholder: 'resultat', class: 'form-control'
-      .form-group
-        = f.number_field :place, placeholder: 'placering', class: 'form-control'
+        = f.number_field :place, value: @place, placeholder: 'placering', class: 'form-control'
+
+        = hidden_field_tag :competition_id, @tour_part.competition_id
+        = hidden_field_tag :tour_part_id, @tour_part.id
+        = hidden_field_tag :course_id, @tour_part.course_id
+        = hidden_field_tag :tee_id, @tour_part.tee_id
       .form-group
         = f.submit :Spara, class: 'btn btn-sm btn-primary'

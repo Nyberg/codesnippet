@@ -18,6 +18,9 @@ class RoundsController < ApplicationController
   # GET /rounds/new
   def new
     @round = Round.new
+    @tour_part = TourPart.find(params[:id])
+    count = @tour_part.rounds.count
+    @place = count + 1
   end
 
   # GET /rounds/1/edit
@@ -28,16 +31,14 @@ class RoundsController < ApplicationController
   # POST /rounds.json
   def create
     @round = Round.new(round_params)
-    tour_part = TourPart.find(@round.tour_part_id)
-
-    @round.tee_id = tour_part.tee_id
-    @round.course_id = tour_part.course_id
-    @round.competition_id = tour_part.competition_id
-
+    @round.tee_id = params[:tee_id]
+    @round.course_id = params[:course_id]
+    @round.competition_id = params[:competition_id]
+    @round.tour_part_id = params[:tour_part_id]
     respond_to do |format|
       if @round.save
         User.where(id: @round.user_id).first.increment!(:rounds_count)
-        format.html { redirect_to edit_score_path(@round.id), notice: 'Round was successfully created.' }
+        format.html { redirect_to new_score_path(id: @round.id), notice: 'Round was successfully created.' }
         format.json { render :show, status: :created, location: @round }
       else
         format.html { render :new }

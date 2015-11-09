@@ -11,6 +11,7 @@ gem 'font-awesome-rails'
 gem 'will_paginate', '~> 3.0.6'
 gem 'rails_12factor', group: :production
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'jquery-turbolinks'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 gem 'mysql2'

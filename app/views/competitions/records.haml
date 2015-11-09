@@ -23,5 +23,5 @@
                     = link_to r.user.name, user_path(r.user.id)
 
                   - r.scores.each do |s|
-                    %td{class: "#{s.result} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+                    %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
                   %td= calc_score(r.total, r.tee.par)

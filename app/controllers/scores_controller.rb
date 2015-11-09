@@ -11,29 +11,30 @@ class ScoresController < ApplicationController
 
   def new
     @score = Score.new
-    @round = Round.find(params[:format])
+    @round = Round.find(params[:id])
   end
 
   def edit
     @scores = Score.where(round_id: params[:id])
+    @round = Round.find(params[:id])
   end
 
   def create
-    @score = Score.new(score_params)
-
-    respond_to do |format|
-      if @score.save
-        format.html { redirect_to @score, notice: 'Score was successfully created.' }
-        format.json { render :show, status: :created, location: @score }
-      else
-        format.html { render :new }
-        format.json { render json: @score.errors, status: :unprocessable_entity }
-      end
+    scores = params[:scores].split(' ')
+    total_score = 0
+    @round = Round.find(params[:round_id])
+    @round.tee.holes.each_with_index do |hole, index|
+      num = scores[index].to_i
+      result = get_score(num, hole.par)
+      Score.create(round_id: @round.id, hole_id: hole.id, tee_id: hole.tee_id, user_id: @round.user_id, score: num, tour_part_id: @round.tour_part_id, competition_id: @round.competition_id, result: result)
+      total_score = total_score + num
     end
+    @round.total = total_score
+    @round.save!
+    redirect_to admin_tours_path, notice: 'Score was successfully created.'
   end
 
   def update
-    scores = params[:scores]
     # Updating multiple records:
     Score.update(scores.keys, scores.values)
     scores = Score.where(id: scores.keys).includes(:hole)
@@ -59,6 +60,6 @@ class ScoresController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def score_params
-      params.permit(:user_id, :round_id, :tee_id, :hole_id, :score, :competition_id, :ob, :tour_part_id, :result)
+      params.permit(:user_id, :round_id, :tee_id, :hole_id, :score, :competition_id, :ob, :tour_part_id, :result, :result_id)
     end
 end

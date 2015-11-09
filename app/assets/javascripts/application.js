@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require_tree .
@@ -19,3 +20,10 @@
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/highstock
+
+
+
+$(document).ready(function () {
+  $('.has-tooltip').tooltip();
+  $('.dropdown-toggle').dropdown();
+ });

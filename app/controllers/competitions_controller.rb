@@ -46,7 +46,7 @@ class CompetitionsController < ApplicationController
     rounds = Round.bogeyfree_rounds(@competition.id)
     @bogeyfrees = []
     rounds.each do |round|
-      data = round.result.split(',')
+      data = round.result_type.split(',')
       if data.include?("bogey" || "dblbogey" || "trpbogey" || "other")
       else
         @bogeyfrees << round
@@ -65,9 +65,10 @@ class CompetitionsController < ApplicationController
     @page_title = "Statistik"
     @heading = "Statistik"
     @graph_type = params[:graph] || "spline"
+    @data_type = params[:data_type] || "avg"
     @competition = Competition.find(params[:id])
     @all_scores = Score.where(competition_id: params[:id]).includes(:hole)
-    @tour_parts = TourPart.where(competition_id: params[:id])
+    @tour_parts = TourPart.where(competition_id: params[:id]).by_date
     @graphs = stats.graph_types
 
     if params[:tour_part]
@@ -75,33 +76,33 @@ class CompetitionsController < ApplicationController
     else
       @tour_part = @tour_parts.first
     end
+
     @tee = Tee.find(@tour_part.tee_id)
     @holes = Hole.where(tee_id: @tee.id)
 
-    numbers = stats.holes(@holes) # gets the hole numbers
-    round = Round.where(tour_part_id: @tour_part.id, tee_id: @tee.id, place: 1).order("total ASC").limit(1) # gets the lowest score for the competition
-    low = stats.high_low(@holes, @tour_part.id, "asc")
-    high = stats.high_low(@holes, @tour_part.id, "desc")
-    scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
-    avg = Score.tour_part_avg(@tour_part.id) # gets average score for line graph
-    avg = stats.tour_part_avg_score(avg)
-    all_avg = Score.competition_avg(@competition.id, @tee.id)
-    all_avg  = stats.tour_part_avg_score(all_avg)
-    totals = stats.numbers(scores)
+    if @data_type == "avg"
+      numbers = stats.holes(@holes) # gets the hole numbers
+      round = Round.where(tour_part_id: @tour_part.id, tee_id: @tee.id, place: 1).order("total ASC").limit(1) # gets the lowest score for the competition
+      scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
+      avg = Score.tour_part_avg(@tour_part.id) # gets average score for line graph
+      avg = stats.tour_part_avg_score(avg)
+      all_avg = Score.competition_avg(@competition.id, @tee.id)
+      all_avg  = stats.tour_part_avg_score(all_avg)
+      totals = stats.numbers(scores)
 
-    check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first if current_user
-    @headtohead = true if check
+      check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first if current_user
+      @headtohead = true if check
 
-    if @headtohead
-      head_scores = Score.where(user_id: current_user.id, tour_part_id: @tour_part.id)
-      data = head_scores.map(&:score).to_a
-      @line_chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, low, high, data, @graph_type, avg, all_avg)
+      if @headtohead
+        head_scores = Score.where(user_id: current_user.id, tour_part_id: @tour_part.id)
+        data = head_scores.map(&:score).to_a
+        @chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, data, @graph_type, avg, all_avg)
+      else
+        @chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, @graph_type, avg, all_avg)
+      end
     else
-      @line_chart = stats.tour_part_line_chart(@tour_part, numbers, @tee.color, low, high, @graph_type, avg, all_avg)
+      @chart = stats.hole_bar_chart(@graph_type, @holes, @tour_part, @tee.color)
     end
-    @pie_chart = stats.competition_pie_chart(totals, "Resultat #{@tee.color} tee")
-    all_totals = stats.numbers(@all_scores) # gets the total results for the competition (birdies, pars etc)
-    @pie_chart_total = stats.competition_pie_chart(all_totals, "Totalt för #{@competition.name}")
   end
 
   # GET /competitions/new

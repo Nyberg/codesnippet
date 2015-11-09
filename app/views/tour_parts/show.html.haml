@@ -1,26 +1,31 @@
 %header.masthead
   .container
     .row.spacing
-      .col-md-8
-        %h1= "#{@tour_part.competition.name} - #{@tour_part.name}"
-        %h4= @tour_part.competition.club.name
-      .col-md-4.info
-        .col-md-6
-          %p
-            Datum:
-            %strong= @tour_part.date.strftime("%Y-%m-%-d")
-        .col-md-6
-          %p
-            Spelare:
-            %strong= @rounds.count
-        .col-md-6
-          %p
-            Bana:
-            %strong= "#{@tour_part.course.name} #{@tee.color}"
-        .col-md-6
-          %p
-            Snitt:
-            %strong= calc_total_score(@scores.map(&:score).inject(:+), @rounds.count, @tee.par)
+      .col-md-12
+        .col-md-8
+          %h1= @tour_part.name
+          %h4
+            = link_to @tour_part.competition.name, competition_path(@tour_part.competition.id)
+            = " - #{@tour_part.competition.club.name}"
+
+        .col-md-4.info
+          .col-md-6
+            %p
+              Datum:
+              %strong= @tour_part.date.strftime("%Y-%m-%-d")
+          .col-md-6
+            %p
+              Spelare:
+              %strong= @rounds.count
+          .col-md-6
+            %p
+              Bana:
+              %strong= "#{@tour_part.course.name} #{@tee.color}"
+          .col-md-6
+            %p
+              Snitt:
+              %strong= calc_total_score(@scores.map(&:score).inject(:+), @rounds.count, @tee.par)
+
 .container
   .row.spacing
     .col-md-12
@@ -48,17 +53,4 @@
                 %td= link_to calc_score(r.total, @tee.par), statistics_headtohead_path(tour_part: @tour_part.id, user: r.user_id)
               - else
                 %td= calc_score(r.total, @tee.par)
-
-  .row
-    .col-md-12
-      %h1 Statistik
-  .row
-    .col-md-12
-      .col-md-12#line_chart
-        = high_chart("line_chart", @stats.get_tour_part_line_chart(@tour_part, @scores, @holes, @all_scores, @headtohead, current_user.id))
-  .row
-    .col-md-12
-      .col-md-6#pie_chart_part
-        = high_chart("pie_chart_part", @stats.get_tour_part_part_pie(@tour_part.name, @scores))
-      .col-md-6#pie_chart_total
-        = high_chart("pie_chart_total", @stats.get_tour_part_total_pie(@tour_part.competition.name, @all_scores))
+              %td 100
