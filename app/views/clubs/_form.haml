@@ -1,0 +1,9 @@
+.row
+  = form_for(@club) do |f|
+    .col-md-4
+      .form-group
+        = f.text_field :name, placeholder: 'namn', class: 'form-control'
+      .form-group
+        = f.text_field :website, placeholder: 'website', class: 'form-control'
+      .form-group
+        = f.submit :Spara, class: 'btn btn-sm btn-success'

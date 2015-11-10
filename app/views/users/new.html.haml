@@ -1,21 +1,24 @@
-.row
-  .col-md-4
-    %h1 Ny spelare
-    = form_for(@user) do |f|
+.container
+  .row
+    .col-md-4
+      %h1 Ny Användare
 
-      .form-group
-        = f.text_field :name, placeholder: 'namn', class: 'form-control'
-      .form-group
-        = f.email_field :email, placeholder: 'email', class: 'form-control'
-      .form-group
-        = f.collection_select(:club_id, Club.all, :id, :name, class: 'form-control')
-      .form-group
-        = f.text_field :division, placeholder: 'division ( O, A, M )', class: 'form-control'
-      .form-group
-        = f.text_field :pdga, placeholder: 'pdga', class: 'form-control'
-      .form-group
-        = f.password_field :password, placeholder: 'lösenord', class: 'form-control'
-      .form-group
-        = f.password_field :password_confirmation, placeholder: 'bekräfta lösenord', class: 'form-control'
-      .form-group
-        = f.submit :Spara, class: 'btn btn-sm btn-success'
+  = form_for(@user) do |f|
+    .row
+      .col-md-4
+        .form-group
+          = f.text_field :name, placeholder: 'namn', class: 'form-control'
+        .form-group
+          = f.email_field :email, placeholder: 'email', class: 'form-control'
+        .form-group
+          = f.collection_select(:club_id, Club.all, :id, :name, class: 'form-control')
+        .form-group
+          = f.text_field :division, placeholder: 'division ( O, A, M )', class: 'form-control'
+        .form-group
+          = f.text_field :pdga, placeholder: 'pdga', class: 'form-control'
+        .form-group
+          = f.password_field :password, placeholder: 'lösenord', class: 'form-control'
+        .form-group
+          = f.password_field :password_confirmation, placeholder: 'bekräfta lösenord', class: 'form-control'
+        .form-group
+          = f.submit :Spara, class: 'btn btn-sm btn-success'

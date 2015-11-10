@@ -36,5 +36,6 @@ Rails.application.routes.draw do
   get '/tour_part_line_chart' => 'tour_parts#line_chart'
 
   get 'stats'   => 'statistics#index'
+  get 'hole_stats' => 'statistics#hole_stats' 
 
 end

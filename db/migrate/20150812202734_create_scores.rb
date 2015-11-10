@@ -6,7 +6,10 @@ class CreateScores < ActiveRecord::Migration
       t.integer :tee_id
       t.integer :hole_id
       t.integer :score
-
+      t.integer :ob
+      t.integer :tour_part_id
+      t.string :result
+      t.integer :competition_id
       t.timestamps null: false
     end
   end

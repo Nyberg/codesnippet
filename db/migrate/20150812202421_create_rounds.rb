@@ -6,9 +6,9 @@ class CreateRounds < ActiveRecord::Migration
       t.integer :competition_id
       t.integer :tee_id
       t.integer :tour_part_id
-      t.integer :score
+      t.integer :total
       t.integer :division_id
-
+      t.integer :place
       t.timestamps null: false
     end
   end

@@ -2,14 +2,22 @@
 
 .container
   .row.spacing
-    .col-md-12
-      - @line_charts.each_with_index do |line, index|
-        .col-md-6{id: "line_chart_#{index}"}
-          = high_chart("line_chart_#{index}", line)
+    .col-md-3
+      %ul.list-group
+        %li.list-group-item.dropdown
+          %span.badge
+            = @competition.tour_parts.count
+          = @competition.name
+        - @tour_parts.each do |tour|
+          %li.list-group-item
+            %span.badge= tour.date.strftime("%Y-%m-%d")
+            = link_to tour.name, competition_statistics_path(id: @competition.id, tour_part: tour.id, graph: @graph_type, data_type: @data_type), class: "#{tour.id == @tour_part.id ? 'active' : ''}"
+    .col-md-9
+      .col-md-12.charts
+        = link_to "Snittresultat", competition_statistics_path(id: @competition.id, tour_part: @tour_part.id, graph: @graph_type, data_type: "avg"), class: "pull-left graph-button #{@data_type == "avg" ? 'active' : ''}"
+        = link_to "Resultat", competition_statistics_path(id: @competition.id, tour_part: @tour_part.id, graph: @graph_type, data_type: "result"), class: "pull-left graph-button #{@data_type == "result" ? 'active' : ''}"
+        - @graphs.each do |graph|
+          = link_to fa_icon(graph.last), competition_statistics_path(id: @competition.id, tour_part: @tour_part.id, graph: graph.first, data_type: @data_type), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
+        .col-md-12{id: "line_chart"}
+          = high_chart("line_chart", @chart)
   .row.spacing
-    .col-md-12
-      - @pie_charts.each_with_index do |pie, index|
-        .col-md-4{id: "pie_chart_#{index}"}
-          = high_chart("pie_chart_#{index}", pie)
-        .col-md-4#all_totals
-          = high_chart("all_totals", @pie_chart_total)

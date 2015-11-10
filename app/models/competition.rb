@@ -1,4 +1,7 @@
 class Competition < ActiveRecord::Base
+  acts_as_taggable
+  acts_as_taggable_on :tags
+
   belongs_to :club
   has_many :tour_parts
   has_many :scores

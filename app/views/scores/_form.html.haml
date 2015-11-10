@@ -5,13 +5,16 @@
         = @score.errors.full_messages.each do |message|
           %li= message
 
-    - @scores.each do |s|
-      .form-group
-        = f.number_field :score, placeholder: 'resultat', class: 'form-control'
+    -# - @scores.each do |s|
+    -#   .form-group
+    -#     = f.number_field :score, placeholder: 'resultat', class: 'form-control'
 
-  = hidden_field(:user_id, @score.user_id)
-  = hidden_field(:round_id, @score.user_id)
-  = hidden_field(:tee_id, @score.user_id)
+  .form-group
+    = text_field_tag :scores, '', class: 'form-control'
+
+  = hidden_field_tag :user_id, @round.user_id
+  = hidden_field_tag :round_id, @round.id
+  = hidden_field_tag :tee_id, @round.tee_id
 
   .form-group
     = f.submit :Spara, class: 'btn btn-sm btn-primary'

@@ -21,7 +21,6 @@ class TourPartsController < ApplicationController
     @holes = Hole.where(tee_id: @tour_part.tee_id)
     @rounds = Round.where(tour_part_id: @tour_part.id).includes(:scores, :user, :holes, :tee)
     @scores = Score.where(tour_part_id: @tour_part.id).includes(:hole)
-    @all_scores = Score.where(competition_id: @tour_part.competition_id).includes(:hole)
     check = Round.where(user_id: current_user.id, tour_part_id: @tour_part.id).first if current_user
     @headtohead = true if check
   end
@@ -56,7 +55,7 @@ class TourPartsController < ApplicationController
   def update
     respond_to do |format|
       if @tour_part.update(tour_part_params)
-        format.html { redirect_to @tour_part, notice: 'Tour part was successfully updated.' }
+        format.html { redirect_to admin_tours_path, notice: 'Tour part was successfully updated.' }
         format.json { render :show, status: :ok, location: @tour_part }
       else
         format.html { render :edit }

@@ -6,7 +6,7 @@ class CreateTourParts < ActiveRecord::Migration
       t.integer :course_id
       t.integer :competition_id
       t.integer :tee_id
-
+      t.timestamp :date
       t.timestamps null: false
     end
   end

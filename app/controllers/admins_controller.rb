@@ -19,7 +19,7 @@ class AdminsController < ApplicationController
   end
 
   def tours
-    @tour_parts = TourPart.all
+    @tour_parts = TourPart.all.by_date
   end
 
   def courses

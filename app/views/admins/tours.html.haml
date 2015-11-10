@@ -12,10 +12,16 @@
   %table.table.table-hover
     %thead
       %th Namn
+      %th Tävling
+      %th Datum
+      %th Lägg till runda
       %th
     %tbody
       - @tour_parts.each do |u|
         %tr
           %td= u.name
+          %td= link_to u.competition.name, competition_path(u.competition)
+          %td= u.date.strftime("%Y-%m-%d")
+          %td= link_to "Lägg till", new_round_path(id: u)
           %td
-            = link_to "", edit_competition_path(u), class: "glyphicon glyphicon-pencil"
+            = link_to "", edit_tour_part_path(u), class: "glyphicon glyphicon-pencil"

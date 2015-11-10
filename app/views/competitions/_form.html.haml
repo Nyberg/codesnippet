@@ -1,18 +1,18 @@
-= form_for(@competition) do |f|
-  -if @competition.errors.any?
-    .error_explanation
-      %ul
-        = @competition.errors.full_messages.each do |message|
-          %li= message
-  .form-group
-    = f.text_field :name, placeholder: "namn", class: 'form-control'
-  .form-group
-    = f.text_field :title, placeholder: "titel", class: 'form-control'
-  .form-group
-    = f.text_area :content, placeholder: "beskrivning", class: 'form-control'
-  .form-group
-    = f.collection_select(:club_id, Club.all, :id, :name, class: 'form-control')
-  .form-group
-    = f.datetime_select :date, class: 'form-control'
-  .form-group
-    = f.submit :Spara, class: 'btn btn-sm btn-primary'
+.row
+  = form_for(@competition) do |f|
+    .col-md-4
+      .form-group
+        = f.text_field :name, placeholder: "namn", class: 'form-control'
+      .form-group
+        = f.text_field :title, placeholder: "titel", class: 'form-control'
+      .form-group
+        = f.text_area :content, placeholder: "beskrivning", class: 'form-control'
+      .form-group
+        = f.collection_select(:club_id, Club.all, :id, :name, class: 'form-control')
+      .form-group
+        = f.datetime_select :date, class: 'form-control'
+      .form-group
+        = f.label :tag_list, "Tags (separated by commas)"
+        = f.text_field :tag_list
+      .form-group
+        = f.submit :Spara, class: 'btn btn-sm btn-primary'
