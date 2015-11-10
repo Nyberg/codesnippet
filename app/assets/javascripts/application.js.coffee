@@ -12,6 +12,8 @@
 ready = ->
   $('.has-tooltip').tooltip()
 
+  $('.collapse').click( ->  $('.collapseSideMenu').parent().collapse() )
+
   $('.navbar .dropdown').hover(
     ->  $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
     ->  $(this).find('.dropdown-menu').first().stop(true, true).delay(150).slideUp()

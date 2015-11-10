@@ -4,14 +4,19 @@
   .row.spacing
     .col-md-3
       %ul.list-group
-        %li.list-group-item.dropdown
+        %li.list-group-item
           %span.badge
             = @competition.tour_parts.count
           = @competition.name
-        - @tour_parts.each do |tour|
+        - @months.each_with_index do |month, index|
           %li.list-group-item
-            %span.badge= tour.date.strftime("%Y-%m-%d")
-            = link_to tour.name, competition_statistics_path(id: @competition.id, tour_part: tour.id, graph: @graph_type, data_type: @data_type), class: "#{tour.id == @tour_part.id ? 'active' : ''}"
+            = link_to month.first.strftime("%B %Y"), "#collapseSideMenu-#{index}", role: :button, data: { toggle: "collapse", target: "#collapseSideMenu-#{index}" }, aria: { controls: "collapseSideMenu-#{index}", expanded: "false" }
+
+          %div.tours{class: @date.to_date.strftime("%B %Y") == month.first.strftime("%B %Y") ? 'collapse in' : 'collapse', id: "collapseSideMenu-#{index}"}
+            - month.last.each do |tour|
+              %li.list-group-item
+                %span.badge= tour.date.strftime("%Y-%m-%d")
+                = link_to tour.name, competition_statistics_path(id: @competition.id, tour_part: tour.id, graph: @graph_type, data_type: @data_type, date: tour.date), class: "#{tour.id == @tour_part.id ? 'active' : ''}"
     .col-md-9
       .col-md-12.charts
         = link_to "Snittresultat", competition_statistics_path(id: @competition.id, tour_part: @tour_part.id, graph: @graph_type, data_type: "avg"), class: "pull-left graph-button #{@data_type == "avg" ? 'active' : ''}"

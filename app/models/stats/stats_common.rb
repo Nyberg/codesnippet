@@ -58,25 +58,6 @@ class Stats::StatsCommon
     numbers
   end
 
-  def high_low(holes, id, order)
-    result = []
-    holes.each do |hole|
-      number = Score.where(hole_id: hole.id).where(tour_part_id: id).order("score #{order}").first
-      result << number.score
-    end
-    result
-  end
-
-  def competition_high_low(round)
-    result = []
-    round.each do |r|
-      r.scores.each do |s|
-        result << s.score
-      end
-    end
-    result
-  end
-
   def tour_part_avg_score(scores)
     sums = []
     scores.each do |s|
@@ -130,14 +111,14 @@ class Stats::StatsCommon
 
   def tour_part_line_chart(tour_part, numbers, tee, player = nil, chart, avg, all_avg)
     @line_chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Resultat #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee", :style => {:color => '#616161'})
-      f.xAxis(:categories => numbers)
-      f.series(:name => "Snittresultat", :yAxis => 0, :data => avg)
-      f.series(:name => "Snitt alla deltävlingar", :yAxis => 0, :data => all_avg)
-      f.series(:name => "Din runda", :yAxis => 0, :data => player) unless player.blank?
-      f.tooltip(:shared => true)
+      f.title({text: "Resultat #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee", style: {color: '#616161', "font-size": '12px'}})
+      f.xAxis(categories: numbers)
+      f.series(name: "Snittresultat", yAxis: 0, data: avg)
+      f.series(name: "Snitt alla deltävlingar", yAxis: 0, data: all_avg)
+      f.series(name: "Din runda", yAxis: 0, data: player) unless player.blank?
+      f.tooltip(shared: true)
       f.plotOptions({
-        :series => {
+        series: {
           fillOpacity: 0.4
       }})
       f.colors(['#24CCA9', '#616161', '#9061C2'])
@@ -147,8 +128,8 @@ class Stats::StatsCommon
         itemMarginTop: 15,
         borderWidth: 0
         })
-      f.yAxis [{:title => {:text => "Resultat", :margin => 20, :style => {:color => '#24CCA9'}} }]
-      f.chart({:defaultSeriesType=>chart, backgroundColor:'rgba(255, 255, 255, 0.1)'})
+      f.yAxis [{title: {text: "Resultat", margin: 15, style: {color: '#24CCA9'}}}]
+      f.chart({defaultSeriesType: chart, backgroundColor:'rgba(255, 255, 255, 0.1)'})
     end
   end
 
@@ -164,19 +145,15 @@ class Stats::StatsCommon
           arr = Score.get_type(h.id, tour_part.id, type)
           data << arr.first.sum
         end
-        f.series(:name=>type, :data=> data)
+        f.series(name: type, data: data)
       end
-      f.legend({
-        layout: 'horizontal',
-        itemDistance: 20,
-        itemMarginTop: 15,
-        borderWidth: 0
-        })
-      f.title({ :text=>"Resultat för #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee"})
-      f.tooltip(shared: true)
+      f.legend({layout: 'horizontal', itemDistance: 20, itemMarginTop: 15, borderWidth: 0})
+      f.title({ text: "Resultat för #{tour_part.name} - #{tour_part.date.strftime("%Y-%m-%d")} - #{tee} tee", style: {color: '#616161', "font-size": '12px'}})
+      f.tooltip(shared: true, valueSuffix: ' st')
+      f.yAxis [{title: {text: "Antal", margin: 15, style: {color: '#24CCA9'}}}]
       f.colors(['#9061C2', '#3DF556', '#8FFFA3', '#FFFFD4','#FFADAD', '#F08181', '#F26363', '#F53D3D', '#DB3535'])
-      f.chart({:defaultSeriesType=>graph, backgroundColor:'rgba(255, 255, 255, 0.1)'})
-      f.plot_options({:column=>{:stacking=>"normal", :dataLabels => {:enabled => false}}})
+      f.chart({defaultSeriesType: graph, backgroundColor:'rgba(255, 255, 255, 0.1)'})
+      f.plot_options({column:{stacking: "normal", dataLabels: {enabled: false}}})
     end
   end
 end

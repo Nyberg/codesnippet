@@ -76,7 +76,14 @@ class CompetitionsController < ApplicationController
     else
       @tour_part = @tour_parts.first
     end
+    @date = params[:date] || @tour_part.date
 
+    @months = Hash.new()
+    months = TourPart.group_by_month(@tour_part.id, @competition.id)
+    months.each_with_index do |month, index|
+      tours = TourPart.by_competition_and_date(@competition.id, month.date.strftime("%m").to_i)
+      @months[month.date] = tours
+    end
     @tee = Tee.find(@tour_part.tee_id)
     @holes = Hole.where(tee_id: @tee.id)
 
