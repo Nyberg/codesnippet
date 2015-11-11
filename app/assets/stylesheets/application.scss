@@ -24,6 +24,14 @@
 .height {
     min-height: 200px;
 }
+
+.highcharts-tooltip>span {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid silver;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #888;
+    padding: 20px;
+}
 /* end */
 
 /* custom theme + Bootstrap resets */
@@ -40,6 +48,10 @@
 }
 
 .tours > li > a.active{
+	color: #24CCA9 !important;
+}
+
+.list-group > li > a.active{
 	color: #24CCA9 !important;
 }
 

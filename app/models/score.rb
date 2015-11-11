@@ -24,11 +24,6 @@ class Score < ActiveRecord::Base
     where("competition_id = #{id} AND tee_id = #{tee}").
     group("hole_id")
   }
-  # scope :hole_results, -> (tour_part, hole_id) {
-  #   select("scores.result, COUNT(scores.result) as sum").
-  #   where("tour_part_id = #{tour_part} AND hole_id = #{hole_id}").
-  #   group("result")
-  # }
 
   scope :get_type, -> (id, tour_part, type){
     select("COUNT(scores.id) as sum").
@@ -39,6 +34,17 @@ class Score < ActiveRecord::Base
     select("COUNT(scores.result_type) as sum").
     where("tour_part_id = #{tour_part_id} AND tee_id = #{tee_id} AND scores.result_type = '#{result}'").
     group("scores.hole_id")
+  }
+
+  scope :user_results, -> {
+    select("r.name as name, scores.result_type, COUNT(scores.id) as total").
+    joins("inner join results r on scores.result_id = r.id").
+    group("scores.result_type").
+    order("r.id ASC")
+  }
+
+  scope :by_user, -> user_id{
+    where("scores.user_id = #{user_id}")
   }
 
 end
