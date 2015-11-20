@@ -1,30 +1,29 @@
 %header.masthead
   .container
-    .row
+    .row.page_header.admin
       .col-md-6
-        %h1
-          Banor
-        %p.lead Nedan visas #{@courses.count} banor
-        = link_to "Ny bana", new_course_path, class: "btn btn-primary btn-sm"
+        %h1 Banor
 
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th Klubb
-      %th Antal hål
-      %th Tee(s)
-      %th Actions
-    %tbody
-      - @courses.each do |u|
-        %tr
-          %td= link_to u.name, course_path(u)
-          %td= u.club.name
-          %td= u.holes
-          %td
-            - u.tees.each do |t|
-              = t.color
-          %td
-            = link_to "", edit_course_path(u), class: "glyphicon glyphicon-pencil"
-            = link_to "", new_tee_path, class: "glyphicon glyphicon-plus"
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th Klubb
+            %th Antal hål
+            %th Tee(s)
+            %th Actions
+          %tbody
+            - @courses.each do |u|
+              %tr
+                %td= link_to u.name, course_path(u)
+                %td= u.club.name
+                %td= u.holes
+                %td
+                  - u.tees.each do |t|
+                    = t.color
+                %td
+                  = link_to "", edit_course_path(u), class: "glyphicon glyphicon-pencil"
+                  = link_to "", new_tee_path, class: "glyphicon glyphicon-plus"

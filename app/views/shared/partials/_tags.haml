@@ -1,0 +1,2 @@
+- @tags.each do |tag|
+  %span.tag= link_to (fa_icon "tags", class: "black", text: tag.name), competitions_path(term: tag.name)

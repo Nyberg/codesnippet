@@ -8,11 +8,10 @@ class UsersController < ApplicationController
 
     if @search
       @users = User.clubs.search(@search).by_name
-      @users = @users.paginate(:page => params[:page], :per_page => 10)
     else
       @users = User.by_name.includes(:club, :rounds)
-      @users = @users.paginate(:page => params[:page], :per_page => 10)
     end
+    @users = @users.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /users/1

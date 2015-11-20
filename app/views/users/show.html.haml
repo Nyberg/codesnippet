@@ -1,30 +1,6 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-6
         %h1= @user.name
-        %p.lead= @user.pdga.blank? ? @club.name : "##{@user.pdga} | #{@club.name}"
-
-    - @rounds.each do |round|
-      .row
-        .col-md-12
-          %h3= "#{round.tour_part.name} - #{round.competition.name}"
-          %table.table.table-hover
-            %tbody
-              %tr
-                %td Nr
-                - round.tee.holes.each do |h|
-                  %td.text-center= h.number
-
-              %tr
-                %td Längd
-                - round.tee.holes.each do |h|
-                  %td.text-center= "#{h.length} m"
-
-                %tr
-                  %td
-                    = link_to "#{round.place} #{round.user.name}", user_path(round.user.id)
-
-                  - round.scores.each do |s|
-                    %td{class: "#{get_score(s.score, s.hole.par)} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
-                  %td= calc_score(round.total, round.tee.par)
+        %small= @user.pdga.blank? ? @club.name : "##{@user.pdga} | #{@club.name}"

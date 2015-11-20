@@ -1,13 +1,15 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-8
         %h1
           Spelare
         - if @search
-          %p
+          %small
             = "Visar sökresultat för '#{@search}' - "
             = link_to "Visa alla", users_path
+        - else
+          %small Visar alla spelare
 
       .col-md-4
         .input-group.middle

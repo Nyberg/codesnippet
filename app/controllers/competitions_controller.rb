@@ -10,7 +10,10 @@ class CompetitionsController < ApplicationController
     if @search
       @competitions = Competition.search(@search)
       @tags = Competition.tagged_with(@search)
+    else
+      @competitions = @competitions.paginate(:page => params[:page], :per_page => 10)
     end
+
   end
 
   def stats
@@ -23,19 +26,8 @@ class CompetitionsController < ApplicationController
   def show
     @competition = Competition.where(id: params[:id]).first
     @page_title = "Startsida"
-    # if @competition.tour_parts.count == 1
-    #   tour = TourPart.where(competition_id: @competition.id).first
-    #   redirect_to tour_part_path(tour.id)
-    # end
-
     @heading = @competition.name
-    @tour_parts = TourPart.where(competition_id: params[:id]).order("date DESC").includes(:course, :tee, :rounds)
-    @tees = []
-
-    @tour_parts.each do |tour|
-      @tees << tour.tee
-    end
-    @tees = @tees.uniq(&:id)
+    @tags = @competition.tags
   end
 
   def records
@@ -43,15 +35,16 @@ class CompetitionsController < ApplicationController
     @heading = "Rekordrundor"
     @competition = Competition.find(params[:id])
     @tees = Tee.where(id: @competition.tour_parts.uniq).includes(:rounds, :holes)
-    rounds = Round.bogeyfree_rounds(@competition.id)
-    @bogeyfrees = []
-    rounds.each do |round|
-      data = round.result_type.split(',')
-      if data.include?("bogey" || "dblbogey" || "trpbogey" || "other")
-      else
-        @bogeyfrees << round
-      end
-    end
+    rounds = Round.bogeyfree_rounds.from_competition(@competition.id).group_by_round
+    @bogeyfree_rounds = stats.bogeyfree_rounds(rounds)
+  end
+
+  def tours
+    @competition = Competition.where(id: params[:id]).first
+    @page_title = "Deltävlingar"
+    @heading = @competition.name
+    @tour_parts = TourPart.where(competition_id: params[:id]).order("date DESC").includes(:course, :tee, :rounds)
+    @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 10)
   end
 
   def totals

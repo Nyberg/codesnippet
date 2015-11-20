@@ -1,0 +1,18 @@
+.row
+  = form_for @import, html: { multipart: true } do |f|
+    .col-md-4
+      .form-group
+        = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
+      .form-group
+        = f.text_field :tour_name, placeholder: "Deltävlingens namn", class: 'form-control'
+      .form-group
+        = f.label :club
+        = f.collection_select(:club, Club.all, :id, :name, class: 'form-control')
+      .form-group
+        = f.label :Datum
+        = f.datetime_select :date, class: 'form-control'
+      .form-group
+        = f.label :Ladda_upp_fil
+        = f.file_field :import_sheet
+      .form-group
+        = f.submit "Skicka import", class: 'btn btn-sm btn-primary'

@@ -1,0 +1,27 @@
+%header.masthead
+  .container
+    .row.page_header.admin
+      .col-md-6
+        %h1 Importer
+
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
+
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Tävling
+            %th Namn
+            %th Klubb
+            %th File
+            %th Actions
+          %tbody
+            - @imports.each do |i|
+              %tr
+                %td= i.comp_name
+                %td= i.tour_name
+                %td= i.club
+                %td= link_to "Ladda ner fil", i.import_sheet_url
+                %td
+                  = link_to "", import_tour_part_path(id: i), class: "glyphicon glyphicon-plus"
+                  = link_to "", import_path(i), method: :delete, class: 'glyphicon glyphicon-trash'

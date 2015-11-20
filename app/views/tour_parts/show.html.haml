@@ -1,10 +1,10 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-12
         .col-md-8
           %h1= @tour_part.name
-          %h4
+          %small
             = link_to @tour_part.competition.name, competition_path(@tour_part.competition.id)
             = " - #{@tour_part.competition.club.name}"
 

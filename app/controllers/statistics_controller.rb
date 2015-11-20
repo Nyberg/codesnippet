@@ -9,11 +9,9 @@ class StatisticsController < ApplicationController
     @graphs = stats.graph_types
 
     if @data_content == "result"
-      if @data_type == "user"
-        data = Score.user_results.by_user(current_user.id)
-      else
-        data = Score.user_results
-      end
+      data = Score.user_results
+      data = data.by_user(current_user.id) if @data_type == "user"
+
       @results = []
       types = []
       results = []
@@ -24,19 +22,27 @@ class StatisticsController < ApplicationController
       @chart = stats.build_user_stats(@graph_type, types, results)
     else
       if @data_type == "user"
-        current_user.rounds.count
-        current_user.tour_parts.count
+        rounds = Round.bogeyfree_rounds.by_user(current_user.id)
+        bogeyfree_rounds = stats.bogeyfree_rounds(rounds).count
+        rounds_count = current_user.rounds.count
+        tour_parts = current_user.rounds.uniq(&:tour_part_id).count
+        comps = current_user.rounds.map(&:competition_id).uniq
+        below_par = Round.below_par.by_user(current_user.id)
+        below_par = below_par.first.sum
       else
-        rounds = Round.all.count
+        rounds = Round.bogeyfree_rounds.group_by_round
+        rounds_count = Round.all.count
+        comps = Competition.all.count
         tour_parts = TourPart.all.count
         players = User.all.count
         types = ["Rundor", "Deltävlingar", "Spelare"]
+        bogeyfree_rounds = stats.bogeyfree_rounds(rounds).count
+        below_par = Round.below_par
+        below_par = below_par.first.sum
       end
 
-      @chart = stats.build_common_stats(@graph_type, rounds, tour_parts, players, types)
+      @chart = stats.build_common_stats(@graph_type, rounds_count, comps, tour_parts, players, types, bogeyfree_rounds, below_par)
     end
-
-
   end
 
   def stats
@@ -59,13 +65,9 @@ class StatisticsController < ApplicationController
     end
     @data.flatten(2)
 
-
     @rounds = @rounds.reverse if @order == "reverse"
     @rounds = @rounds if @order == "inverse"
 
-  end
-
-  def hole_stats
   end
 
 end

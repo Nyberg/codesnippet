@@ -1,27 +1,33 @@
 %header.masthead
   .container
-    .row
+    .row.page_header.admin
       .col-md-6
-        %h1
-          Deltävlingar
-          %p.lead Nedan visas #{@tour_parts.count} tävlingar
+        %h1 Deltävlingar
         = link_to "Ny tävling", new_tour_part_path
 
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th Tävling
-      %th Datum
-      %th Lägg till runda
-      %th
-    %tbody
-      - @tour_parts.each do |u|
-        %tr
-          %td= u.name
-          %td= link_to u.competition.name, competition_path(u.competition)
-          %td= u.date.strftime("%Y-%m-%d")
-          %td= link_to "Lägg till", new_round_path(id: u)
-          %td
-            = link_to "", edit_tour_part_path(u), class: "glyphicon glyphicon-pencil"
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th Tävling
+            %th Tee
+            %th Datum
+            %th Lägg till runda
+            %th
+          %tbody
+            - @tour_parts.each do |u|
+              %tr
+                %td= u.name
+                %td= link_to u.competition.name, competition_path(u.competition)
+                %td= u.tee.color
+                %td= u.date.strftime("%Y-%m-%d")
+                %td= link_to "Lägg till", new_round_path(id: u)
+                %td
+                  = link_to "", edit_tour_part_path(u), class: "glyphicon glyphicon-pencil"
+                  = link_to "", tour_part_path(u), method: :delete, class: 'glyphicon glyphicon-trash'
+
+        .text-center
+          = will_paginate @tour_parts

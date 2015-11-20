@@ -1,21 +1,21 @@
 %header.masthead
   .container
-    .row
+    .row.page_header.admin
       .col-md-6
-        %h1
-          Tävlingar
-          %p.lead Nedan visas #{@competitions.count} tävlingar
+        %h1 Tävlingar
         = link_to "Ny tävling", new_competition_path
 
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th
-    %tbody
-      - @competitions.each do |u|
-        %tr
-          %td= u.name
-          %td
-            = link_to "", edit_competition_path(u), class: "glyphicon glyphicon-pencil"
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th
+          %tbody
+            - @competitions.each do |u|
+              %tr
+                %td= u.name
+                %td
+                  = link_to "", edit_competition_path(u), class: "glyphicon glyphicon-pencil"

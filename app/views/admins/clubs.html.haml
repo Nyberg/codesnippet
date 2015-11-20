@@ -1,21 +1,20 @@
 %header.masthead
   .container
-    .row
+    .row.page_header.admin
       .col-md-6
-        %h1
-          Klubbar
-          %p.lead Nedan visas #{@clubs.count} klubbar
-        = link_to "Ny klubb", new_club_path
+        %h1 Klubbar
 
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th
-    %tbody
-      - @clubs.each do |u|
-        %tr
-          %td= u.name
-          %td
-            = link_to "", edit_club_path(u), class: "glyphicon glyphicon-pencil"
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th
+          %tbody
+            - @clubs.each do |u|
+              %tr
+                %td= u.name
+                %td
+                  = link_to "", edit_club_path(u), class: "glyphicon glyphicon-pencil"

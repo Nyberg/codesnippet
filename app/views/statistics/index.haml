@@ -1,13 +1,12 @@
 .container
-  .row.spacing
+  .row.spacing.page_header.normal
     .col-md-12
       %h1 Statistik
+      %small Här kan du se siffror om det mesta!
 
   .row.spacing
     .col-md-2
       %ul.list-group
-        %li.list-group-item
-          Statistik
         %li.list-group-item
           = link_to "Resultat", statistics_path(graph: @graph_type, content: "result", data_type: @data_type), class: (@data_content == "result" ? 'active' : '')
         %li.list-group-item

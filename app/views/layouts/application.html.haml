@@ -14,6 +14,7 @@
           = link_to "dgstats", "/"
         .navbar-collapse.collapse
           %ul.nav.navbar-right.navbar-nav
+            %li= link_to "Importera tävling", new_import_path
             %li= link_to "Statistik", statistics_path
             %li
               = link_to "Tävlingar", competitions_path

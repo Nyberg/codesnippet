@@ -12,8 +12,8 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'rails_12factor', group: :production
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'jquery-turbolinks'
-# Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
+gem 'roo', '~> 2.1.0'
+gem 'carrierwave'
 gem 'mysql2'
 gem 'haml'
 # Use SCSS for stylesheets

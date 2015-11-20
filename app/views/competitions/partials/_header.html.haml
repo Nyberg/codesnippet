@@ -1,7 +1,8 @@
 .container
-  .row.spacing
+  .row.spacing.page_header.normal
     .col-md-4
       %h1= @heading
+      %small Här kan du se statistik för varje enskild deltväling.
       -# %span= fa_icon "tags", class: "black"
       -# - @competition.tag_list.each do |tag|
       -#   %span.tag= link_to tag, competitions_path(term: tag)
@@ -11,6 +12,8 @@
       %ul.nav.nav-tabs.pull-right
         %li
           = link_to (fa_icon "home", text: "Startsida"), competition_path(@competition), class: (title == "Startsida" ? 'active' : '')
+        %li
+          = link_to (fa_icon "info", text: "Deltävlingar"), competition_tours_path(id: @competition), class: (title == "Deltävlingar" ? 'active' : '')
         %li
           = link_to (fa_icon "trophy", text: "Totalställning"), competition_totals_path(id: @competition.id), class: (title == "Totalställning" ? 'active' : '')
         %li

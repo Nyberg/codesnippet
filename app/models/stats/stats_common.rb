@@ -12,6 +12,18 @@ class Stats::StatsCommon
     data = [user: round.user, club: round.user.club.name, par: round.tee.par, score: round.total, results: numbers(round.scores) ]
   end
 
+  def bogeyfree_rounds(rounds)
+    bogeyfrees = []
+    rounds.each do |round|
+      data = round.result_type.split(',')
+      if data.include?("5" || "6" || "7" || "8")
+      else
+        bogeyfrees << round
+      end
+    end
+    bogeyfrees
+  end
+
   def get_hole_stats(datas)
     results = result_types
     sums = Array.new(results.size, 0)
@@ -168,33 +180,27 @@ class Stats::StatsCommon
       f.legend({layout: 'horizontal', itemDistance: 20, itemMarginTop: 15, borderWidth: 0})
       f.title({ text: "Resultat", style: {color: '#616161', "font-size": '12px'}})
       f.tooltip(shared: true, valueSuffix: ' st', borderColor: '#24CCA9', borderWidth: 1, useHtml: true, style: { padding: 10 })
-      f.colors(['#24CCA9'])
+      f.colors(['#9061C2'])
       f.chart({defaultSeriesType: graph, backgroundColor:'rgba(255, 255, 255, 0.1)'})
       f.plot_options({column:{stacking: "normal", dataLabels: {enabled: false}}})
     end
   end
 
-  def build_common_stats(graph, rounds, tour_parts, players, types)
+  def build_common_stats(graph, rounds, comps, tour_parts, players = nil, types, bogeyfree_rounds, below_par)
     @graph = LazyHighCharts::HighChart.new('column') do |f|
       f.title({ text: "Resultat", style: {color: '#616161', "font-size": '12px'}})
-      f.series(name: "Spelare", data: [players])
+      f.series(name: "Spelare", data: [players]) unless players.nil?
+      f.series(name: "Tävlingar", data: [comps])
       f.series(name: "Deltävlingar", data: [tour_parts])
       f.series(name: "Rundor", data: [rounds])
-      f.xAxis(categories: ["Data"])
+      f.series(name: "Under par", data: [below_par])
+      f.series(name: "Bogeyfria rundor", data: [bogeyfree_rounds])
+      f.xAxis(categories: ["Antal"])
       f.colors(['#24CCA9', '#616161', '#9061C2'])
+      f.legend({layout: 'horizontal', itemDistance: 20, itemMarginTop: 15, borderWidth: 0})
       f.chart({defaultSeriesType: graph, backgroundColor:'rgba(255, 255, 255, 0.1)'})
-      f.tooltip(shared: true, valueSuffix: ' st', borderColor: '#24CCA9', borderWidth: 1, useHtml: true, style: { padding: 10 })
+      f.tooltip(shared: false, valueSuffix: ' st', borderColor: '#24CCA9', borderWidth: 1, useHtml: true, style: { padding: 10 })
       f.options[:yAxis][:title] = {:text=>"Antal"}
     end
-    # @bar = LazyHighCharts::HighChart.new('column') do |f|
-
-    #   f.options[:xAxis] = {:plot_bands => "none", :title=>{:text=>"Time"}, :categories => types}
-    #   f.legend({layout: 'horizontal', itemDistance: 20, itemMarginTop: 15, borderWidth: 0})
-    #
-    #   f.tooltip(shared: false, valueSuffix: ' st', borderColor: '#24CCA9', borderWidth: 1, useHtml: true, style: { padding: 10 })
-    #   f.colors(['#24CCA9', '#616161', '#9061C2'])
-    #   f.chart({defaultSeriesType: "column", backgroundColor:'rgba(255, 255, 255, 0.1)'})
-    #   #f.plot_options({column:{stacking: "normal", dataLabels: {enabled: false}}})
-    # end
   end
 end

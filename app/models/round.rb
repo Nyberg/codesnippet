@@ -9,13 +9,22 @@ class Round < ActiveRecord::Base
   has_many :holes, through: :scores
 
   default_scope { order(total: :asc)}
-  #scope :by_date, -> {order(created_at: :asc)}
   scope :holes, -> (tee) { joins(:holes).where("holes.tee_id = #{tee}") }
-  scope :bogeyfree_rounds, -> (id) {
-    select("rounds.*, GROUP_CONCAT(s.result_type SEPARATOR ',') as result_type").
-    joins("INNER JOIN scores s on s.round_id = rounds.id").
-    where("rounds.competition_id = #{id}").
-    group("rounds.id")
+  scope :bogeyfree_rounds, -> {
+    select("rounds.*, GROUP_CONCAT(s.result_id SEPARATOR ',') as result_type").
+    joins("INNER JOIN scores s on s.round_id = rounds.id") }
+
+  # These 4 scopes are used for bogeyfree_rounds
+  scope :group_by_round, -> { group("rounds.id") }
+  scope :from_competition, -> (id) { where("rounds.competition_id = ?", id) }
+  scope :from_tour_part, -> (id) { where("rounds.tour_part_id = ?", id) }
+  scope :by_user, -> (user_id){ where("rounds.user_id = ?", user_id) }
+
+  # This scope gets all rounds with score lower than par
+  scope :below_par, -> {
+    select("COUNT(rounds.id) as sum").
+    joins("INNER JOIN tees t on rounds.tee_id = t.id").
+    where("rounds.total < t.par")
   }
 
   scope :competition_players, -> (id) {
@@ -26,13 +35,4 @@ class Round < ActiveRecord::Base
     group("u.id").
     order("u.name")
   }
-
-  #after_create :build_scores
-
- # def build_scores
- #   self.tee.holes.each do |h|
- #     Score.create(round: self, hole_id: h.id, tee_id: h.tee_id, user_id: self.user_id, score: h.par, tour_part_id: self.tour_part_id, competition_id: self.competition_id) # Associations must be defined correctly for this syntax, avoids using ID's directly.
- #   end
- # end
-
 end

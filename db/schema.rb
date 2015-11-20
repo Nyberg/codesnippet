@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109180224) do
+ActiveRecord::Schema.define(version: 20151119171719) do
 
   create_table "clubs", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20151109180224) do
     t.datetime "updated_at",           null: false
   end
 
+  create_table "imports", force: :cascade do |t|
+    t.string   "comp_name",  limit: 255
+    t.string   "tour_name",  limit: 255
+    t.datetime "date"
+    t.integer  "club",       limit: 4
+    t.string   "file",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,7 +92,7 @@ ActiveRecord::Schema.define(version: 20151109180224) do
     t.integer  "score",          limit: 4
     t.integer  "ob",             limit: 4
     t.integer  "tour_part_id",   limit: 4
-    t.string   "result",         limit: 255
+    t.string   "result_type",    limit: 255
     t.integer  "competition_id", limit: 4
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -110,11 +120,12 @@ ActiveRecord::Schema.define(version: 20151109180224) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "tees", force: :cascade do |t|
-    t.string   "color",      limit: 255
-    t.integer  "course_id",  limit: 4
-    t.integer  "par",        limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "color",       limit: 255
+    t.integer  "course_id",   limit: 4
+    t.integer  "par",         limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "course_name", limit: 255
   end
 
   create_table "tour_parts", force: :cascade do |t|

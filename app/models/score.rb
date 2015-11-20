@@ -5,7 +5,7 @@ class Score < ActiveRecord::Base
   belongs_to :hole
   belongs_to :tee
   belongs_to :competition
-  #belongs_to :result
+  belongs_to :result
 
   scope :tour_part_avg, -> (id) {
     select("scores.hole_id, ROUND(SUM(scores.score), 2) as sum, COUNT(scores.id) as number").

@@ -1,6 +1,6 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-12
         .col-md-6
           %h1
@@ -24,3 +24,10 @@
                     %h5
                       = link_to comp.name, competition_path(comp.id)
                   %li= fa_icon "calendar", class: "fa-1x", text: comp.date.strftime("%Y-%m-%d")
+    .row
+      .col-md-12
+        .col-md-12
+          %h1 Största taggar
+        .col-md-6
+          = render :partial => '/shared/partials/tags', locales: {tags: @tags}
+    .row.spacing
