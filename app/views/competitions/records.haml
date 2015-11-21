@@ -26,19 +26,20 @@
                     %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= s.score
                   %td= calc_score(r.total, r.tee.par)
   .row.spacing
-    .col-md-12
-      %h2.highlight Bogeyfria rundor
-      %table.table.table-hover
-        %tbody
-          %tr
-            %td Nr
-            %td Tee
-            - @tees.first.holes.each do |h|
-              %td= h.number
-        - @bogeyfree_rounds.each do |round|
-          %tr
-            %td= round.user.name
-            %td= round.tee.color
-            - round.scores.each do |s|
-              %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
-            %td= calc_score(round.total, round.tee.par)
+    - unless @bogeyfree_rounds.blank?
+      .col-md-12
+        %h2.highlight Bogeyfria rundor
+        %table.table.table-hover
+          %tbody
+            %tr
+              %td Nr
+              %td Tee
+              - @tees.first.holes.each do |h|
+                %td= h.number
+          - @bogeyfree_rounds.each do |round|
+            %tr
+              %td= round.user.name
+              %td= round.tee.color
+              - round.scores.each do |s|
+                %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+              %td= calc_score(round.total, round.tee.par)

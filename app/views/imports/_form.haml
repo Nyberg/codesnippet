@@ -1,18 +1,36 @@
-.row
-  = form_for @import, html: { multipart: true } do |f|
-    .col-md-4
-      .form-group
-        = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
-      .form-group
-        = f.text_field :tour_name, placeholder: "Deltävlingens namn", class: 'form-control'
-      .form-group
-        = f.label :club
-        = f.collection_select(:club, Club.all, :id, :name, class: 'form-control')
-      .form-group
-        = f.label :Datum
-        = f.datetime_select :date, class: 'form-control'
-      .form-group
-        = f.label :Ladda_upp_fil
-        = f.file_field :import_sheet
-      .form-group
-        = f.submit "Skicka import", class: 'btn btn-sm btn-primary'
+.row.spacing
+  .col-md-6
+    %p.well Här kan du enkelt importera tävlingar i excel-format.
+  .col-md-6
+    = form_for @import, html: { multipart: true }, class: 'form-horizontal' do |f|
+      %fieldset
+        .form-group
+          = f.label "Välj tävling: "
+          = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label "Deltävlingens namn: "
+          = f.text_field :tour_name, placeholder: "Deltävlingens namn", class: 'form-control'
+
+        .form-group
+          = f.label "Välj klubb: "
+          = f.collection_select(:club, Club.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label "Välj bana: "
+          = f.collection_select(:course, Course.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label "Välj tee: "
+          = f.collection_select(:tee, Tee.all, :id, :name_with_course_name, class: 'form-control')
+
+        .form-group
+          = f.label "Datum: "
+          = f.datetime_select :date, class: 'form-control'
+
+        .form-group
+          = f.label :Ladda_upp_fil
+          = f.file_field :import_sheet
+
+        .form-group
+          = f.submit "Skicka import", class: 'btn btn-sm btn-primary'

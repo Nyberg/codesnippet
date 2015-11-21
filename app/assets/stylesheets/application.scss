@@ -32,9 +32,11 @@
     box-shadow: 1px 1px 2px #888;
     padding: 20px;
 }
-/* end */
 
-/* custom theme + Bootstrap resets */
+ul.list-group#admin{
+	margin-top: 2.5em;
+}
+
 /*@import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');*/
 @import url('https://fonts.googleapis.com/css?family=Asap');
 @import url('https://fonts.googleapis.com/css?family=Cookie');
@@ -355,9 +357,9 @@ h3.highlight  {
 }
 
 .panel,.panel-heading {
-  	border-radius:0;
-  	border-width:0;
-  	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
+	border-radius:0;
+	border-width:0;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
 	box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
 }
 

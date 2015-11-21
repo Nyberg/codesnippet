@@ -3,9 +3,11 @@ class CreateImports < ActiveRecord::Migration
     create_table :imports do |t|
       t.string :comp_name
       t.string :tour_name
+      t.integer :course
+      t.integer :tee
       t.timestamp :date
       t.integer :club
-      t.string :file
+      t.string :import_sheet
 
       t.timestamps null: false
     end

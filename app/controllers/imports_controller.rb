@@ -15,27 +15,25 @@ class ImportsController < ApplicationController
 
   def import_tour_part
     @import = Import.find(params[:id])
-    @club = Club.where(id: @import.club).first
-
-    sheet = Roo::Spreadsheet.open("#{Rails.public_path}#{@import.import_sheet_url}", extension: :xlsx)
-    info = sheet.row(1)
-    results = []
-
-    @course = Course.where(name: info[3]).first
-    @tee = Tee.where(color: info[4]).where(course_name: info[3]).first
+    @club = Club.find(@import.club)
+    @course = Course.find(@import.course)
+    @tee = Tee.find(@import.tee)
     @tour_part = TourPart.create(name: @import.tour_name, course_id: @course.id, tee_id: @tee.id, competition_id: @import.comp_name, date: @import.date)
 
+    sheet = Roo::Spreadsheet.open("#{Rails.public_path}#{@import.import_sheet_url}", extension: :xlsx)
+    results = []
+
     sheet.each_with_index do |row, index|
-      next if index == 0
       results.clear
       total_score = 0
       place = row[0]
-      user = User.where(name: row[1]).first
-      results << row[2..19]
+      full_name = "#{row[1]} #{row[2]}"
+      user = User.where(name: full_name).first
+      results << row[3..20]
       results = results.flatten
-      score = row[20]
-      points = row[21]
-      @round = Round.create(user_id: user.id, tour_part_id: @tour_part.id, course_id: @tour_part.course_id, competition_id: @tour_part.competition_id, tee_id: @tour_part.tee_id, total: 20, place: place.to_f )
+      score = row[21]
+      points = row[22]
+      @round = Round.create(user_id: user.id, tour_part_id: @tour_part.id, course_id: @tour_part.course_id, competition_id: @tour_part.competition_id, tee_id: @tour_part.tee_id, total: 20, place: place.to_f, points: points )
       @round.tee.holes.each_with_index do |hole, index|
         num = results[index]
         result_type = get_score(num, hole.par)
@@ -94,6 +92,6 @@ class ImportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def import_params
-      params.require(:import).permit(:comp_name, :tour_name, :date, :club, :import_sheet)
+      params.require(:import).permit(:comp_name, :tour_name, :date, :club, :import_sheet, :course, :tee)
     end
 end

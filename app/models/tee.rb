@@ -15,4 +15,8 @@ class Tee < ActiveRecord::Base
     order("tees.id, h.number")
   }
 
+  def name_with_course_name
+    "#{course_name} - #{color}"
+  end
+
 end

@@ -34,7 +34,7 @@ class CompetitionsController < ApplicationController
     @page_title = "Rekordrundor"
     @heading = "Rekordrundor"
     @competition = Competition.find(params[:id])
-    @tees = Tee.where(id: @competition.tour_parts.uniq).includes(:rounds, :holes)
+    @tees = Tee.where(id: @competition.tour_parts.map(&:tee_id)).includes(:rounds, :holes)
     rounds = Round.bogeyfree_rounds.from_competition(@competition.id).group_by_round
     @bogeyfree_rounds = stats.bogeyfree_rounds(rounds)
   end

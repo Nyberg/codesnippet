@@ -76,7 +76,7 @@ module ApplicationHelper
       return 5 if score == 5
       return 6 if score == 6
       return 7 if score == 7
-      return 8 if score >= 8
+      return 8 if score == 8
     elsif par == 5
       return "ace" if score == 1
       return "albatross" if score == 2

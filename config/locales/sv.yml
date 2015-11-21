@@ -1,0 +1,28 @@
+sv:
+
+  Swedish: "Svenska"
+  English: "Engelska"
+
+  # root index
+  page_information: "Statistik för Svenska discgolftävlingar"
+  Latest_competitions: "Senaste tävlingarna"
+  Most_used_tags: "Mest använda taggarna"
+
+  # main menu
+  Players: "Spelare"
+  Tournaments: "Tävlingar"
+  Statistics: "Statistik"
+  Dashboard: "Kontrollpanel"
+  Logout: "Logga ut"
+  Login: "Logga in"
+  Lang: "Språk"
+
+  # common
+  All_shown: "Visar alla %{resource}"
+  Search: "Sök"
+  Search_resource: "Sök %{resource}.."
+
+  Name: "Namn"
+  Club: "Klubb"
+  Pdga: "Pdga #"
+  Division: "Division"

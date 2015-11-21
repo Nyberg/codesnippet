@@ -3,31 +3,32 @@
     .row.spacing.page_header.normal
       .col-md-8
         %h1
-          Spelare
+          = t(:Players)
         - if @search
           %small
             = "Visar sökresultat för '#{@search}' - "
             = link_to "Visa alla", users_path
         - else
-          %small Visar alla spelare
+          %small= t(:All_shown, resource: t(:Players).downcase)
 
-      .col-md-4
+    .row.spacing
+      .col-md-12
         .input-group.middle
           = form_tag users_path, method: :get do
-            = text_field_tag :term, @search, size: 32, placeholder: "Sök spelare..", class: "form-control"
+            = text_field_tag :term, @search, size: 32, placeholder: t(:Search_resource, resource: t(:Players).downcase), class: "form-control"
           %span.input-group-btn
-            = submit_tag "Sök", type: "button", class: "btn btn-primary"
+            = submit_tag t(:Search), type: "button", class: "btn btn-primary"
 
-    .row
+    .row.spacing
       .col-md-12
         %table.table.table-striped
           %thead
             %tr
-              %th Namn
-              %th Klubb
-              %th PDGA #
-              %th Division
-              %th Tävlingar
+              %th= t(:Name)
+              %th= t(:Club)
+              %th= t(:Pdga)
+              %th= t(:Division)
+              %th= t(:Tournaments)
           %tbody
             - @users.each do |u|
               %tr

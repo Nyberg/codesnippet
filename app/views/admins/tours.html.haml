@@ -1,9 +1,13 @@
 %header.masthead
   .container
     .row.page_header.admin
-      .col-md-6
+      .col-md-4
         %h1 Deltävlingar
-        = link_to "Ny tävling", new_tour_part_path
+
+      .col-md-8#leftCol
+        %ul.nav.nav-tabs.pull-right
+          %li
+            = link_to (fa_icon "plus", text: "Ny deltävling"), new_tour_part_path
 
     .row.spacing
       = render :partial => 'admins/partials/menu'
