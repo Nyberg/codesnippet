@@ -43,8 +43,22 @@ class Score < ActiveRecord::Base
     order("r.id ASC")
   }
 
-  scope :by_user, -> user_id{
+  scope :by_user, -> (user_id) {
     where("scores.user_id = #{user_id}")
+  }
+
+  scope :hole_result_stats, -> (hole_id) {
+    select("r.name, COUNT(scores.id) as sum").
+    joins("INNER JOIN results r on scores.result_id = r.id").
+    where("scores.hole_id = #{hole_id}")
+  }
+
+  scope :by_user, -> (user_id) {
+    where("scores.user_id = #{user_id}")
+  }
+
+  scope :group_by_result, -> {
+    group("r.id")
   }
 
 end

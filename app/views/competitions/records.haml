@@ -4,7 +4,7 @@
   - @tees.each do |tee|
     .row
       .col-md-12
-        %h2.highlight= "Rekordrundor #{tee.color} tee"
+        %h2.highlight= "#{t(:Record_rounds)} - #{tee.color} tee"
         %table.table.table-hover
           %tbody
             %tr
@@ -12,7 +12,7 @@
               - tee.holes.each do |h|
                 %td= h.number
             %tr
-              %td Längd
+              %td= t(:Length)
               - tee.holes.each do |h|
                 %td= h.length
 
@@ -28,11 +28,11 @@
   .row.spacing
     - unless @bogeyfree_rounds.blank?
       .col-md-12
-        %h2.highlight Bogeyfria rundor
+        %h2.highlight= t(:bogeyfree_rounds)
         %table.table.table-hover
           %tbody
             %tr
-              %td Nr
+              %td= t(:Name)
               %td Tee
               - @tees.first.holes.each do |h|
                 %td= h.number

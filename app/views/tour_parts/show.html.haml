@@ -35,7 +35,7 @@
           %tr
             %td Nr
             - @holes.each do |h|
-              %td.text-center= h.number
+              %td.text-center= link_to h.number, hole_path(h)
 
           %tr
             %td Längd

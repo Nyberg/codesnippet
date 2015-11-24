@@ -6,6 +6,12 @@ class TourPartsController < ApplicationController
 
   def index
     @tour_parts = TourPart.all
+    @search = params[:term] || nil
+    if @search
+      @tour_parts = TourPart.search(@search)
+    else
+      @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   def stats

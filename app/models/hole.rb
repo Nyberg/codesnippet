@@ -17,4 +17,9 @@ class Hole < ActiveRecord::Base
     group("holes.number")
   }
 
+  scope :hole_stats, -> (id) {
+    select("holes.*").
+    where("holes.id = #{id}")
+  }
+
 end

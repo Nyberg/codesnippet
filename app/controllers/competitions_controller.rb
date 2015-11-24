@@ -25,14 +25,14 @@ class CompetitionsController < ApplicationController
   # GET /competitions/1.json
   def show
     @competition = Competition.where(id: params[:id]).first
-    @page_title = "Startsida"
+    @page_title = t(:Home)
     @heading = @competition.name
     @tags = @competition.tags
   end
 
   def records
-    @page_title = "Rekordrundor"
-    @heading = "Rekordrundor"
+    @page_title = t(:Record_rounds)
+    @heading = t(:Record_rounds)
     @competition = Competition.find(params[:id])
     @tees = Tee.where(id: @competition.tour_parts.map(&:tee_id)).includes(:rounds, :holes)
     rounds = Round.bogeyfree_rounds.from_competition(@competition.id).group_by_round
@@ -41,22 +41,22 @@ class CompetitionsController < ApplicationController
 
   def tours
     @competition = Competition.where(id: params[:id]).first
-    @page_title = "Deltävlingar"
+    @page_title = t(:Tour_parts)
     @heading = @competition.name
     @tour_parts = TourPart.where(competition_id: params[:id]).order("date DESC").includes(:course, :tee, :rounds)
     @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 10)
   end
 
   def totals
-    @page_title = "Totalställning"
-    @heading = "Totalställning"
+    @page_title = t(:Overall_standings)
+    @heading = t(:Overall_standings)
     @competition = Competition.find(params[:id])
     @users = Round.competition_players(params[:id])
   end
 
   def statistics
-    @page_title = "Statistik"
-    @heading = "Statistik"
+    @page_title = t(:Statistics)
+    @heading = t(:Statistics)
     @graph_type = params[:graph] || "spline"
     @data_type = params[:data_type] || "avg"
     @competition = Competition.find(params[:id])

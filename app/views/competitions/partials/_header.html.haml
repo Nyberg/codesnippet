@@ -11,12 +11,12 @@
     .col-md-8#leftCol
       %ul.nav.nav-tabs.pull-right
         %li
-          = link_to (fa_icon "home", text: "Startsida"), competition_path(@competition), class: (title == "Startsida" ? 'active' : '')
+          = link_to (fa_icon "home", text: t(:Home)), competition_path(@competition), class: (title == t(:Home) ? 'active' : '')
         %li
-          = link_to (fa_icon "info", text: "Deltävlingar"), competition_tours_path(id: @competition), class: (title == "Deltävlingar" ? 'active' : '')
+          = link_to (fa_icon "info", text: t(:Tour_parts)), competition_tours_path(id: @competition), class: (title == t(:Tour_parts) ? 'active' : '')
         %li
-          = link_to (fa_icon "trophy", text: "Totalställning"), competition_totals_path(id: @competition.id), class: (title == "Totalställning" ? 'active' : '')
+          = link_to (fa_icon "trophy", text: t(:Overall_standings)), competition_totals_path(id: @competition.id), class: (title == t(:Overall_standings) ? 'active' : '')
         %li
-          = link_to (fa_icon "bullseye", text: "Rekordrundor"), competition_records_path(id: @competition.id), class: (title == "Rekordrundor" ? 'active' : '')
+          = link_to (fa_icon "bullseye", text: t(:Record_rounds)), competition_records_path(id: @competition.id), class: (title == t(:Record_rounds) ? 'active' : '')
         %li
-          = link_to (fa_icon "area-chart", text: "Statistik"), competition_statistics_path(id: @competition.id), class: (title == "Statistik" ? 'active' : '')
+          = link_to (fa_icon "area-chart", text: t(:Statistics)), competition_statistics_path(id: @competition.id), class: (title == t(:Statistics) ? 'active' : '')

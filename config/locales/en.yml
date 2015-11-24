@@ -1,4 +1,22 @@
 en:
+  # Date & time formats
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    # Used in date_select and datetime_select.
+    order:
+      - year
+      - month
+      - day
 
   Swedish: "Swedish"
   English: "English"
@@ -12,6 +30,11 @@ en:
   Players: "Players"
   Tournaments: "Tournaments"
   Statistics: "Statistics"
+  Statistics_small: "Here you can see alot of numbers!"
+  Tour_parts: "Tour parts"
+  Competition: "Tournament"
+  Rounds: "Rounds"
+  Import_tour_part: "Import tournament"
   Dashboard: "Dashboard"
   Logout: "Log out"
   Login: "Log in"
@@ -21,8 +44,41 @@ en:
   All_shown: "Showing all %{resource}"
   Search: "Search"
   Search_resource: "Search %{resource}.."
+  Date: "Date"
 
   Name: "Name"
   Club: "Club"
   Pdga: "Pdga #"
   Division: "Division"
+  Course: "Course"
+
+  Hole: "Hole"
+  Par: "Par"
+  Length: "Length"
+  Result: "Results"
+  Summary: "Summary"
+  Results_for: "Result for hole %{number}"
+  All_players: "All players"
+  Quantity: "Quantity"
+  St: ""
+  Tee: "Tee"
+
+  #Imports
+  Send_import: "Send import"
+  Upload_file: "Choose file"
+
+  # Tags
+  Tags: "Tags"
+
+  # Competitions
+  Home: "Home"
+  Overall_standings: "Overall standings"
+  Record_rounds: "Record rounds"
+
+  # Statistik
+  Bogeyfree_rounds: "Bogey free rounds"
+  Below_par: "Below par"
+  Tour_part_avg: "Average result for all tour parts"
+  Avg_result: "Average"
+  Your_round: "Your round"
+  Results_for_tour_part: "Result %{name} - %{date} - %{color} tee"

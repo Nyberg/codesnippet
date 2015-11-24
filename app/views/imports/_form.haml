@@ -5,32 +5,32 @@
     = form_for @import, html: { multipart: true }, class: 'form-horizontal' do |f|
       %fieldset
         .form-group
-          = f.label "Välj tävling: "
+          = f.label t(:Competition)
           = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
 
         .form-group
-          = f.label "Deltävlingens namn: "
-          = f.text_field :tour_name, placeholder: "Deltävlingens namn", class: 'form-control'
+          = f.label t(:Name)
+          = f.text_field :tour_name, placeholder: t(:Name), class: 'form-control'
 
         .form-group
-          = f.label "Välj klubb: "
+          = f.label t(:Club)
           = f.collection_select(:club, Club.all, :id, :name, class: 'form-control')
 
         .form-group
-          = f.label "Välj bana: "
+          = f.label t(:Course)
           = f.collection_select(:course, Course.all, :id, :name, class: 'form-control')
 
         .form-group
-          = f.label "Välj tee: "
+          = f.label t(:Tee)
           = f.collection_select(:tee, Tee.all, :id, :name_with_course_name, class: 'form-control')
 
         .form-group
-          = f.label "Datum: "
+          = f.label t(:Date)
           = f.datetime_select :date, class: 'form-control'
 
         .form-group
-          = f.label :Ladda_upp_fil
+          = f.label t(:Upload_file)
           = f.file_field :import_sheet
 
         .form-group
-          = f.submit "Skicka import", class: 'btn btn-sm btn-primary'
+          = f.submit t(:Send_import), class: 'btn btn-sm btn-primary'

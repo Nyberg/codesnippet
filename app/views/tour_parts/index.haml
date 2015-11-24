@@ -1,0 +1,42 @@
+%header.masthead
+  .container
+    .row.spacing.page_header.normal
+      .col-md-8
+        %h1
+          = t(:Tour_parts)
+        - if @search
+          %small
+            = "Visar sökresultat för '#{@search}' - "
+            = link_to "Visa alla", tour_parts_path
+        - else
+          %small= t(:All_shown, resource: t(:Tour_parts).downcase)
+
+    .row.spacing
+      .col-md-12
+        .input-group
+          = form_tag tour_parts_path, method: :get do
+            = text_field_tag :term, @search, size: 32, placeholder: t(:Search_resource, resource: t(:Tour_parts).downcase), class: "form-control"
+          %span.input-group-btn
+            = submit_tag t(:Search), type: "button", class: "btn btn-primary"
+
+    .row.spacing
+      .col-md-12
+        %table.table.table-striped
+          %thead
+            %tr
+              %th= t(:Name)
+              %th= t(:Competition)
+              %th= t(:Course)
+              %th= t(:Tee)
+              %th= t(:Date)
+          %tbody
+            - @tour_parts.each do |tour|
+              %tr
+                %td= link_to tour.name, tour_part_path(tour)
+                %td= link_to tour.competition.name, competition_path(tour.competition)
+                %td= link_to tour.course.name, course_path(tour.course)
+                %td= tour.tee.color
+                %td= tour.date.strftime("%Y-%m-%d")
+    - unless @search
+      .text-center
+        = will_paginate @tour_parts
