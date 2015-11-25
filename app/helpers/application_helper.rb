@@ -4,6 +4,10 @@ module ApplicationHelper
     return true if logged_in?
   end
 
+  def admin?
+    return true if current_user.admin == 1
+  end
+
   def get_ob_stroke(ob)
     return "ob" if ob == 1
   end
@@ -30,8 +34,7 @@ module ApplicationHelper
       return "bogey" if score == 4
       return "dblbogey" if score == 5
       return "tplbogey" if score == 6
-      return "quadbogey" if score == 7
-      return "other" if score >= 8
+      return "other" if score >= 7
     elsif par == 4
       return "ace" if score == 1
       return "eagle" if score == 2
@@ -40,8 +43,40 @@ module ApplicationHelper
       return "bogey" if score == 5
       return "dblbogey" if score == 6
       return "tplbogey" if score == 7
-      return "quadbogey" if score == 8
-      return "other" if score >= 9
+      return "other" if score >= 8
+    elsif par == 5
+      return "ace" if score == 1
+      return "albatross" if score == 2
+      return "eagle" if score == 3
+      return "birdie" if score == 4
+      return "par"  if score == 5
+      return "bogey" if score == 6
+      return "dblbogey" if score == 7
+      return "tplbogey" if score == 8
+      return "quadbogey" if score == 9
+      return "other" if score >= 10
+    end
+  end
+
+  def get_result_id(score, par)
+
+    if par == 3
+      return 1 if score == 1
+      return 3 if score == 2
+      return 4  if score == 3
+      return 5 if score == 4
+      return 6 if score == 5
+      return 7 if score == 6
+      return 8 if score >= 7
+    elsif par == 4
+      return 1 if score == 1
+      return 2 if score == 2
+      return 3 if score == 3
+      return 4  if score == 4
+      return 5 if score == 5
+      return 6 if score == 6
+      return 7 if score == 7
+      return 8 if score == 8
     elsif par == 5
       return "ace" if score == 1
       return "albatross" if score == 2

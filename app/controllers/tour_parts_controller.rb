@@ -1,10 +1,17 @@
 class TourPartsController < ApplicationController
   before_action :set_tour_part, only: [:show, :edit, :update, :destroy]
   before_filter :stats
-  # GET /tour_parts
-  # GET /tour_parts.json
+  require "roo"
+  include ApplicationHelper
+
   def index
     @tour_parts = TourPart.all
+    @search = params[:term] || nil
+    if @search
+      @tour_parts = TourPart.search(@search)
+    else
+      @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   def stats
@@ -69,7 +76,7 @@ class TourPartsController < ApplicationController
   def destroy
     @tour_part.destroy
     respond_to do |format|
-      format.html { redirect_to tour_parts_url, notice: 'Tour part was successfully destroyed.' }
+      format.html { redirect_to admin_tours_path, notice: 'Tour part was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

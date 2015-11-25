@@ -1,21 +1,25 @@
 %header.masthead
   .container
-    .row
-      .col-md-6
-        %h1
-          Klubbar
-          %p.lead Nedan visas #{@clubs.count} klubbar
-        = link_to "Ny klubb", new_club_path
+    .row.page_header.admin
+      .col-md-4
+        %h1 Klubbar
 
+      .col-md-8#leftCol
+        %ul.nav.nav-tabs.pull-right
+          %li
+            = link_to (fa_icon "plus", text: "Ny klubb"), new_club_path
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th
-    %tbody
-      - @clubs.each do |u|
-        %tr
-          %td= u.name
-          %td
-            = link_to "", edit_club_path(u), class: "glyphicon glyphicon-pencil"
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
+
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th
+          %tbody
+            - @clubs.each do |u|
+              %tr
+                %td= u.name
+                %td
+                  = link_to "", edit_club_path(u), class: "glyphicon glyphicon-pencil"

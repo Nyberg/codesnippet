@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comp_name: 
+  tour_name: 
+  date: 
+  club: 1
+
+two:
+  comp_name: 
+  tour_name: 
+  date: 
+  club: 1

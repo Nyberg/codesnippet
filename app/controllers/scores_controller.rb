@@ -25,8 +25,9 @@ class ScoresController < ApplicationController
     @round = Round.find(params[:round_id])
     @round.tee.holes.each_with_index do |hole, index|
       num = scores[index].to_i
-      result = get_score(num, hole.par)
-      Score.create(round_id: @round.id, hole_id: hole.id, tee_id: hole.tee_id, user_id: @round.user_id, score: num, tour_part_id: @round.tour_part_id, competition_id: @round.competition_id, result: result)
+      result_type = get_score(num, hole.par)
+      result_id = get_result_id(num, hole.par)
+      Score.create(round_id: @round.id, hole_id: hole.id, tee_id: hole.tee_id, user_id: @round.user_id, score: num, tour_part_id: @round.tour_part_id, competition_id: @round.competition_id, result_type: result_type, result_id: result_id)
       total_score = total_score + num
     end
     @round.total = total_score

@@ -8,6 +8,7 @@ class AdminsController < ApplicationController
 
   def users
     @users = User.by_name
+    @users = @users.paginate(:page => params[:page], :per_page => 10)
   end
 
   def clubs
@@ -18,8 +19,13 @@ class AdminsController < ApplicationController
     @competitions = Competition.all
   end
 
+  def imports
+    @imports = Import.all
+  end
+
   def tours
     @tour_parts = TourPart.all.by_date
+    @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 10)
   end
 
   def courses
@@ -32,6 +38,7 @@ class AdminsController < ApplicationController
 
   def rounds
     @tour_parts = TourPart.all.includes(:rounds).order("date DESC")
+    @tour_parts = @tour_parts.paginate(:page => params[:page], :per_page => 5)
   end
 
 end

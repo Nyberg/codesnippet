@@ -1,0 +1,23 @@
+= render :partial => 'competitions/partials/header', locals: {title: @page_title, heading: @heading}
+
+.container
+  .row
+    .col-md-7
+      %h2.highlight= t(:Tour_parts)
+      %table.table.table-hover
+        %thead
+          %th= t(:Name)
+          %th= t(:Date)
+          %th= t(:Course)
+          %th= t(:Players)
+        %tbody
+          - @tour_parts.each do |tour|
+            %tr{data: {href: tour_part_path(tour)}}
+              %td= link_to tour.name, tour_part_path(tour)
+              %td= tour.date.strftime("%Y-%m-%d")
+              %td= "#{tour.course.name} - #{tour.tee.color}"
+              %td= "#{tour.rounds.count} #{t(:St)}"
+
+    .row.text-center
+      .col-md-7
+        = will_paginate @tour_parts

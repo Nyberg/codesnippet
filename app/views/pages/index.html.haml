@@ -1,18 +1,18 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-12
         .col-md-6
           %h1
             dgstats
             %p.lead
-              Statistik för Svenska Discgolftävlingar
+              = t(:page_information)
     .row
       = image_tag("IMG_1006.JPG", width: "100%")
     .row
       .col-md-12
         .col-md-12
-          %h1 Senaste Tävlingar
+          %h1= t(:Latest_competitions)
         - @competitions.each do |comp|
           .col-md-4
             .event
@@ -24,3 +24,10 @@
                     %h5
                       = link_to comp.name, competition_path(comp.id)
                   %li= fa_icon "calendar", class: "fa-1x", text: comp.date.strftime("%Y-%m-%d")
+    .row
+      .col-md-12
+        .col-md-12
+          %h1= t(:Most_used_tags)
+        .col-md-6
+          = render :partial => '/shared/partials/tags', locales: {tags: @tags}
+    .row.spacing

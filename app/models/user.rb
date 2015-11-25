@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-belongs_to :club
-has_many :rounds
-has_many :scores
+	belongs_to :club
+	has_many :rounds
+	has_many :scores
 
 	scope :by_name, -> {order(name: :asc)}
 	scope :clubs, -> { joins("INNER JOIN clubs c on users.club_id = c.id ")}

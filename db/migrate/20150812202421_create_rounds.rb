@@ -9,6 +9,7 @@ class CreateRounds < ActiveRecord::Migration
       t.integer :total
       t.integer :division_id
       t.integer :place
+      t.integer :points
       t.timestamps null: false
     end
   end

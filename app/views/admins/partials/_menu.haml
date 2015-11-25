@@ -1,0 +1,18 @@
+.col-md-2
+  %ul.list-group#admin
+    %li.list-group-item
+      = link_to (fa_icon "users", text: "Användare"), admin_users_path
+    %li.list-group-item
+      = link_to (fa_icon "asterisk", text: "Klubbar"), admin_clubs_path
+    %li.list-group-item
+      = link_to (fa_icon "tree", text: "Banor"), admin_courses_path
+    %li.list-group-item
+      = link_to (fa_icon "flag", text: "Tees"), admin_tees_path
+    %li.list-group-item
+      = link_to (fa_icon "trophy", text: "Tävlingar"), admin_competitions_path
+    %li.list-group-item
+      = link_to (fa_icon "star-o", text: "Deltävlingar"), admin_tours_path
+    %li.list-group-item
+      = link_to (fa_icon "fire", text: "Rundor"), admin_round_path
+    %li.list-group-item
+      = link_to (fa_icon "users", text: "Importer"), admin_imports_path

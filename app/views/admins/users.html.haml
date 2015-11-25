@@ -1,30 +1,37 @@
 %header.masthead
   .container
-    .row
-      .col-md-6
-        %h1
-          Användare
-          %p.lead Nedan visas #{@users.count} användare
-        = link_to "Ny spelare", new_user_path, class: 'btn btn-success'
+    .row.page_header.admin
+      .col-md-4
+        %h1 Användare
 
+      .col-md-8#leftCol
+        %ul.nav.nav-tabs.pull-right
+          %li
+            = link_to (fa_icon "plus", text: "Ny användare"), new_user_path
 
-.col-md-12
-  %table.table.table-hover
-    %thead
-      %th Namn
-      %th PDGA #
-      %th Division
-      %th Email
-      %th Klubb
-      %th
-    %tbody
-      - @users.each do |u|
-        %tr
-          %td= u.name
-          %td= "##{u.pdga}"
-          %td= u.division
-          %td= u.email
-          %td= u.club.name
-          %td
-            = link_to "", user_path(u), class: "glyphicon glyphicon-user"
-            = link_to "", edit_user_path(u), class: "glyphicon glyphicon-pencil"
+    .row.spacing
+      = render :partial => 'admins/partials/menu'
+
+      .col-md-10
+        %table.table.table-hover
+          %thead
+            %th Namn
+            %th PDGA #
+            %th Division
+            %th Email
+            %th Klubb
+            %th
+          %tbody
+            - @users.each do |u|
+              %tr
+                %td= u.name
+                %td= "##{u.pdga}"
+                %td= u.division
+                %td= u.email
+                %td= u.club.name
+                %td
+                  = link_to "", user_path(u), class: "glyphicon glyphicon-user"
+                  = link_to "", edit_user_path(u), class: "glyphicon glyphicon-pencil"
+
+        .text-center
+          = will_paginate @users

@@ -1,0 +1,36 @@
+.row.spacing
+  .col-md-6
+    %p.well Här kan du enkelt importera tävlingar i excel-format.
+  .col-md-6
+    = form_for @import, html: { multipart: true }, class: 'form-horizontal' do |f|
+      %fieldset
+        .form-group
+          = f.label t(:Competition)
+          = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label t(:Name)
+          = f.text_field :tour_name, placeholder: t(:Name), class: 'form-control'
+
+        .form-group
+          = f.label t(:Club)
+          = f.collection_select(:club, Club.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label t(:Course)
+          = f.collection_select(:course, Course.all, :id, :name, class: 'form-control')
+
+        .form-group
+          = f.label t(:Tee)
+          = f.collection_select(:tee, Tee.all, :id, :name_with_course_name, class: 'form-control')
+
+        .form-group
+          = f.label t(:Date)
+          = f.datetime_select :date, class: 'form-control'
+
+        .form-group
+          = f.label t(:Upload_file)
+          = f.file_field :import_sheet
+
+        .form-group
+          = f.submit t(:Send_import), class: 'btn btn-sm btn-primary'

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Imports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Comp name</th>
+      <th>Tour name</th>
+      <th>Date</th>
+      <th>Club</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @imports.each do |import| %>
+      <tr>
+        <td><%= import.comp_name %></td>
+        <td><%= import.tour_name %></td>
+        <td><%= import.date %></td>
+        <td><%= import.club %></td>
+        <td><%= link_to 'Show', import %></td>
+        <td><%= link_to 'Edit', edit_import_path(import) %></td>
+        <td><%= link_to 'Destroy', import, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Import', new_import_path %>

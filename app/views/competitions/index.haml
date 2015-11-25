@@ -1,19 +1,25 @@
 %header.masthead
   .container
-    .row.spacing
+    .row.spacing.page_header.normal
       .col-md-8
-        %h1 Tävlingar
+        %h1
+          = t(:Tournaments)
         - if @search
-          %p
+          %small
             = "Visar sökresultat för '#{@search}' - "
             = link_to "Visa alla", competitions_path
-      .col-md-4
-        .input-group.middle
+        - else
+          %small= t(:All_shown, resource: t(:Tournaments).downcase)
+
+    .row.spacing
+      .col-md-12
+        .input-group
           = form_tag competitions_path, method: :get do
-            = text_field_tag :term, @search, size: 32, placeholder: "Sök tävlingar..", class: "form-control"
+            = text_field_tag :term, @search, size: 32, placeholder: t(:Search_resource, resource: t(:Tournaments).downcase), class: "form-control"
           %span.input-group-btn
-            = submit_tag "Sök", type: "button", class: "btn btn-primary"
-    .row
+            = submit_tag t(:Search), type: "button", class: "btn btn-primary"
+
+    .row.spacing
       - @competitions.each do |comp|
         .col-md-4
           .event

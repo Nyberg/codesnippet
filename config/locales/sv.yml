@@ -1,0 +1,92 @@
+sv:
+  # Date & time formats
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Måndag, Tisdag, Onsdag, Torsdag, Fredag, Lördag, Söndag]
+    abbr_day_names: [Mån, Tis, Ons, Tors, Fre, Lör, Sön]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Januari, Februari, Mars, April, Maj, Juni, Juli, Augusti, September, Oktober, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, Maj, Jun, Jul, Aug, Sep, Okt, Nov, Dec]
+    # Used in date_select and datetime_select.
+    order:
+      - year
+      - month
+      - day
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  Swedish: "Svenska"
+  English: "Engelska"
+
+  # root index
+  page_information: "Statistik för Svenska discgolftävlingar"
+  Latest_competitions: "Senaste tävlingarna"
+  Most_used_tags: "Mest använda taggarna"
+
+  # main menu
+  Players: "Spelare"
+  Tournaments: "Tävlingar"
+  Statistics: "Statistik"
+  Statistics_small: "Här kan du se siffor om det mesta!"
+  Tour_parts: "Deltävlingar"
+  Competition: "Tävling"
+  Rounds: "Rundor"
+  Import_tour_part: "Importera tävling"
+  Dashboard: "Kontrollpanel"
+  Logout: "Logga ut"
+  Login: "Logga in"
+  Lang: "Språk"
+
+  # common
+  All_shown: "Visar alla %{resource}"
+  Search: "Sök"
+  Search_resource: "Sök %{resource}.."
+  Date: "Datum"
+
+  Name: "Namn"
+  Club: "Klubb"
+  Pdga: "Pdga #"
+  Division: "Division"
+  Course: "Bana"
+
+  Hole: "Hål"
+  Par: "Par"
+  Length: "Längd"
+  Result: "Resultat"
+  Summary: "Sammanställning"
+  Results_for: "Resultat för hål %{number}"
+  All_players: "Alla spelare"
+  Quantity: "Antal"
+  St: "st"
+  Tee: "Tee"
+
+  # Imports
+  Send_import: "Skicka import"
+  Upload_file: "Välj fil"
+
+  # Tags
+  Tags: "Taggar"
+
+  # Competitions
+  Home: "Startsida"
+  Overall_standings: "Totalställning"
+  Record_rounds: "Rekordrundor"
+
+  # Statistics
+  Bogeyfree_rounds: "Bogeyfria rundor"
+  Below_par: "Under par"
+  Tour_part_avg: "Snittresultat för alla deltävlingar"
+  Avg_result: "Snittresultat"
+  Your_round: "Din runda"
+  Results_for_tour_part: "Resultat %{name} - %{date} - %{color} tee"

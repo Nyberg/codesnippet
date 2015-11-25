@@ -8,7 +8,7 @@ class CreateScores < ActiveRecord::Migration
       t.integer :score
       t.integer :ob
       t.integer :tour_part_id
-      t.string :result
+      t.string :result_type
       t.integer :competition_id
       t.timestamps null: false
     end

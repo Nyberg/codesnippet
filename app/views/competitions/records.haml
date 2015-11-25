@@ -2,9 +2,9 @@
 
 .container
   - @tees.each do |tee|
-    .row.spacing
+    .row
       .col-md-12
-        %p.text-center= "Rekordrundor #{tee.color} tee"
+        %h2.highlight= "#{t(:Record_rounds)} - #{tee.color} tee"
         %table.table.table-hover
           %tbody
             %tr
@@ -12,7 +12,7 @@
               - tee.holes.each do |h|
                 %td= h.number
             %tr
-              %td Längd
+              %td= t(:Length)
               - tee.holes.each do |h|
                 %td= h.length
 
@@ -23,5 +23,23 @@
                     = link_to r.user.name, user_path(r.user.id)
 
                   - r.scores.each do |s|
-                    %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+                    %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= s.score
                   %td= calc_score(r.total, r.tee.par)
+  .row.spacing
+    - unless @bogeyfree_rounds.blank?
+      .col-md-12
+        %h2.highlight= t(:bogeyfree_rounds)
+        %table.table.table-hover
+          %tbody
+            %tr
+              %td= t(:Name)
+              %td Tee
+              - @tees.first.holes.each do |h|
+                %td= h.number
+          - @bogeyfree_rounds.each do |round|
+            %tr
+              %td= round.user.name
+              %td= round.tee.color
+              - round.scores.each do |s|
+                %td{class: "#{s.result_type} #{get_ob_stroke(s.ob)} text-center"}= "#{s.score}"
+              %td= calc_score(round.total, round.tee.par)

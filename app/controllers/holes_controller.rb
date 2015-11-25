@@ -1,5 +1,11 @@
 class HolesController < ApplicationController
   before_action :set_hole, only: [:show, :edit, :update, :destroy]
+  before_filter :stats
+
+  def stats
+    @stats ||= Stats::StatsCommon.new
+    @stats
+  end
 
   # GET /holes
   # GET /holes.json
@@ -10,6 +16,23 @@ class HolesController < ApplicationController
   # GET /holes/1
   # GET /holes/1.json
   def show
+    @holes = Hole.where(tee_id: @hole.tee_id).order(:number)
+    @graphs = stats.graph_types
+    @graph_type = params[:graph] || "spline"
+    @data_type = params[:data_type] || "result"
+    @course = Course.find(@hole.course_id)
+    @tee = Tee.find(@hole.tee_id)
+
+    if @data_type == "user"
+      data = Score.hole_result_stats(@hole.id).by_user(current_user.id).group_by_result
+      results = stats.get_hole_result_stats(data)
+    else
+      data = Score.hole_result_stats(@hole.id).group_by_result
+      results = stats.get_hole_result_stats(data)
+    end
+
+    result_types = stats.get_result_types(data)
+    @chart = stats.build_hole_chart(@hole.number, results, @graph_type, result_types)
   end
 
   # GET /holes/new

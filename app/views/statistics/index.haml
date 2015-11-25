@@ -1,0 +1,22 @@
+.container
+  .row.spacing.page_header.normal
+    .col-md-12
+      %h1= t(:Statistics)
+      %small= t(:Statistics_small)
+
+  .row.spacing
+    .col-md-2
+      %ul.list-group
+        %li.list-group-item
+          = link_to t(:Result), statistics_path(graph: @graph_type, content: "result", data_type: @data_type), class: (@data_content == "result" ? 'active' : '')
+        %li.list-group-item
+          = link_to t(:Summary), statistics_path(graph: @graph_type, content: "common", data_type: @data_type), class: (@data_content == "common" ? 'active' : '')
+    .col-md-10
+      .col-md-12.charts
+        = link_to t(:All_players), statistics_path(graph: @graph_type, data_type: "all", content: @data_content), class: "pull-left graph-button #{@data_type == "all" ? 'active' : ''}"
+        = link_to (fa_icon "user"), statistics_path(graph: @graph_type, data_type: "user", content: @data_content), class: "pull-left graph-button #{@data_type == "user" ? 'active' : ''}" unless !logged_in?
+        - @graphs.each do |graph|
+          = link_to fa_icon(graph.last), statistics_path(graph: graph.first, data_type: @data_type, content: @data_content), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
+        .col-md-12{id: "line_chart"}
+          = high_chart("line_chart", @chart)
+  .row.spacing

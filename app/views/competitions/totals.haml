@@ -3,15 +3,15 @@
 .container
   .row
     .col-md-5
-      %h2.highlight Spelare
+      %h2.highlight= t(:Players)
       %table.table.table-hover
         %thead
-          %th Namn
-          %th Klubb
-          %th Deltävlingar
+          %th= t(:Name)
+          %th= t(:Club)
+          %th= t(:Tour_parts)
         %tbody
           - @users.each do |user|
             %tr
               %td= user.name
               %td= user.club_name
-              %td= user.rounds_count
+              %td= "#{user.rounds_count} #{t(:St)}"

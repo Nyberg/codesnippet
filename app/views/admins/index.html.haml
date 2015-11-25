@@ -1,29 +1,9 @@
 .container
-  .row.spacing
+  .row.page_header.admin
     .col-md-6
-      %h1
-        Kontrollpanel
+      %h1 Kontrollpanel
 
-  .row.spacing.text-center
-    .col-md-12
-      .col-md-4
-        = link_to admin_users_path do
-          = fa_icon "users", text: "Användare", class: "fa-3x"
-      .col-md-4
-        = link_to admin_clubs_path do
-          = fa_icon "asterisk", text: "Klubbar", class: "fa-3x"
-      .col-md-4
-        = link_to admin_courses_path do
-          = fa_icon "tree", text: "Banor", class: "fa-3x"
-  .row.spacing.text-center
-    .col-md-12
-      .col-md-4
-        = link_to admin_competitions_path do
-          = fa_icon "trophy", text: "Tävlingar", class: "fa-3x"
-      .col-md-4
-        = link_to admin_tours_path do
-          = fa_icon "star-o", text: "Deltävlingar", class: "fa-3x"
-      .col-md-4
-        = link_to admin_round_path do
-          = fa_icon "fire", text: "Rundor", class: "fa-3x"
+  .row.spacing
+    = render :partial => 'admins/partials/menu'
+
   .row.spacing
