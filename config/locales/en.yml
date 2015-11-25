@@ -21,12 +21,12 @@ en:
   Swedish: "Swedish"
   English: "English"
 
-  # root index
+  # Root index
   page_information: "Statistics for Swedish disc golf tournaments"
   Latest_competitions: "Latest tournaments"
   Most_used_tags: "Most used tags"
 
-  # main menu
+  # Main menu
   Players: "Players"
   Tournaments: "Tournaments"
   Statistics: "Statistics"
