@@ -63,7 +63,7 @@ en:
   St: ""
   Tee: "Tee"
 
-  #Imports
+  # Imports
   Send_import: "Send import"
   Upload_file: "Choose file"
 
