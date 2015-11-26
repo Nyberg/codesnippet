@@ -1,0 +1,11 @@
+.container
+  .row.spacing.page_header.normal
+    .col-md-4
+      %h1= title
+
+    .col-md-8#leftCol
+      %ul.nav.nav-tabs.pull-right
+        %li
+          = link_to (fa_icon "home", text: @course.name), course_path(@course), class: (title == @course.name ? 'active' : '')
+        %li
+          = link_to (fa_icon "area-chart", text: t(:Statistics)), course_statistics_path(id: @course.id), class: (title == t(:Statistics) ? 'active' : '')

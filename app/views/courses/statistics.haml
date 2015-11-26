@@ -1,0 +1,36 @@
+= render :partial => 'courses/partials/header', locals: {title: @page_title, heading: @heading}
+
+.container
+  .row.spacing
+    .col-md-12
+      .pull-right
+        = form_tag course_statistics_path, class: 'form-inline', method: :get do
+          - if @user
+            = select_tag :user_id, options_from_collection_for_select(User.by_name, :id, :with_name_and_club, selected: @user.id), class: 'form-control'
+          - else
+            = select_tag :user_id, content_tag(:option, t(:Select_a_player), value: "")+options_from_collection_for_select(User.by_name, :id, :with_name_and_club), class: 'form-control', id: 'players-select'
+          = hidden_field_tag :id, @course.id
+          = hidden_field_tag :tee_id, @tee.id
+          = hidden_field_tag :graph, @graph_type
+          = hidden_field_tag :data_type, @data_type
+          = submit_tag "Go!", class: "btn btn-primary", disabled: (@user.blank? ? true : false), id: 'players-submit'
+  .row.spacing
+    .col-md-3
+      %ul.list-group
+        %li.list-group-item
+          %span.badge
+            = @course.tees.count
+          = @course.name
+        - @tees.each do |tee|
+          %li.list-group-item
+            = link_to tee.color, course_statistics_path(id: @course.id, tee_id: tee.id, graph: @graph_type, data_type: @data_type, user_id: @user? @user.id : nil), class: "#{@tee.id == tee.id ? 'active' : ''}"
+
+    .col-md-9
+      .col-md-12.charts
+        = link_to t(:Avg_result), course_statistics_path(id: @course.id, tee_id: @tee.id, graph: @graph_type, data_type: "avg"), class: "pull-left graph-button #{@data_type == "avg" ? 'active' : ''}"
+        - @graphs.each do |graph|
+          = link_to fa_icon(graph.last), course_statistics_path(id: @course.id, tee_id: @tee.id, graph: graph.first, data_type: @data_type, user_id: @user? @user.id : nil), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
+        .col-md-12{id: "line_chart"}
+          = high_chart("line_chart", @chart)
+
+  .row.spacing

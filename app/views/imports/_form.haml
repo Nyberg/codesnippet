@@ -6,7 +6,7 @@
       %fieldset
         .form-group
           = f.label t(:Competition)
-          = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control')
+          = f.collection_select(:comp_name, Competition.all, :id, :name, class: 'form-control', id: 'imports-select')
 
         .form-group
           = f.label t(:Name)

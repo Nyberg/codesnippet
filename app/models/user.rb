@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   	has_secure_password
   	validates :password, presence: false, length: { minimum: 0 }, on: :create
 
+		def with_name_and_club
+			"#{name} - #{club.name}"
+		end
+
   	def User.digest(string)
   		cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
   	end

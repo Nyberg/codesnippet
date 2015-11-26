@@ -38,6 +38,7 @@ sv:
   Players: "Spelare"
   Tournaments: "Tävlingar"
   Statistics: "Statistik"
+  Courses: "Banor"
   Statistics_small: "Här kan du se siffor om det mesta!"
   Tour_parts: "Deltävlingar"
   Competition: "Tävling"
@@ -90,3 +91,6 @@ sv:
   Avg_result: "Snittresultat"
   Your_round: "Din runda"
   Results_for_tour_part: "Resultat %{name} - %{date} - %{color} tee"
+
+  # Course
+  Select_a_player: "Välj en spelare"

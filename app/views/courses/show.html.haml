@@ -1,25 +1,23 @@
-.container
-  .row.spacing.page_header.normal
-    .col-md-6
-      %h1= @course.name
+= render :partial => 'courses/partials/header', locals: {title: @page_title, heading: @heading}
 
-    -# - @tees.each do |t|
-    -#   .row
-    -#     .col-md-12
-    -#       %table.table.table-striped
-    -#         %tbody
-    -#           %tr
-    -#             %td= t.color
-    -#             %td= "Par #{t.par}"
-    -#           %tr
-    -#             %td Nr (par)
-    -#             - t.holes.each do |h|
-    -#               %td= h.number
-    -#           %tr
-    -#             %td Längd
-    -#             - t.holes.each do |h|
-    -#               %td= "#{h.length} m"
-    -#           %tr
-    -#             %td Par
-    -#             - t.holes.each do |h|
-    -#               %td= h.par
+.container
+  .row
+    = image_tag("IMG_1006.JPG", width: "100%")
+  .row.spacing
+    - @tees.each do |t|
+      .col-md-12
+        %h2.highlight= "#{t.color} - par #{t.par}"
+        %table.table.table-striped
+          %tbody
+            %tr
+              %td Nr
+              - t.holes.each do |h|
+                %td= link_to h.number, hole_path(h)
+            %tr
+              %td Längd
+              - t.holes.each do |h|
+                %td= link_to "#{h.length} m", hole_path(h)
+            %tr
+              %td Par
+              - t.holes.each do |h|
+                %td= link_to h.par, hole_path(h)

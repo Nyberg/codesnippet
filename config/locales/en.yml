@@ -26,10 +26,11 @@ en:
   Latest_competitions: "Latest tournaments"
   Most_used_tags: "Most used tags"
 
-  # main menu
+  # Main menu
   Players: "Players"
   Tournaments: "Tournaments"
   Statistics: "Statistics"
+  Courses: "Courses"
   Statistics_small: "Here you can see alot of numbers!"
   Tour_parts: "Tour parts"
   Competition: "Tournament"
@@ -82,3 +83,6 @@ en:
   Avg_result: "Average"
   Your_round: "Your round"
   Results_for_tour_part: "Result %{name} - %{date} - %{color} tee"
+
+  # Course
+  Select_a_player: "Select a player"

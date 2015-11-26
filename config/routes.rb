@@ -24,13 +24,15 @@ Rails.application.routes.draw do
     get '/admin/imports'      => 'admins#imports'
     post '/scores/update'     => 'scores#update'
 
+    get '/course/statistics'      => 'courses#statistics'
+
     get '/competition/statistics' => 'competitions#statistics'
     get '/competition/records'    => 'competitions#records'
-    get '/competition/tours'    => 'competitions#tours'
+    get '/competition/tours'      => 'competitions#tours'
     get '/statistics/headtohead/' => 'statistics#headtohead'
     get '/competition/totals'     => 'competitions#totals'
     get '/tour_part_line_chart'   => 'tour_parts#line_chart'
-    get '/import_tour_part'      => 'imports#import_tour_part'
+    get '/import_tour_part'       => 'imports#import_tour_part'
 
     get 'stats'   => 'statistics#index'
     get 'hole_stats' => 'statistics#hole_stats'

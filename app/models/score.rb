@@ -7,6 +7,21 @@ class Score < ActiveRecord::Base
   belongs_to :competition
   belongs_to :result
 
+  scope :tee_avg, -> (id) {
+    select("scores.hole_id, ROUND(SUM(scores.score), 2) as sum, COUNT(scores.id) as number").
+    where("tee_id = #{id}").
+    group("scores.hole_id").
+    order("scores.hole_id")
+  }
+
+  scope :user_tee_avg, -> (id, user_id) {
+    select("scores.hole_id, ROUND(SUM(scores.score), 2) as sum, COUNT(scores.id) as number").
+    where("tee_id = #{id}").
+    where("user_id = #{user_id}").
+    group("scores.hole_id").
+    order("scores.hole_id")
+  }
+
   scope :tour_part_avg, -> (id) {
     select("scores.hole_id, ROUND(SUM(scores.score), 2) as sum, COUNT(scores.id) as number").
     where("tour_part_id = #{id}").

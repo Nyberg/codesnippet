@@ -1,24 +1,31 @@
 %header.masthead
   .container
-    .row
+    .row.spacing.page_header.normal
       .col-md-6
-        %h1
-          Banor
-          %p.lead
-            Visar all banor
-    .row
+        %h1= t(:Courses)
+        %small= t(:All_shown, resource: t(:Courses).downcase)
+
+    .row.spacing
+      .col-md-12
+        .input-group.middle
+          = form_tag courses_path, method: :get do
+            = text_field_tag :term, @search, size: 32, placeholder: t(:Search_resource, resource: t(:Courses).downcase), class: "form-control"
+          %span.input-group-btn
+            = submit_tag t(:Search), type: "button", class: "btn btn-primary"
+
+    .row.spacing
       .col-md-12
         %table.table.table-striped
           %thead
             %tr
-              %th Namn
-              %th Klubb
-              %th Vart
-              %th Antal hål
+              %th= t(:Name)
+              %th= t(:Club)
+              %th= t(:Tee).pluralize
           %tbody
             - @courses.each do |c|
               %tr
                 %td= link_to c.name, course_path(c)
                 %td= c.club.name
-                %td= c.content
-                %td= c.holes
+                %td= c.tees.count
+      .text-center
+        = will_paginate @courses unless @search

@@ -233,4 +233,27 @@ class Stats::StatsCommon < ApplicationController
       f.plot_options({column:{stacking: "normal", dataLabels: {enabled: false}}})
     end
   end
+
+  def tee_line_chart(tee, numbers, chart, avg, user = nil, name = nil)
+    @chart = LazyHighCharts::HighChart.new('column') do |f|
+      f.title({text: "#{tee.color} tee", style: {color: '#616161', "font-size": '12px'}})
+      f.xAxis(categories: numbers)
+      f.series(name: t(:Avg_result), yAxis: 0, data: avg)
+      f.series(name: name, yAxis: 0, data: user) if user
+      f.tooltip(shared: true)
+      f.plotOptions({
+        series: {
+          fillOpacity: 0.4
+      }})
+      f.colors(['#24CCA9', '#9061C2'])
+      f.legend({
+        layout: 'horizontal',
+        itemDistance: 20,
+        itemMarginTop: 15,
+        borderWidth: 0
+        })
+      f.yAxis [{title: {text: t(:Result), margin: 15, style: {color: '#24CCA9'}}}]
+      f.chart({defaultSeriesType: chart, backgroundColor:'rgba(255, 255, 255, 0.1)'})
+    end
+  end
 end

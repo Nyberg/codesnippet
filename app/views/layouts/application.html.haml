@@ -21,8 +21,8 @@
                 %li= link_to t(:Tournaments), competitions_path
                 %li= link_to t(:Tour_parts), tour_parts_path
                 %li= link_to t(:Import_tour_part), new_import_path
-            %li
-              = link_to t(:Players), users_path
+            %li= link_to t(:Players), users_path
+            %li= link_to t(:Courses), courses_path
             %li.dropdown
               = link_to t(:Lang), "#", class: 'dropdown', toggle: "dropdown"
               %ul.dropdown-menu{data: {role: 'menu'}}
