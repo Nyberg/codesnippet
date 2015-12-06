@@ -1,0 +1,9 @@
+%nav.sub-navbar.navbar-default
+  .container-fluid
+    .navbar-brand.sub
+      = @course.name
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        = link_to (fa_icon "home", text: @course.name), course_path(@course), class: (@title == @course.name ? 'active' : '')
+      %li
+        = link_to (fa_icon "area-chart", text: t(:Statistics)), course_statistics_path(id: @course.id), class: (@title == t(:Statistics) ? 'active' : '')

@@ -8,6 +8,13 @@ module ApplicationHelper
     return true if current_user.admin == 1
   end
 
+  def load_navbar
+    begin
+      render :partial => @navbar || "#{params[:controller]}/partials/navbar.show" unless params[:action] == "index"
+    rescue ActionView::MissingTemplate
+    end
+  end
+
   def get_ob_stroke(ob)
     return "ob" if ob == 1
   end

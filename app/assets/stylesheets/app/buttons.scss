@@ -1,0 +1,61 @@
+.graph-button{
+	background-color: #fff;
+	border: 1px solid #ddd6d6;
+	border-radius: 4px;
+	padding: 5px;
+	margin-left: 5px;
+}
+
+.btn-primary {
+	background-color: #24CCA9;
+	color:#ffffff;
+	border: 1px solid #24CCA9;
+}
+
+.btn-primary:hover{
+	background-color: #24CCA9;
+	border: 1px solid #24CCA9;
+}
+
+.btn a, a:hover{
+	background-color: #fff;
+	color: #24CCA9;
+}
+
+.signin-button{
+	background-color: #24CCA9;
+	color:#ffffff;
+	border: none;
+}
+
+input[type="submit"]:disabled{
+    background-color: #616161;
+		border: 1px solid #313131;
+}
+
+input[type="submit"]:disabled:hover{
+	background-color: #616161;
+	border: 1px solid #313131;
+}
+
+/* Tags */
+
+.tag{
+
+  a{
+    background-color: #24CCA9;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
+    color: #fff !important;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  a:hover{
+    color: #fff !important;
+    background-color: #26f2c8 !important;
+  }
+}

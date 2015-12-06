@@ -10,7 +10,8 @@
 #= require turbolinks
 
 ready = ->
-  $('.has-tooltip').tooltip()
+  
+  $('[data-toggle="tooltip"]').tooltip()
 
   $('.collapse').click( ->  $('.collapseSideMenu').parent().collapse() )
 

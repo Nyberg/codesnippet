@@ -1,0 +1,8 @@
+%nav.sub-navbar.navbar-default
+  .container-fluid
+    .navbar-brand.sub
+      = "#{@course.name} - #{t(:Hole)} #{@hole.number}, #{@tee.color.downcase} tee"
+
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        = link_to (fa_icon "home", text: "#{t(:Par)} #{@hole.par} - #{t(:Length)} #{@hole.length} m"), "#"

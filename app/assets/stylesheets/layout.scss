@@ -1,0 +1,294 @@
+body {
+  font-family: 'Asap',Sans-Serif;
+  font-weight:300;
+  color:#616161;
+  background-color:#f6f6f6;
+	min-height: 700px;
+}
+
+.footer{
+	width: 100%;
+	height: 120px;
+	background-color: #24CCA9;
+	border-top: 1px solid #616161;
+	padding: 40px 15px 35px;
+	color: #ffffff;
+
+  p, a{
+    padding: 18px 0;
+    text-align: right;
+  }
+}
+
+/* Navbar */
+
+.navbar-default{
+  background-color: rgba(249, 246, 246, 0.49);
+}
+
+.sub{
+  color: #24CCA9 !important;
+  font-size: 2em;
+}
+
+.navbar-header a{
+	color:#ffffff;
+	font-size: 1.3em;
+	font-weight: 400;
+	padding-top: 23px;
+	height: 70px;
+	text-transform: uppercase;
+	margin-left: 3%;
+
+}
+
+.navbar-brand {
+
+  a {
+  	color: #ffffff;
+  	font-size: 2.2em;
+  	font-family: 'Cookie', Serif;
+  }
+
+  a:hover{
+    color: #616161;
+    background-color: #24CCA9;
+  }
+}
+
+.navbar {
+	background-color: #24CCA9;
+	color:#fff;
+	border-radius:0;
+	margin-bottom: 0px;
+	padding: 10px 0;
+}
+
+.sub-navbar {
+	color:#616161;
+	border-radius:0;
+	margin-bottom: 0px;
+	padding: 10px 0;
+}
+
+.sub-navbar-nav > li > a {
+  	color:#616161;
+		border: none;
+		height: 30px;
+		font-size: .9em;
+		text-transform: uppercase;
+		font-weight: 400;
+		padding-left: 0px;
+		padding-right: 20px;
+}
+
+.navbar-nav > li > a {
+  	color:#fff;
+		border: none;
+		height: 50px;
+		font-size: .9em;
+		text-transform: uppercase;
+		font-weight: 400;
+		padding-left: 0px;
+		padding-right: 20px;
+}
+
+.navbar-nav > li:last-child > a {
+	border: none;
+}
+
+.navbar-nav li a:hover {
+		color: #fff;
+		background-color: #24CCA9;
+}
+
+.navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
+	color: #000;
+  	opacity:.9;
+}
+
+.dropdown-menu {
+	min-width: 200px;
+}
+
+.caret {
+	color:#fff;
+}
+
+.navbar-toggle {
+	color:#fff;
+  border-width:0;
+}
+
+.navbar-toggle:hover {
+	background-color:#fff;
+}
+
+.navbar-form input, .form-inline input {
+	width:auto;
+}
+
+/* Nav tabs */
+.nav-tabs{
+
+  margin-top: 20px;
+
+  li > a.active{
+    color: #fff;
+    background-color: #24CCA9;
+  }
+}
+
+/* Events (start page etc) */
+
+.event{
+	min-height: 100px;
+	border-left: 5px solid #24CCA9;
+	margin-bottom: 10px;
+
+  li {
+  	display: block;
+  	list-style: none;
+  }
+
+  li:first-child{
+  	padding-top: 15px;
+  	padding-bottom: 0;
+  }
+
+  i{
+  	color: #616161;
+  }
+}
+
+.padding-icon{
+	padding: 10px 0 20px 10px;
+	margin: 10px 0 10px 0;
+}
+
+/* Panels */
+
+.panel,.panel-heading {
+	border-radius:0;
+	border-width:0;
+  margin-top: 20px;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
+	box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
+}
+
+.list-group > li > a.active{
+	color: #24CCA9 !important;
+}
+
+/* Wells */
+
+.well {
+  	border-radius:0;
+}
+
+/* Tables */
+
+.tours > li > a.active{
+	color: #24CCA9 !important;
+}
+
+table td a:hover{
+	color: #616161;
+	background-color: transparent;
+}
+
+.table a.active{
+	color: #24CCA9;
+}
+
+/* Other stuff */
+
+.accordion-group {
+	border-width:0;
+}
+
+.thumbnail {
+	margin-bottom:8px;
+	border-radius:0;
+}
+
+.accordion-heading .accordion-toggle, .accordion-inner, .nav-stacked li > a {
+	padding-left:1px;
+}
+
+.white{
+  background-color: #ffffff;
+}
+
+/* Header on every page */
+.page_header{
+
+	background-color: rgba(249, 246, 246, 0.49);
+
+	&.normal{
+		min-height: 8em;
+	}
+
+	&.admin{
+		min-height: 6em;
+	}
+}
+
+header {
+	min-height:180px;
+  	margin-bottom:5px;
+}
+
+
+.spacing{
+	margin-top: 30px;
+}
+
+@media (min-width: 992px) {
+  .no-gutter.row > div[class*='col-md'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .no-gutter.row > .col-md-12 {
+    width: 99.99999999999999%;
+    *width: 99.93055555555554%;
+  }
+  .no-gutter.row .col-md-11 {
+    width: 91.66666666666666%;
+    *width: 91.59722222222221%;
+  }
+  .no-gutter.row > .col-md-10 {
+    width: 83.33333333333331%;
+    *width: 83.26388888888887%;
+  }
+  .no-gutter.row > .col-md-9 {
+    width: 74.99999999999999%;
+    *width: 74.93055555555554%;
+  }
+  .no-gutter.row > .col-md-8 {
+    width: 66.66666666666666%;
+    *width: 66.59722222222221%;
+  }
+  .no-gutter.row > .col-md-7 {
+    width: 58.33333333333333%;
+    *width: 58.263888888888886%;
+  }
+  .no-gutter.row > .col-md-6 {
+    width: 49.99999999999999%;
+  }
+  .no-gutter.row > .col-md-4 {
+    width: 33.33333333333333%;
+  }
+  .no-gutter.row > .col-md-3 {
+    width: 24.999999999999996%;
+    *width: 24.930555555555554%;
+  }
+  .no-gutter.row > .col-md-2 {
+    width: 16.666666666666664%;
+    *width: 16.59722222222222%;
+  }
+  .no-gutter.row > .col-md-1 {
+    width: 8.333333333333332%;
+    *width: 8.263888888888888%;
+  }
+}

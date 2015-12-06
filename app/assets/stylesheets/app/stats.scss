@@ -1,0 +1,19 @@
+.highcharts-tooltip>span {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid silver;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #888;
+    padding: 20px;
+}
+
+.charts{
+	background-color: rgba(#f9f6f6, 0.49);
+	border: 1px solid #ddd6d6;
+	border-radius: 4px;
+	padding: 10px;
+	margin-bottom: 10px;
+
+  a.active{
+  	color: #24CCA9 !important;
+  }
+}

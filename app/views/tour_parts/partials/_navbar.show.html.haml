@@ -1,0 +1,14 @@
+%nav.sub-navbar.navbar-default
+  .container-fluid
+    .navbar-brand.sub
+      = @heading
+
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        = link_to @tour_part.competition.name, competition_path(@tour_part.competition.id)
+      %li
+        = link_to "Datum: #{@tour_part.date.strftime("%Y-%m-%-d")}", "#"
+      %li
+        = link_to "Spelare: #{@rounds.count}", "#"
+      %li
+        = link_to "Bana: #{@tour_part.course.name} #{@tee.color}", course_path(@tour_part.course.id)

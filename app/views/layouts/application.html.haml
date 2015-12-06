@@ -39,27 +39,26 @@
               %li
                 = link_to t(:Login), sessions_new_path
 
-    - if alert
-      .container
-        .row.spacing
+    .container.white
+      - if alert
+        .row
           %div.alert.alert-danger.alert-dismissible{role: "alert"}
             %button.close{type: "button", data: {dismiss: "alert"}, aria: {label: "close"}}
               %span{aria: {hidden: true}}
                 &times;
             %strong Ooops!
             = alert
-    - if notice
-      .container
-        .row.spacing
+      - if notice
+        .row
           %div.alert.alert-success.alert-dismissible{role: "alert"}
             %button.close{type: "button", data: {dismiss: "alert"}, aria: {label: "close"}}
               %span{aria: {hidden: true}}
                 &times;
             %strong Wooho!
             = notice
+      .row
+        = load_navbar
 
-
-    .container.white
       .row
         = yield
 

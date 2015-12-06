@@ -1,34 +1,28 @@
-%header.masthead
-  .container
-    .row.spacing.page_header.normal
-      .col-md-12
-        %h1= "#{@course.name} - #{t(:Hole)} #{@hole.number}, #{@tee.color.downcase} tee"
-        %small= "#{t(:Par)} #{@hole.par} - #{t(:Length)} #{@hole.length} m"
-
-    .row.spacing
-      .col-md-12
-        %table.table.table-hover
-          %tbody
+.container
+  .row.spacing
+    .col-md-12
+      %table.table.table-hover
+        %tbody
+          %tr
+            %td Nr
+            - @holes.each do |hole|
+              %td= link_to hole.number, hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
             %tr
-              %td Nr
+              %td= t(:Length)
               - @holes.each do |hole|
-                %td= link_to hole.number, hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
-              %tr
-                %td= t(:Length)
-                - @holes.each do |hole|
-                  %td= link_to "#{hole.length} m", hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
+                %td= link_to "#{hole.length} m", hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
 
-              %tr
-                %td= t(:Par)
-                - @holes.each do |hole|
-                  %td= link_to hole.par, hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
+            %tr
+              %td= t(:Par)
+              - @holes.each do |hole|
+                %td= link_to hole.par, hole_path(id: hole, data_type: @data_type, graph: @graph_type), class: @hole.id == hole.id ? 'active' : ''
 
-      .col-md-12
-        .col-md-12.charts
-          = link_to t(:All_players), hole_path(id: @hole.id, graph: @graph_type, data_type: "result"), class: "pull-left graph-button #{@data_type == "result" ? 'active' : ''}"
-          = link_to (fa_icon "user"), hole_path(id: @hole.id, graph: @graph_type, data_type: "user"), class: "pull-left graph-button #{@data_type == "user" ? 'active' : ''}"
-          - @graphs.each do |graph|
-            = link_to fa_icon(graph.last), hole_path(id: @hole.id, graph: graph.first, data_type: @data_type), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
-          .col-md-12{id: "line_chart"}
-            = high_chart("line_chart", @chart)
-    .row.spacing
+    .col-md-12
+      .col-md-12.charts
+        = link_to t(:All_players), hole_path(id: @hole.id, graph: @graph_type, data_type: "result"), class: "pull-left graph-button #{@data_type == "result" ? 'active' : ''}"
+        = link_to (fa_icon "user"), hole_path(id: @hole.id, graph: @graph_type, data_type: "user"), class: "pull-left graph-button #{@data_type == "user" ? 'active' : ''}"
+        - @graphs.each do |graph|
+          = link_to fa_icon(graph.last), hole_path(id: @hole.id, graph: graph.first, data_type: @data_type), class: "pull-right graph-button #{graph.first == @graph_type ? 'active' : ''}"
+        .col-md-12{id: "line_chart"}
+          = high_chart("line_chart", @chart)
+  .row.spacing

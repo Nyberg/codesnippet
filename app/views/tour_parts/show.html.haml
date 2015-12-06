@@ -1,33 +1,5 @@
-%header.masthead
-  .container
-    .row.spacing.page_header.normal
-      .col-md-12
-        .col-md-8
-          %h1= @tour_part.name
-          %small
-            = link_to @tour_part.competition.name, competition_path(@tour_part.competition.id)
-            = " - #{@tour_part.competition.club.name}"
-
-        .col-md-4.info
-          .col-md-6
-            %p
-              Datum:
-              %strong= @tour_part.date.strftime("%Y-%m-%-d")
-          .col-md-6
-            %p
-              Spelare:
-              %strong= @rounds.count
-          .col-md-6
-            %p
-              Bana:
-              %strong= "#{@tour_part.course.name} #{@tee.color}"
-          .col-md-6
-            %p
-              Snitt:
-              %strong= calc_total_score(@scores.map(&:score).inject(:+), @rounds.count, @tee.par)
-
 .container
-  .row.spacing
+  .row
     .col-md-12
       %h3
       %table.table.table-hover
